@@ -91,14 +91,52 @@ def contact_view(request):
 
     # send email (configured via env)
     subject = f"Website contact from {name}"
-    body = f"From: {name} <{email}>\n\n{message}\n\n"
+    body = f"New contact form submission from your website:\n\n"
+    body += f"Name: {name}\n"
+    body += f"Email: {email}\n"
+    body += f"Message:\n{message}\n\n"
     if saved_links:
         body += "Uploaded files:\n"
         for s in saved_links:
             body += f"- {s['type']}: {s['name']} -> {s['url']}\n"
-
-    send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [settings.DEFAULT_FROM_EMAIL])
-    return Response({'detail': 'Sent', 'files': saved_links})
+    
+    # Get recipient email from settings (defaults to DEFAULT_FROM_EMAIL if not set)
+    recipient_email = getattr(settings, 'CONTACT_EMAIL_RECIPIENT', settings.DEFAULT_FROM_EMAIL)
+    
+    # Ensure we always send to the configured recipient
+    if not recipient_email:
+        recipient_email = 'ndimihboclair4@gmail.com'
+    
+    try:
+        send_mail(
+            subject, 
+            body, 
+            settings.DEFAULT_FROM_EMAIL, 
+            [recipient_email],
+            fail_silently=False
+        )
+        return Response({'detail': 'Sent', 'files': saved_links})
+    except Exception as e:
+        # Log the error for debugging
+        import logging
+        logger = logging.getLogger(__name__)
+        error_msg = str(e)
+        logger.error(f"Failed to send contact email: {error_msg}")
+        
+        # Provide more helpful error messages
+        if 'authentication failed' in error_msg.lower() or 'invalid credentials' in error_msg.lower():
+            detail_msg = 'Email authentication failed. Please configure EMAIL_HOST_PASSWORD in .env file with a Gmail App Password. See EMAIL_SETUP.md for instructions.'
+        elif 'connection' in error_msg.lower() or 'timeout' in error_msg.lower():
+            detail_msg = 'Could not connect to email server. Please check your internet connection and email settings.'
+        elif 'password' in error_msg.lower():
+            detail_msg = 'Email password is incorrect or not set. Please check EMAIL_HOST_PASSWORD in .env file.'
+        else:
+            detail_msg = f'Email delivery failed: {error_msg}. Please check your email configuration.'
+        
+        return Response(
+            {'detail': detail_msg}, 
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
 
 @api_view(['GET'])

@@ -5,12 +5,29 @@
 .site-navbar {
 	position: sticky;
 	top: 0;
-	z-index: 100;
+	z-index: 1000;
 	display: block;
 	backdrop-filter: blur(10px) saturate(120%);
-	background: linear-gradient(180deg, rgba(10,15,31,0.95), rgba(10,15,31,0.85));
+	background: rgba(10,15,31,0.3);
 	border-bottom: 1px solid rgba(0,168,255,0.08);
-	box-shadow: 0 4px 20px rgba(2,6,23,0.6);
+	box-shadow: 0 4px 20px rgba(0,168,255,0.1);
+	width: 100%;
+	isolation: isolate;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+}
+.site-navbar::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: rgba(10,15,31,0.2);
+	z-index: -1;
+	pointer-events: none;
+}
+.site-navbar > div {
+	max-width: 1400px;
+	margin: 0 auto;
+	width: 100%;
 }
 .site-navbar .max-wrap { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
 .site-navbar .inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 0; }
@@ -31,7 +48,7 @@
 
 /* Nav links */
 .site-nav { display: flex; gap: 1.25rem; align-items: center; justify-content: center; }
-.site-nav a {
+.site-nav a, .nav-link {
 	color: #CCCCCC;
 	padding: 0.5rem 0.9rem;
 	border-radius: 10px;
@@ -39,7 +56,12 @@
 	transition: all 0.25s ease;
 	font-weight: 600;
 }
-.site-nav a:hover, .site-nav a:focus { color: #00A8FF; transform: translateY(-3px); background: rgba(0,168,255,0.06); box-shadow: 0 6px 18px rgba(0,168,255,0.12); }
+.site-nav a:hover, .site-nav a:focus, .nav-link:hover, .nav-link:focus { 
+	color: #00A8FF; 
+	transform: translateY(-3px); 
+	background: rgba(0,168,255,0.06); 
+	box-shadow: 0 6px 18px rgba(0,168,255,0.12); 
+}
 
 .site-actions { display: flex; gap: 1rem; align-items: center; }
 .site-actions .btn {
@@ -54,6 +76,17 @@
 	box-shadow: 0 6px 20px rgba(0,168,255,0.18);
 }
 .site-actions .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,168,255,0.28); }
+.theme-toggle {
+	background: rgba(0,168,255,0.1);
+	border: 1px solid rgba(0,168,255,0.2);
+	color: #00A8FF;
+	transition: all 0.25s ease;
+}
+.theme-toggle:hover {
+	background: rgba(0,168,255,0.2);
+	border-color: rgba(0,168,255,0.4);
+	transform: scale(1.1);
+}
 
 /* Mobile */
 .mobile-toggle { 
@@ -73,10 +106,13 @@
   box-shadow: 0 4px 12px rgba(0,168,255,0.2);
   transform: scale(1.05);
 }
+/* Nav links group */
+.nav-links { display: flex; gap: 0.5rem; align-items: center; }
+
 @media (max-width: 780px) {
   /* Keep the nav container visible so action buttons (and the mobile toggle)
      are still reachable — only hide the horizontal link group on small screens */
-  .site-nav { display: flex; align-items: center; justify-content: space-between; }
+  .site-nav { display: flex; align-items: center; justify-content: flex-end; }
   .site-nav .nav-links { display: none; }
   .site-actions { gap: 0.5rem; }
   .mobile-toggle { display: inline-flex; align-items: center; justify-content: center; }
@@ -90,7 +126,8 @@
   left: 0; 
   right: 0; 
   top: 64px; 
-  background: linear-gradient(180deg, rgba(10,15,31,0.99), rgba(4,8,15,0.99)); 
+  background: rgba(10,15,31,0.3);
+  backdrop-filter: blur(10px) saturate(120%);
   border-bottom: 1px solid rgba(0,168,255,0.12); 
   z-index: 110; 
   width: 100%; 

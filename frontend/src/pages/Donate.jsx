@@ -48,40 +48,73 @@ export default function Donate(){
   }
 
   return (
-    <div className="donate-page">
-      <h1>Support the project</h1>
-      <p className="lead">If you find this site or the content useful, a small donation keeps things running and funds improvements.</p>
-
-      <form className="donate-form" onSubmit={handleDonate}>
-        <div className="preset-grid">
-          {presets.map(p => (
-            <button type="button" key={p} onClick={()=>selectPreset(p)} className={`preset ${amount===p ? 'active' : ''}`}>${(p/100).toFixed(0)}</button>
-          ))}
+    <div className="donate-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white w-full">
+      <main className="max-w-2xl mx-auto px-4 sm:px-6 py-12 sm:py-16 w-full">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold gradient-accent mb-3">Support the Project</h1>
+          <p className="text-base sm:text-lg text-gray-300">If you find this site or the content useful, a small donation keeps things running and funds improvements.</p>
         </div>
 
-        <label className="custom-label">Custom amount (USD)</label>
-        <div className="custom-input">
-          <span className="dollar">$</span>
-          <input aria-label="Custom amount in USD" value={custom} onChange={handleCustomChange} placeholder="10.00" />
+        <div className="glass-card rounded-xl border border-blue-500/10 p-6 sm:p-8">
+          <form className="donate-form" onSubmit={handleDonate}>
+            <div className="preset-grid mb-6">
+              {presets.map(p => (
+                <button 
+                  type="button" 
+                  key={p} 
+                  onClick={()=>selectPreset(p)} 
+                  className={`preset ${amount===p ? 'active' : ''}`}
+                >
+                  ${(p/100).toFixed(0)}
+                </button>
+              ))}
+            </div>
+
+            <label className="custom-label block text-white mb-2">Custom amount (USD)</label>
+            <div className="custom-input mb-6">
+              <span className="dollar">$</span>
+              <input 
+                aria-label="Custom amount in USD" 
+                value={custom} 
+                onChange={handleCustomChange} 
+                placeholder="10.00"
+                className="bg-transparent text-white"
+              />
+            </div>
+
+            <div className="donate-actions">
+              <button 
+                className="donate-btn w-full sm:w-auto" 
+                type="submit" 
+                disabled={loading}
+              >
+                {loading ? 'Redirecting…' : `Donate $${(amount/100).toFixed(2)}`}
+              </button>
+            </div>
+
+            {error && (
+              <div className="error bg-red-900/30 border border-red-500/50 rounded p-3 text-red-300 text-sm mt-4">
+                {error}
+              </div>
+            )}
+          </form>
         </div>
 
-        <div className="donate-actions">
-          <button className="donate-btn" type="submit" disabled={loading}>{loading ? 'Redirecting…' : `Donate $${(amount/100).toFixed(2)}`}</button>
+        <div className="mt-8 pt-8 border-t border-white/10">
+          <div className="fallback text-center">
+            <h3 className="text-xl font-semibold mb-4">Other ways to donate</h3>
+            {paypal ? (
+              <p className="text-gray-300">
+                You can also donate via PayPal: <a href={paypal} target="_blank" rel="noreferrer" className="text-blue-400 hover:text-blue-300">PayPal.me</a>
+              </p>
+            ) : (
+              <p className="text-gray-300">
+                If the payment gateway isn't configured, please reach out via the <a href="/contact" className="text-blue-400 hover:text-blue-300">contact page</a> to arrange a donation.
+              </p>
+            )}
+          </div>
         </div>
-
-        {error && <div className="error">{error}</div>}
-      </form>
-
-      <hr />
-
-      <div className="fallback">
-        <h3>Other ways to donate</h3>
-        {paypal ? (
-          <p>You can also donate via PayPal: <a href={paypal} target="_blank" rel="noreferrer">PayPal.me</a></p>
-        ) : (
-          <p>If the payment gateway isn't configured, please reach out via the <a href="/contact">contact page</a> to arrange a donation.</p>
-        )}
-      </div>
+      </main>
     </div>
   )
 }

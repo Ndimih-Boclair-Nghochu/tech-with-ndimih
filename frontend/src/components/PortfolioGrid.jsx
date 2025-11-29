@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import '../styles/PortfolioCard.css'
 
 export default function PortfolioGrid({ items = [] }){
   const [start, setStart] = React.useState(0)
@@ -48,15 +49,47 @@ export default function PortfolioGrid({ items = [] }){
             ) : (
               slice.map(it => (
                 <div key={it.id} className="glass-card overflow-hidden rounded-lg card-hover">
-                  <div className="w-full h-40 bg-gray-800">
-                    {it.cover ? <img src={it.cover} alt={it.title} className="w-full h-full object-cover"/> : <div className="w-full h-full bg-gradient-to-br from-[#071225] to-[#032033] flex items-center justify-center text-gray-500">No image</div>}
-                  </div>
-                  <div className="p-4 text-center">
-                    <h3 className="text-lg font-semibold text-white">{it.title}</h3>
-                    <p className="text-gray-300 mt-1 text-sm">{it.excerpt}</p>
-                  </div>
-                  <div className="p-4 flex justify-center">
-                    <Link to={`/portfolio/${it.slug || it.id}`} className="hero-cta secondary" style={{textDecoration:'none'}}>View more</Link>
+                  <Link to={`/portfolio/${it.slug || it.id}`} className="block">
+                    <div className="w-full h-40 bg-gray-800">
+                      {it.cover ? <img src={it.cover} alt={it.title} className="w-full h-full object-cover"/> : <div className="w-full h-full bg-gradient-to-br from-[#071225] to-[#032033] flex items-center justify-center text-gray-500">No image</div>}
+                    </div>
+                    <div className="p-4 text-center">
+                      <h3 className="text-lg font-semibold text-white">{it.title}</h3>
+                      <p className="text-gray-300 mt-1 text-sm">{it.excerpt}</p>
+                    </div>
+                  </Link>
+                  <div className="px-4 pb-4">
+                    <div className="flex flex-col gap-2">
+                      {(it.live_url || it.github_url) && (
+                        <div className="flex gap-2 flex-wrap justify-center">
+                          {it.live_url && (
+                            <a 
+                              href={it.live_url} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="portfolio-btn portfolio-btn-live"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              🌐 View Live
+                            </a>
+                          )}
+                          {it.github_url && (
+                            <a 
+                              href={it.github_url} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="portfolio-btn portfolio-btn-github"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              💻 GitHub
+                            </a>
+                          )}
+                        </div>
+                      )}
+                      <div className="flex justify-center">
+                        <Link to={`/portfolio/${it.slug || it.id}`} className="hero-cta secondary" style={{textDecoration:'none'}} onClick={(e) => e.stopPropagation()}>View more</Link>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))

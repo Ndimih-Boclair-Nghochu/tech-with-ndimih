@@ -38,10 +38,10 @@ export default function About(){
   if (!about) {
     return (
       <div className="about-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white">
-        <main className="max-w-6xl mx-auto px-4 py-16">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
           <div className="text-center">
-            <h1 className="text-4xl font-bold gradient-accent mb-3">About</h1>
-            <p className="text-lg muted">About page content is not available yet. Please add content from the Admin Dashboard.</p>
+            <h1 className="text-3xl sm:text-4xl font-bold gradient-accent mb-3">About</h1>
+            <p className="text-base sm:text-lg muted">About page content is not available yet. Please add content from the Admin Dashboard.</p>
           </div>
         </main>
       </div>
@@ -50,9 +50,9 @@ export default function About(){
 
   return (
     <div className="about-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white">
-      <main className="max-w-6xl mx-auto px-4 py-16">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         {/* Hero Section */}
-        <div className="about-hero text-center mb-16">
+        <div className="about-hero text-center mb-8 sm:mb-12 md:mb-16">
           <div className="profile-image-container mb-8">
             {about.profile_image_url ? (
               <div className="profile-image-wrapper">
@@ -68,8 +68,8 @@ export default function About(){
               </div>
             )}
           </div>
-          <h1 className="text-5xl font-bold gradient-accent mb-4">{about.name}</h1>
-          <p className="text-2xl text-cyan-300 mb-4">{about.title}</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-accent mb-4">{about.name}</h1>
+          <p className="text-xl sm:text-2xl text-cyan-300 mb-4">{about.title}</p>
           {about.location && (
             <p className="text-lg muted flex items-center justify-center gap-2">
               <span>📍</span> {about.location}
@@ -79,7 +79,7 @@ export default function About(){
 
         {/* Social Links */}
         {(about.linkedin_url || about.github_url || about.twitter_url || about.website || about.email) && (
-          <div className="social-links mb-12 flex flex-wrap justify-center gap-4">
+          <div className="social-links mb-8 sm:mb-12 flex flex-wrap justify-center gap-3 sm:gap-4">
             {about.email && (
               <a 
                 href={`mailto:${about.email}`}

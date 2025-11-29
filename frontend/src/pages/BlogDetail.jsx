@@ -36,12 +36,36 @@ export default function BlogDetail(){
     }
   }
 
-  if(loading) return <div>Loading post…</div>
-  if(!post) return <div className="muted">Post not found</div>
+  if(loading) {
+    return (
+      <div className="blog-detail-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white">
+        <main className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="text-center">
+              <div className="spinner mx-auto mb-4"></div>
+              <p className="text-gray-300">Loading post…</p>
+            </div>
+          </div>
+        </main>
+      </div>
+    )
+  }
+  if(!post) {
+    return (
+      <div className="blog-detail-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white">
+        <main className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-red-400 mb-4">Post Not Found</h1>
+            <p className="text-gray-300 mb-6">The blog post you are looking for does not exist.</p>
+          </div>
+        </main>
+      </div>
+    )
+  }
 
   return (
     <div className="blog-detail-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white">
-      <main className="max-w-4xl mx-auto px-4 py-16">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <article className="blog-detail">
           {post.cover && (
             <div className="blog-cover mb-8">

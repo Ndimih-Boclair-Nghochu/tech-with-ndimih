@@ -91,26 +91,46 @@ export async function fetchTags(){
 }
 
 export async function updatePortfolio(id, data){
-  // id is numeric id or slug; backend lookup field is slug but update endpoint uses pk in viewset's URLs (we registered viewset with basename)
-  // try slug-based PUT/PATCH
+  // id should be slug (backend uses lookup_field='slug')
+  // Handle tags: convert comma-separated string to array if needed
+  const tagsValue = data.tags
+  let tagsArray = []
+  if(tagsValue){
+    if(Array.isArray(tagsValue)){
+      tagsArray = tagsValue
+    } else if(typeof tagsValue === 'string'){
+      tagsArray = tagsValue.split(',').map(t => t.trim()).filter(t => t)
+    }
+  }
+  
   if(data.cover){
     const form = new FormData()
     if(data.title) form.append('title', data.title)
     if(data.excerpt) form.append('excerpt', data.excerpt)
     if(data.body) form.append('body', data.body)
-    if(data.tags){
-      if(Array.isArray(data.tags)) data.tags.forEach(t => form.append('tags', t))
-      else form.append('tags', data.tags)
-    }
+    tagsArray.forEach(t => form.append('tags', t))
+    if(data.live_url) form.append('live_url', data.live_url)
+    if(data.github_url) form.append('github_url', data.github_url)
     form.append('cover', data.cover)
     const res = await api.patch(`/portfolio/${id}/`, form, { headers: { 'Content-Type': 'multipart/form-data' } })
     return res.data
   }
-  const res = await api.patch(`/portfolio/${id}/`, data)
+  
+  // No cover file - send as JSON
+  const jsonData = {
+    title: data.title,
+    excerpt: data.excerpt,
+    body: data.body,
+    tags: tagsArray,
+    live_url: data.live_url,
+    github_url: data.github_url
+  }
+  const res = await api.patch(`/portfolio/${id}/`, jsonData)
   return res.data
 }
 
 export async function deletePortfolio(id){
+  // Backend uses slug as lookup_field, so id should be slug
   const res = await api.delete(`/portfolio/${id}/`)
   return res.data
 }

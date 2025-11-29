@@ -55,7 +55,7 @@ export default function AdminDashboard(){
   const { token, login, logout } = useContext(AuthContext)
   const [activeTab, setActiveTab] = useState('portfolio')
   const [credentials, setCredentials] = useState({ username: '', password: '' })
-  const [form, setForm] = useState({ title: '', excerpt: '', body: '', tags: '', cover: null, live_url: '', github_url: '' })
+  const [form, setForm] = useState({ title: '', excerpt: '', body: '', tags: '', cover: null, live_url: '', github_url: '', images: [] })
   const [status, setStatus] = useState(null)
   const [portfolios, setPortfolios] = useState([])
   const [loadingList, setLoadingList] = useState(false)
@@ -104,7 +104,13 @@ export default function AdminDashboard(){
   async function saveEdit(e){
     e.preventDefault()
     try{
-      await updatePortfolio(editItem.slug || editItem.id, {
+      // Ensure we use slug (backend requires slug, not id)
+      const portfolioId = editItem.slug
+      if(!portfolioId){
+        addToast('Portfolio slug is missing. Please refresh and try again.', 'error')
+        return
+      }
+      await updatePortfolio(portfolioId, {
         title: editForm.title,
         excerpt: editForm.excerpt,
         body: editForm.body,
@@ -117,7 +123,9 @@ export default function AdminDashboard(){
       addToast('Portfolio updated successfully', 'success')
       loadPortfolios()
     }catch(err){
-      addToast('Failed to update portfolio', 'error')
+      const errorMsg = err.response?.data?.detail || err.message || 'Failed to update portfolio'
+      console.error('Portfolio update error:', err)
+      addToast(`Failed to update portfolio: ${errorMsg}`, 'error')
     }
   }
 
@@ -161,7 +169,7 @@ export default function AdminDashboard(){
         }
       }
       setStatus('created')
-      setForm({ title: '', excerpt: '', body: '', tags: '', cover: null, live_url: '', github_url: '' })
+      setForm({ title: '', excerpt: '', body: '', tags: '', cover: null, live_url: '', github_url: '', images: [] })
       addToast('Portfolio created successfully', 'success')
       loadPortfolios()
     }catch(err){
@@ -556,11 +564,18 @@ export default function AdminDashboard(){
                               onClick={async ()=>{
                                 if(!confirm('Are you sure you want to delete this portfolio?')) return
                                 try {
-                                  await deletePortfolio(p.slug || p.id)
+                                  // Backend uses slug as lookup field, so use slug if available
+                                  const portfolioId = p.slug || p.id
+                                  if(!portfolioId){
+                                    addToast('Portfolio identifier missing. Please refresh and try again.', 'error')
+                                    return
+                                  }
+                                  await deletePortfolio(portfolioId)
                                   addToast('Portfolio deleted successfully', 'success')
                                   loadPortfolios()
                                 } catch(err) {
-                                  addToast('Failed to delete portfolio', 'error')
+                                  const errorMsg = err.response?.data?.detail || err.message || 'Failed to delete portfolio'
+                                  addToast(`Failed to delete portfolio: ${errorMsg}`, 'error')
                                 }
                               }}
                             >

@@ -160,10 +160,10 @@ export default function Resources() {
 
   return (
     <div className="resources-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white">
-      <main className="max-w-6xl mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold gradient-accent mb-3">Resources</h1>
-          <p className="text-lg muted">View my CV and professional certifications</p>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold gradient-accent mb-3">Resources</h1>
+          <p className="text-base sm:text-lg muted">View my CV and professional certifications</p>
         </div>
 
         {loading ? (

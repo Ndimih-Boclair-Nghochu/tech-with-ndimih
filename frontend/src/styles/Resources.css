@@ -28,11 +28,17 @@
 }
 
 .section-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #fff;
   margin-bottom: 1.5rem;
   text-align: center;
+}
+
+@media (min-width: 640px) {
+  .section-title {
+    font-size: 2rem;
+  }
 }
 
 .resource-card {
@@ -40,10 +46,16 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(0, 168, 255, 0.2);
   border-radius: 16px;
-  padding: 3rem;
+  padding: 2rem;
   text-align: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .resource-card {
+    padding: 3rem;
+  }
 }
 
 .resource-card:hover {

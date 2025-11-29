@@ -63,7 +63,7 @@ export default function Navbar(){
       <div className="px-4 py-3 flex items-center justify-between">
         <Link to="/" className="brand flex items-center gap-2 md:gap-3" aria-label="Home">
           <img src={logo} alt="Tech with Ndimih" style={{width:40,height:40, borderRadius:8}} />
-          <span className="font-bold text-sm md:text-lg text-white">Tech with Ndimih</span>
+          <span className="font-bold text-sm md:text-lg">Tech with Ndimih</span>
         </Link>
 
         <nav className="site-nav" role="navigation" aria-label="Primary navigation">

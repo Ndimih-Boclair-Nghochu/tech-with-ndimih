@@ -167,12 +167,14 @@ AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', None)
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_FROM', 'no-reply@example.com')
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_FROM', 'ndimihboclair4@gmail.com')
+# Email address to receive contact form submissions
+CONTACT_EMAIL_RECIPIENT = os.environ.get('CONTACT_EMAIL_RECIPIENT', 'ndimihboclair4@gmail.com')
 
 # Security headers
 if not DEBUG:

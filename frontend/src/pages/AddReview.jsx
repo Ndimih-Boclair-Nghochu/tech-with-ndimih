@@ -33,31 +33,69 @@ export default function AddReview(){
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <div className="mb-4">
-        <Link to="/" className="text-sm text-gray-600">← Back</Link>
-      </div>
-      <h1 className="text-2xl font-semibold mb-2">Add review</h1>
-      <p className="text-gray-600 mb-4">Share your experience. Reviews may be moderated before appearing publicly.</p>
-
-      <form className="bg-white p-4 rounded shadow-sm" onSubmit={handleSubmit}>
-        {error && <div className="text-red-600 mb-2">{error}</div>}
-        <label className="block text-sm font-medium">Name</label>
-        <input className="w-full border rounded px-2 py-1 mt-1" value={form.name} onChange={e=>setForm({...form, name: e.target.value})} />
-
-        <label className="block text-sm font-medium mt-2">Rating</label>
-        <select className="w-full border rounded px-2 py-1 mt-1" value={form.rating} onChange={e=>setForm({...form, rating: Number(e.target.value)})}>
-          {[5,4,3,2,1].map(n => <option key={n} value={n}>{n} ★</option>)}
-        </select>
-
-        <label className="block text-sm font-medium mt-2">Message</label>
-        <textarea className="w-full border rounded px-2 py-1 mt-1" rows={6} value={form.message} onChange={e=>setForm({...form, message: e.target.value})} />
-
-        <div className="mt-3 flex gap-2 justify-end">
-          <Link to="/" className="px-3 py-2 border rounded">Cancel</Link>
-          <button className="px-3 py-2 bg-blue-600 text-white rounded" type="submit" disabled={loading}>{loading ? 'Saving…' : 'Submit'}</button>
+    <div className="add-review-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white w-full">
+      <main className="max-w-2xl mx-auto px-4 sm:px-6 py-12 sm:py-16 w-full">
+        <div className="mb-6">
+          <Link to="/" className="text-sm text-gray-300 hover:text-white transition-colors inline-flex items-center gap-2">
+            <span>←</span>
+            <span>Back to Home</span>
+          </Link>
         </div>
-      </form>
+        <h1 className="text-3xl sm:text-4xl font-bold gradient-accent mb-3">Add Review</h1>
+        <p className="text-base sm:text-lg text-gray-300 mb-8">Share your experience. Reviews may be moderated before appearing publicly.</p>
+
+        <form className="glass-card rounded-xl border border-blue-500/10 p-6 sm:p-8" onSubmit={handleSubmit}>
+          {error && (
+            <div className="bg-red-900/30 border border-red-500/50 rounded p-3 text-red-300 text-sm mb-4">
+              {error}
+            </div>
+          )}
+          <div className="form-group mb-4">
+            <label className="block text-sm font-medium text-white mb-2">Name *</label>
+            <input 
+              className="w-full border border-gray-600 rounded-lg px-4 py-2 mt-1 bg-transparent text-gray-200 focus:border-blue-500 focus:outline-none" 
+              value={form.name} 
+              onChange={e=>setForm({...form, name: e.target.value})} 
+              required
+            />
+          </div>
+
+          <div className="form-group mb-4">
+            <label className="block text-sm font-medium text-white mb-2">Rating</label>
+            <select 
+              className="w-full border border-gray-600 rounded-lg px-4 py-2 mt-1 bg-transparent text-gray-200 focus:border-blue-500 focus:outline-none" 
+              value={form.rating} 
+              onChange={e=>setForm({...form, rating: Number(e.target.value)})}
+            >
+              {[5,4,3,2,1].map(n => <option key={n} value={n} className="bg-gray-800">{n} ★</option>)}
+            </select>
+          </div>
+
+          <div className="form-group mb-6">
+            <label className="block text-sm font-medium text-white mb-2">Message *</label>
+            <textarea 
+              className="w-full border border-gray-600 rounded-lg px-4 py-2 mt-1 bg-transparent text-gray-200 focus:border-blue-500 focus:outline-none resize-y" 
+              rows={6} 
+              value={form.message} 
+              onChange={e=>setForm({...form, message: e.target.value})} 
+              required
+            />
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 justify-end">
+            <Link to="/" className="px-4 py-2 border border-gray-600 rounded-lg text-center text-gray-300 hover:bg-white/10 transition">
+              Cancel
+            </Link>
+            <button 
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed" 
+              type="submit" 
+              disabled={loading}
+            >
+              {loading ? 'Saving…' : 'Submit Review'}
+            </button>
+          </div>
+        </form>
+      </main>
     </div>
   )
 }

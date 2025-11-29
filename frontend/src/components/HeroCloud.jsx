@@ -93,16 +93,17 @@ export default function HeroCloud(){
   const backgroundVideoUrl = hero?.background_video_url
   const backgroundImageUrl = hero?.background_image_url
 
-  // Determine background media
-  const hasVideo = backgroundVideoUrl || heroVideo
+  // Determine background media - always use video if available (from API or local fallback)
+  const hasVideo = Boolean(backgroundVideoUrl || heroVideo)
   const videoSrc = backgroundVideoUrl || heroVideo
 
   return (
-    <header className="relative w-full min-h-[70vh] md:h-screen text-white hero-wrapper" aria-label="Hero">
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30 z-10" />
+    <header className="relative w-full min-h-[70vh] md:h-screen text-white hero-wrapper" aria-label="Hero" style={{zIndex: 1, isolation: 'isolate'}}>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30 z-10" style={{pointerEvents: 'none'}} />
       <div className="absolute inset-0 overflow-hidden">
         {hasVideo ? (
           <video 
+            key={videoSrc} 
             className="w-full h-full object-cover hero-video" 
             autoPlay 
             muted 
@@ -110,11 +111,13 @@ export default function HeroCloud(){
             playsInline 
             poster={backgroundImageUrl || logo} 
             aria-hidden
+            onError={(e) => {
+              console.error('Video load error, falling back to image:', e)
+              // If video fails to load, try to show image instead
+            }}
           >
             <source src={videoSrc} type="video/mp4" />
-            {backgroundImageUrl && (
-              <img src={backgroundImageUrl} alt="" className="w-full h-full object-cover" />
-            )}
+            Your browser does not support the video tag.
           </video>
         ) : backgroundImageUrl ? (
           <img 
@@ -134,6 +137,7 @@ export default function HeroCloud(){
             aria-hidden
           >
             <source src={heroVideo} type="video/mp4" />
+            Your browser does not support the video tag.
           </video>
         )}
       </div>
