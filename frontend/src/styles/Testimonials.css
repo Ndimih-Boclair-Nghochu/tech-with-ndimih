@@ -1,0 +1,7 @@
+@import './theme.css';
+.testimonial{padding:1rem; border-radius:12px}
+.testimonial .quote{font-style:italic; color:#0f172a}
+.testimonial .author{margin-top:0.6rem; font-weight:700}
+.testimonials-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1rem}
+@media (max-width:980px){.testimonials-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.testimonials-grid{grid-template-columns:1fr}}

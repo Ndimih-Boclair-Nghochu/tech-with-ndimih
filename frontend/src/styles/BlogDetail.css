@@ -1,0 +1,104 @@
+@import './theme.css';
+/* Blog Detail — article typography and media */
+
+.blog-detail-page {
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.blog-detail {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.blog-meta {
+  color: var(--muted-text);
+  font-size: 0.95rem;
+}
+
+.blog-cover {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(6, 9, 21, 0.06);
+  margin-bottom: 1rem;
+}
+
+.blog-body {
+  line-height: 1.85;
+  font-size: 1.05rem;
+  color: #e2e8f0;
+}
+
+.blog-body h1, .blog-body h2, .blog-body h3, .blog-body h4 {
+  color: #fff;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.blog-body p {
+  margin-bottom: 1.5rem;
+}
+
+.blog-body a {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+.blog-body a:hover {
+  color: #93c5fd;
+}
+
+.blog-body code {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+}
+
+.blog-body pre {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.blog-body ul, .blog-body ol {
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+}
+
+.blog-body li {
+  margin-bottom: 0.5rem;
+}
+
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 168, 255, 0.2);
+}
+
+/* Ensure horizontal alignment on PC/bigger screens for products */
+@media (min-width: 1024px) {
+  .blog-detail-page .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1400px) {
+  .blog-detail-page .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-cover img {
+    transition: none;
+  }
+  .product-card {
+    transition: none;
+  }
+}

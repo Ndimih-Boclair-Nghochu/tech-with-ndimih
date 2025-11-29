@@ -1,0 +1,7 @@
+@import './theme.css';
+.skills-bar{display:flex; gap:12px; flex-direction:column}
+.skill{display:flex; align-items:center; gap:12px}
+.skill .bar{flex:1; height:12px; background:linear-gradient(90deg, rgba(15,23,42,0.06), rgba(15,23,42,0.03)); border-radius:999px; overflow:hidden}
+.skill .bar > i{display:block; height:100%; background:linear-gradient(90deg, rgba(var(--accent),1), rgba(var(--accent-2),1)); transition:width 700ms cubic-bezier(.2,.9,.2,1)}
+.skill-name{min-width:100px}
+@media (max-width:720px){.skill-name{min-width:80px}}

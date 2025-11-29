@@ -1,0 +1,101 @@
+@import './theme.css';
+/* Portfolio detail — media gallery and details column */
+
+.portfolio-detail{display:grid; grid-template-columns:1fr 360px; gap:1.25rem; align-items:start}
+.portfolio-media{border-radius:12px; overflow:hidden; box-shadow:0 18px 46px rgba(6,9,21,0.08)}
+.portfolio-meta{background:var(--card-bg); padding:1rem; border-radius:12px}
+
+/* Ensure horizontal alignment on PC/bigger screens for portfolio images */
+@media (min-width: 1024px) {
+  .portfolio-media .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1400px) {
+  .portfolio-media .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width:880px){.portfolio-detail{grid-template-columns:1fr}}
+
+@media (prefers-reduced-motion: reduce){.portfolio-media, .portfolio-meta{transition:none}}
+
+/* Portfolio detail page styling */
+.portfolio-detail-page {
+  background: linear-gradient(180deg, #071225, rgba(10, 15, 31, 0.95));
+  min-height: 100vh;
+  color: var(--text-dark);
+}
+
+.portfolio-detail-page .gradient-accent {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.portfolio-detail-page .prose {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.8;
+}
+
+.portfolio-detail-page .prose h1,
+.portfolio-detail-page .prose h2,
+.portfolio-detail-page .prose h3 {
+  color: #fff;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.portfolio-detail-page .prose p {
+  margin-bottom: 1.5rem;
+}
+
+.portfolio-detail-page .prose a {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+.portfolio-detail-page .prose a:hover {
+  color: #93c5fd;
+}
+
+/* Portfolio buttons on detail page */
+.portfolio-detail-page .portfolio-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.portfolio-detail-page .portfolio-btn-live {
+  background: linear-gradient(135deg, #00A8FF, #0088CC);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3);
+}
+
+.portfolio-detail-page .portfolio-btn-live:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 168, 255, 0.4);
+  background: linear-gradient(135deg, #0088CC, #0066AA);
+}
+
+.portfolio-detail-page .portfolio-btn-github {
+  background: linear-gradient(135deg, #24292e, #1a1e22);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.portfolio-detail-page .portfolio-btn-github:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, #1a1e22, #0d1117);
+}

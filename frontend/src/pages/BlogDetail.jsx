@@ -1,0 +1,83 @@
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import '../styles/BlogDetail.css'
+import { fetchBlogBySlug, purchaseProduct } from '../lib/api'
+
+export default function BlogDetail(){
+  const { slug } = useParams()
+  const [post, setPost] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(()=>{
+    let mounted = true
+    setLoading(true)
+    fetchBlogBySlug(slug)
+      .then(data => { if(!mounted) return; setPost(data) })
+      .catch(()=>{})
+      .finally(()=>{ if(mounted) setLoading(false) })
+    return ()=> mounted = false
+  }, [slug])
+
+  async function handleBuy(product){
+    try{
+      const res = await purchaseProduct(product.id)
+      if(res.type === 'download' && res.url){
+        window.open(res.url, '_blank')
+      }else if(res.type === 'stripe' && res.checkout_url){
+        window.location.href = res.checkout_url
+      }else if(res.type === 'external' && res.url){
+        // external affiliate link
+        window.location.href = res.url
+      }else if(res.detail){
+        alert(res.detail)
+      }
+    }catch(e){
+      alert('Purchase failed')
+    }
+  }
+
+  if(loading) return <div>Loading post…</div>
+  if(!post) return <div className="muted">Post not found</div>
+
+  return (
+    <div className="blog-detail-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white">
+      <main className="max-w-4xl mx-auto px-4 py-16">
+        <article className="blog-detail">
+          {post.cover && (
+            <div className="blog-cover mb-8">
+              <img src={post.cover} alt={post.title} className="w-full h-auto rounded-xl" />
+            </div>
+          )}
+          <h1 className="text-4xl md:text-5xl font-bold gradient-accent mb-4">{post.title}</h1>
+          {post.excerpt && <p className="text-xl text-gray-300 mb-6">{post.excerpt}</p>}
+          <div className="blog-body prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: post.body }} />
+
+          {post.products && post.products.length > 0 && (
+            <section className="mt-12 pt-8 border-t border-white/10">
+              <h2 className="text-2xl font-semibold mb-6">Related Products</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {post.products.map(prod => (
+                  <div key={prod.id} className="product-card glass-card rounded-xl border border-blue-500/10 p-6 card-hover">
+                    <h3 className="text-xl font-semibold text-white mb-2">{prod.title}</h3>
+                    <p className="text-gray-300 mb-4">{prod.description}</p>
+                    <div className="flex items-center justify-between">
+                      <div className="text-2xl font-bold text-cyan-400">
+                        {prod.price_cents ? `$${(prod.price_cents/100).toFixed(2)}` : 'Free'}
+                      </div>
+                      <button 
+                        className="btn btn--primary px-6 py-2 rounded-lg font-semibold transition hover:shadow-lg" 
+                        onClick={()=>handleBuy(prod)}
+                      >
+                        Buy Now
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </article>
+      </main>
+    </div>
+  )
+}

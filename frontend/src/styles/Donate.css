@@ -1,0 +1,14 @@
+.donate-page{max-width:720px;margin:0 auto;padding:2rem}
+.donate-page h1{font-size:1.75rem;margin-bottom:.25rem}
+.donate-page .lead{color:var(--muted,#6b7280);margin-bottom:1.25rem}
+.preset-grid{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.preset{padding:.5rem 1rem;border-radius:.5rem;border:1px solid var(--muted,#d1d5db);background:transparent;cursor:pointer}
+.preset.active{background:linear-gradient(90deg,var(--accent,#7c3aed),var(--accent-2,#06b6d4));color:white;border:none}
+.custom-label{display:block;margin-bottom:.5rem;margin-top:.5rem}
+.custom-input{display:flex;align-items:center;margin-bottom:1rem}
+.custom-input .dollar{padding:.5rem;border:1px solid var(--muted,#d1d5db);border-right:none;background:#fafafa}
+.custom-input input{flex:1;padding:.5rem;border:1px solid var(--muted,#d1d5db);border-left:none}
+.donate-actions{margin-top:.5rem}
+.donate-btn{background:linear-gradient(90deg,var(--accent,#7c3aed),var(--accent-2,#06b6d4));color:white;padding:.75rem 1.25rem;border-radius:.5rem;border:none;cursor:pointer}
+.error{color:#b91c1c;margin-top:.75rem}
+.fallback{margin-top:1.25rem;color:var(--muted,#6b7280)}

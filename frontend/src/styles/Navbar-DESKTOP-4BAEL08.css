@@ -1,0 +1,65 @@
+@import './theme.css';
+/* Header / Navbar - modern glass + responsive sticky navigation */
+
+/* Layout */
+.site-navbar{position:sticky; top:0; z-index:80; display:block; backdrop-filter: blur(10px) saturate(120%); overflow:visible}
+.site-navbar .max-wrap{max-width:var(--container-max); margin:0 auto; padding:0 calc(var(--space-md));}
+.site-navbar .inner{display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:0.8rem 0}
+
+/* Brand-colored navbar (nav uses brand navy with translucent glass) */
+.site-navbar{background: linear-gradient(180deg, rgba(10,15,31,0.9), rgba(10,15,31,0.85)); border-bottom:1px solid rgba(0,168,255,0.06)}
+
+.brand{font-weight:800; letter-spacing:0.2px; color:var(--text); font-size:1.05rem}
+
+/* Nav links */
+.site-nav{display:flex; gap:0.5rem; align-items:center}
+.site-nav a{color:var(--brand-grey); padding:0.5rem 0.75rem; border-radius:10px; text-decoration:none; transition:transform var(--transition), color var(--transition), background var(--transition), box-shadow .18s ease}
+.site-nav a:hover, .site-nav a:focus{color:var(--brand-blue); transform:translateY(-3px); background:linear-gradient(90deg, rgba(0,168,255,0.04), rgba(255,255,255,0.01)); box-shadow:0 12px 30px rgba(0,168,255,0.12);}
+
+.site-actions{display:flex; gap:0.5rem; align-items:center}
+.site-actions .btn{font-size:0.95rem}
+
+/* Mobile */
+.mobile-toggle{display:none}
+@media (max-width:780px){
+	.site-nav{display:none}
+	.mobile-toggle{display:inline-flex}
+	.mobile-toggle{background:transparent; border:1px solid rgba(255,255,255,0.04); padding:0.35rem; border-radius:8px}
+}
+
+/* focus ring */
+.site-nav a:focus{outline:3px solid color-mix(in srgb, var(--color-primary) 20%, transparent); outline-offset:3px}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+	.site-nav a{transition:none}
+}
+
+/* nav links group */
+.nav-links{display:flex; gap:0.5rem; align-items:center}
+.nav-link{color:var(--brand-grey); padding:0.5rem 0.75rem; border-radius:10px; text-decoration:none; transition:var(--transition);} 
+.nav-link:focus,.nav-link:hover{color:var(--brand-blue); transform:translateY(-3px); background:linear-gradient(90deg, rgba(0,168,255,0.04), rgba(255,255,255,0.01)); box-shadow:0 12px 30px rgba(0,168,255,0.10);}
+
+/* theme toggle */
+.theme-toggle{background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--brand-grey)}
+
+/* mobile menu panel */
+.mobile-menu{display:none; position:absolute; left:0; right:0; top:64px; background: linear-gradient(180deg, rgba(10,15,31,0.98), rgba(4,8,15,0.98)); border-bottom:1px solid rgba(0,168,255,0.04); z-index:90; width:100%}
+.mobile-menu.open{display:block}
+.mobile-inner{display:flex; flex-direction:column; gap:0.5rem; padding:1rem}
+.mobile-link{padding:0.75rem 0; display:block; color:var(--brand-grey); text-decoration:none}
+.mobile-link:focus,.mobile-link:hover{background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent); color:var(--brand-blue)}
+
+@media (max-width:780px){
+	.nav-links{display:none}
+	.mobile-toggle{display:inline-flex !important}
+	.mobile-menu{display:none}
+	.mobile-menu.open{display:block !important}
+}
+
+/* focus visible fallback */
+:focus{outline:none}
+.focus-ring:focus{outline:3px solid color-mix(in srgb, var(--color-primary) 24%, transparent); outline-offset:3px}
+
+/* Donate modal */
+/* donate modal removed; styles cleaned up */

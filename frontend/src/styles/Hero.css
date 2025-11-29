@@ -1,0 +1,58 @@
+@import './theme.css';
+/* Professional Hero section - static, accessible, and conversion-focused */
+
+.hero-section{padding:0}
+.hero-wrap{padding:clamp(2rem,6vw,4rem) 1rem}
+.hero-inner{display:flex;flex-direction:column;align-items:center;gap:clamp(1rem,3vw,2rem);justify-content:center;text-align:center;min-height:360px}
+.hero-left{flex:0 0 auto;max-width:820px;margin:0 auto}
+
+.hero-title{font-weight:800;color:var(--text);font-size:clamp(2rem,5vw,3rem);margin:0 0 .6rem;line-height:1.02}
+.hero-left .lead{margin-top:.6rem;color:var(--muted-text);font-size:clamp(1rem,1.6vw,1.125rem)}
+
+.hero-ctas{display:flex;gap:0.75rem;margin-top:1.25rem;align-items:center}
+.btn-primary{background:linear-gradient(90deg,var(--accent,#7c3aed),var(--accent-2,#06b6d4));color:#fff;border:none;padding:.75rem 1.25rem;border-radius:.6rem;cursor:pointer;box-shadow:0 12px 30px rgba(12,18,32,0.12)}
+.btn-secondary{background:transparent;border:1px solid rgba(12,18,32,0.06);padding:.6rem 1rem;border-radius:.5rem;cursor:pointer}
+
+.hero-right{flex:0 0 auto;display:flex;justify-content:center}
+.hero-visual{width:360px;max-width:44vw}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));border-radius:12px;padding:1rem;box-shadow:0 18px 40px rgba(2,6,23,0.08)}
+.card-header{font-size:.85rem;color:var(--muted-text);margin-bottom:.5rem}
+.card-body h3{margin:0 0 .5rem}
+.card-body p{margin:0 0 .75rem;color:var(--muted-text)}
+.card-body ul{margin:0;padding-left:1.15rem;color:var(--muted-text)}
+
+@media (max-width:960px){
+  .hero-inner{flex-direction:column;text-align:center}
+  /* Center hero content on small screens */
+  .hero-left{max-width:100%;margin:0 auto;text-align:center}
+  .hero-right{margin-top:1rem}
+  /* Stack CTA buttons and center them */
+  .hero-ctas{flex-direction:column;align-items:center;justify-content:center}
+  .hero-ctas .btn-primary, .hero-ctas .btn-secondary{width:100%;max-width:320px}
+  /* Make visual card narrower and centered */
+  .hero-visual{width:80%;max-width:360px;margin:0 auto}
+}
+
+/* Vertically center hero under the sticky header on narrow viewports */
+@media (max-width:960px){
+  /* Approximate sticky header height used elsewhere (adjust if your header height differs) */
+  .hero-section{
+    /* Use a dynamic header height variable when available; fall back to 64px */
+    min-height: calc(100vh - var(--header-height, 64px));
+    display: flex;
+    align-items: center; /* vertical center */
+    justify-content: center;
+  }
+  /* Reduce large vertical padding so centering looks balanced */
+  .hero-wrap{padding-top:clamp(1rem,4vw,2rem);padding-bottom:clamp(1rem,4vw,2rem)}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .hero-inner *{transition:none}
+}
+
+/* Donate modal styles (used by hero CTA) */
+.donate-modal{position:fixed;inset:0;z-index:140;display:flex;align-items:center;justify-content:center}
+.donate-modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6)}
+.donate-modal-panel{position:relative;z-index:150;background:var(--card-bg,#fff);max-width:760px;width:94%;max-height:92vh;overflow:auto;border-radius:12px;box-shadow:0 20px 60px rgba(2,6,23,0.4);padding:1rem}
+.donate-close{position:absolute;right:10px;top:10px;background:transparent;border:none;font-size:1.1rem}

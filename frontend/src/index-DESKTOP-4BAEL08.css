@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root { height: 100%; }
+
+:root{
+	--brand-blue: #00A8FF;
+	--brand-navy: #0A0F1F;
+	--brand-grey: #CCCCCC;
+}
+
+/* Glassmorphism utility */
+.glass-card{
+	background-color: rgba(255,255,255,0.04);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	border: 1px solid rgba(255,255,255,0.06);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+.blue-glow{
+	box-shadow: 0 6px 30px rgba(0,168,255,0.12), 0 2px 8px rgba(0,168,255,0.06) inset;
+}
+
+.typewriter-cursor{ border-right: 2px solid var(--brand-blue); animation: blink 1s steps(1) infinite; }
+@keyframes blink{50%{border-color:transparent}} 
+
+.hero-cta { transition: transform .18s ease, box-shadow .18s ease; }
+.hero-cta:hover{ transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,168,255,0.12); }
+
+.card-hover{ transition: transform .2s ease, box-shadow .2s ease; }
+.card-hover:hover{ transform: translateY(-6px); box-shadow: 0 20px 40px rgba(2,6,23,0.45), 0 6px 20px rgba(0,168,255,0.06); }
+
+/* Note: hero video should be available on all devices per design requirements. */
+
+/* Hero helpers */
+.hero-wrapper{ min-height: 70vh; display:flex; align-items:center; justify-content:center; }
+.hero-content-centered{ display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+
+/* CTA style used across homepage for consistency */
+.hero-cta{ background: linear-gradient(90deg, var(--brand-blue), #00d0ff); color: var(--brand-navy); padding: 0.6rem 1.1rem; border-radius:999px; font-weight:600; box-shadow: 0 6px 18px rgba(0,168,255,0.18); border: none; }
+.hero-cta.secondary{ background: transparent; color: #ffffff; border: 1px solid rgba(255,255,255,0.12); }
+
+/* Form elements */
+input, textarea, select{ background: transparent; border: 1px solid rgba(255,255,255,0.06); color: var(--brand-grey); }
+input:focus, textarea:focus, select:focus{ outline: none; box-shadow: 0 6px 18px rgba(0,168,255,0.08); border-color: var(--brand-blue); }
+
+/* small helper for centered content width */
+.max-w-3xl{ max-width: 64rem; }
+
+/* subtle animated background to increase visibility */
+.home-page::before{
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	background: radial-gradient(600px 300px at 10% 20%, rgba(0,168,255,0.06), transparent 10%), radial-gradient(500px 240px at 90% 80%, rgba(0,168,255,0.04), transparent 12%);
+	pointer-events: none;
+	animation: floatBG 14s linear infinite;
+}
+
+@keyframes floatBG{
+	0%{ transform: translate3d(0,0,0) }
+	50%{ transform: translate3d(-6%, 2%, 0) }
+	100%{ transform: translate3d(0,0,0) }
+}
+
+/* Footer styling to match brand */
+footer{ background: linear-gradient(180deg, rgba(10,15,31,0.95), rgba(8,12,20,0.95)); color: var(--brand-grey); }
+footer a{ color: var(--brand-grey); transition: color .18s ease, text-shadow .18s ease; }
+footer a:hover{ color: var(--brand-blue); text-shadow: 0 6px 20px rgba(0,168,255,0.08); }
+
+/* subtle blue glow for interactive elements */
+.glow-on-hover:hover{ box-shadow: 0 12px 40px rgba(0,168,255,0.12); transform: translateY(-3px); }
+
+

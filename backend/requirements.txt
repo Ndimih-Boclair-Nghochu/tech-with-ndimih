@@ -1,0 +1,17 @@
+Django==4.2.8
+djangorestframework==3.14.0
+# Optional: use psycopg2-binary when using Postgres. Keep commented for local sqlite dev.
+# psycopg2-binary==2.9.7
+django-cors-headers==4.9.0
+djangorestframework-simplejwt==5.5.1
+# Omitting boto3 and django-storages here to avoid dependency resolution issues during
+# local development. We'll add S3-related packages back later with tested pins.
+# boto3
+# django-storages
+pytest==7.4.0
+pytest-django==4.5.2
+django-ratelimit==3.0.1
+python-dotenv==1.0.0
+dj-database-url==1.0.0
+gunicorn==20.1.0
+requests==2.31.0

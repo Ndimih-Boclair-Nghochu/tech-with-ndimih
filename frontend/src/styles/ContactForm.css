@@ -1,0 +1,6 @@
+@import './theme.css';
+.contact-form{max-width:680px}
+.contact-form label{font-weight:600; color:#0f172a}
+.contact-form input, .contact-form textarea{border-radius:10px; border:1px solid rgba(15,23,42,0.06); padding:0.7rem; transition:box-shadow 180ms, transform 120ms}
+.contact-form input:focus, .contact-form textarea:focus{box-shadow:0 8px 20px rgba(14,165,233,0.08); transform:translateY(-2px)}
+.contact-form .submit{margin-top:1rem}

@@ -1,0 +1,14 @@
+@import './theme.css';
+
+.fab{position:fixed; right:20px; bottom:24px; z-index:80; display:flex; align-items:center; gap:0.6rem; padding:0.65rem 0.9rem; border-radius:999px; box-shadow:0 14px 40px rgba(6,9,21,0.14); background:linear-gradient(90deg,var(--color-primary),var(--color-secondary)); color:white; border:none; cursor:pointer; transition:transform var(--transition), box-shadow var(--transition)}
+.fab:active{transform:translateY(1px) scale(0.99)}
+.fab .fab-icon{display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; background:rgba(255,255,255,0.08)}
+.fab .fab-label{font-weight:700}
+
+@media (max-width:640px){
+  .fab{right:12px; bottom:18px; padding:0.5rem 0.7rem}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .fab{transition:none}
+}

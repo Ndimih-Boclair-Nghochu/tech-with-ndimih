@@ -1,0 +1,333 @@
+.donate-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.donate-modal-content {
+  background: linear-gradient(135deg, rgba(10, 15, 31, 0.98) 0%, rgba(15, 23, 42, 0.98) 100%);
+  border: 1px solid rgba(0, 168, 255, 0.3);
+  border-radius: 20px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  color: white;
+}
+
+.donate-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.donate-modal-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.donate-modal-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(0, 168, 255, 0.2);
+}
+
+.donate-modal-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #00A8FF, #7B2CBF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.donate-thank-you {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+}
+
+.donate-loading {
+  text-align: center;
+  padding: 3rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.donate-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.donate-section {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 168, 255, 0.15);
+  border-radius: 12px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.donate-section h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #00A8FF;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.donate-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.donate-option {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 168, 255, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.donate-option-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.donate-option-value {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.donate-option-value span {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  font-family: 'Courier New', monospace;
+  word-break: break-all;
+}
+
+.donate-copy-btn {
+  background: linear-gradient(135deg, #00A8FF, #0088CC);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.donate-copy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 168, 255, 0.4);
+}
+
+.donate-copy-btn.small {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.banks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bank-detail-card {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 168, 255, 0.2);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.bank-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #00A8FF;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0, 168, 255, 0.2);
+}
+
+.bank-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bank-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.bank-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  min-width: 120px;
+}
+
+.bank-value {
+  font-size: 1rem;
+  color: white;
+  font-weight: 500;
+  font-family: 'Courier New', monospace;
+}
+
+.bank-value-with-copy {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bank-value-with-copy span {
+  font-size: 1rem;
+  color: white;
+  font-weight: 500;
+  font-family: 'Courier New', monospace;
+}
+
+.gift-card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid rgba(0, 168, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: rgba(0, 168, 255, 0.5);
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 3px rgba(0, 168, 255, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.upload-btn {
+  background: linear-gradient(135deg, #00A8FF, #0088CC);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.upload-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 168, 255, 0.4);
+}
+
+.upload-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.success-message {
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #4ade80;
+  padding: 0.75rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .donate-modal-content {
+    padding: 1.5rem;
+    max-height: 95vh;
+  }
+
+  .donate-modal-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .bank-field {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bank-label {
+    min-width: auto;
+  }
+}
+

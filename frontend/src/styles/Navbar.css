@@ -1,0 +1,141 @@
+@import './theme.css';
+/* Header / Navbar - centered, glassy header with responsive navigation */
+
+/* Layout */
+.site-navbar {
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	display: block;
+	backdrop-filter: blur(10px) saturate(120%);
+	background: linear-gradient(180deg, rgba(10,15,31,0.95), rgba(10,15,31,0.85));
+	border-bottom: 1px solid rgba(0,168,255,0.08);
+	box-shadow: 0 4px 20px rgba(2,6,23,0.6);
+}
+.site-navbar .max-wrap { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+.site-navbar .inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 0; }
+
+/* Brand */
+.brand {
+	font-weight: 800;
+	letter-spacing: 0.8px;
+	color: white;
+	font-size: 1.25rem;
+	background: linear-gradient(90deg, #00A8FF, #00d4ff);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+/* Nav links */
+.site-nav { display: flex; gap: 1.25rem; align-items: center; justify-content: center; }
+.site-nav a {
+	color: #CCCCCC;
+	padding: 0.5rem 0.9rem;
+	border-radius: 10px;
+	text-decoration: none;
+	transition: all 0.25s ease;
+	font-weight: 600;
+}
+.site-nav a:hover, .site-nav a:focus { color: #00A8FF; transform: translateY(-3px); background: rgba(0,168,255,0.06); box-shadow: 0 6px 18px rgba(0,168,255,0.12); }
+
+.site-actions { display: flex; gap: 1rem; align-items: center; }
+.site-actions .btn {
+	font-size: 0.95rem;
+	background: linear-gradient(90deg, #00A8FF, #0088cc);
+	color: #0A0F1F;
+	padding: 0.6rem 1.4rem;
+	border-radius: 999px;
+	border: none;
+	font-weight: 700;
+	cursor: pointer;
+	box-shadow: 0 6px 20px rgba(0,168,255,0.18);
+}
+.site-actions .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,168,255,0.28); }
+
+/* Mobile */
+.mobile-toggle { 
+  display: none; 
+  background: transparent; 
+  border: 2px solid #00A8FF; 
+  color: #00A8FF; 
+  font-size: 1.25rem; 
+  cursor: pointer; 
+  z-index: 120;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+}
+.mobile-toggle:hover {
+  background: rgba(0,168,255,0.1);
+  box-shadow: 0 4px 12px rgba(0,168,255,0.2);
+  transform: scale(1.05);
+}
+@media (max-width: 780px) {
+  /* Keep the nav container visible so action buttons (and the mobile toggle)
+     are still reachable — only hide the horizontal link group on small screens */
+  .site-nav { display: flex; align-items: center; justify-content: space-between; }
+  .site-nav .nav-links { display: none; }
+  .site-actions { gap: 0.5rem; }
+  .mobile-toggle { display: inline-flex; align-items: center; justify-content: center; }
+  .brand { font-size: 1rem; }
+}
+
+/* mobile menu panel */
+.mobile-menu { 
+  display: none; 
+  position: fixed; 
+  left: 0; 
+  right: 0; 
+  top: 64px; 
+  background: linear-gradient(180deg, rgba(10,15,31,0.99), rgba(4,8,15,0.99)); 
+  border-bottom: 1px solid rgba(0,168,255,0.12); 
+  z-index: 110; 
+  width: 100%; 
+  pointer-events: auto;
+  box-shadow: 0 8px 32px rgba(0,168,255,0.08);
+}
+.mobile-menu.open { display: block !important; }
+.mobile-inner { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.75rem; 
+  padding: 1.5rem 1rem;
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+.mobile-link { 
+  padding: 1rem; 
+  display: block; 
+  color: #CCCCCC; 
+  text-decoration: none; 
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  border-left: 3px solid transparent;
+}
+.mobile-link:hover, .mobile-link:focus { 
+  color: #00A8FF; 
+  background: rgba(0,168,255,0.1); 
+  border-left-color: #00A8FF;
+  padding-left: 1.25rem;
+}
+.mobile-link.hero-cta {
+  background: linear-gradient(90deg, #00A8FF, #66D9FF);
+  color: #0A0F1F;
+  border: none;
+  margin-top: 0.5rem;
+  font-weight: 700;
+}
+.mobile-link.hero-cta:hover {
+  box-shadow: 0 8px 24px rgba(0,168,255,0.2);
+  transform: translateY(-2px);
+}
+
+/* focus visible fallback */
+:focus { outline: none; }
+.focus-ring:focus { outline: 3px solid rgba(0,168,255,0.16); outline-offset: 4px; }
+
+/* keep donate/modal styles removed */

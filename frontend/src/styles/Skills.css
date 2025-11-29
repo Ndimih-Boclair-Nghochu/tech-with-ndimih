@@ -1,0 +1,34 @@
+.skills-page {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.skills-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Horizontal alignment on PC/bigger screens */
+@media (min-width: 1024px) {
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 1000px;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .skills-grid {
+    gap: 1rem;
+  }
+}
