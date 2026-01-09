@@ -144,16 +144,16 @@ export default function HeroCloud(){
 
       <div className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 h-full flex items-center justify-center">
         <div className="w-full md:w-3/4 text-center flex flex-col items-center justify-center">
-          <p className="text-xs sm:text-sm text-gray-300 mb-2 text-center w-full">{greeting}</p>
-          <div className="text-base sm:text-lg md:text-xl font-medium text-gray-200 mb-3 text-center w-full flex items-center justify-center">
+          <p className="text-xs sm:text-sm text-gray-300 mb-2 text-center w-full animate-pop-fade-in-up" style={{ animationDelay: '0.1s' }}>{greeting}</p>
+          <div className="text-base sm:text-lg md:text-xl font-medium text-gray-200 mb-3 text-center w-full flex items-center justify-center animate-pop-bounce" style={{ animationDelay: '0.2s' }}>
             <span className="mr-2 opacity-80">{typingPrefix}</span>
             <span className="typewriter-cursor text-amber-50" aria-live="polite">{sub}</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mx-auto max-w-3xl px-2 text-center" style={{color:'white'}}>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mx-auto max-w-3xl px-2 text-center animate-pop-scale" style={{color:'white', animationDelay: '0.3s'}}>
             {mainTitle}
           </h1>
 
-          <div className="mt-6 flex flex-wrap justify-center items-center gap-3 px-4 w-full">
+          <div className="mt-6 flex flex-wrap justify-center items-center gap-3 px-4 w-full animate-pop-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <a 
               href={button1Link} 
               className="hero-cta glow-on-hover inline-flex items-center gap-2 text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3" 
@@ -172,7 +172,7 @@ export default function HeroCloud(){
       </div>
 
       {scrollText && (
-        <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-20 text-xs sm:text-sm text-gray-300">
+        <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-20 text-xs sm:text-sm text-gray-300 animate-pop-wobble" style={{ animationDelay: '0.5s' }}>
           {scrollText}
         </div>
       )}

@@ -4,4 +4,17 @@
 .skill .bar{flex:1; height:12px; background:linear-gradient(90deg, rgba(15,23,42,0.06), rgba(15,23,42,0.03)); border-radius:999px; overflow:hidden}
 .skill .bar > i{display:block; height:100%; background:linear-gradient(90deg, rgba(var(--accent),1), rgba(var(--accent-2),1)); transition:width 700ms cubic-bezier(.2,.9,.2,1)}
 .skill-name{min-width:100px}
-@media (max-width:720px){.skill-name{min-width:80px}}
+@media (max-width:480px){
+  .skill-name{min-width:60px;font-size:0.75rem}
+  .skill .bar{height:8px}
+  .skill{gap:0.5rem;font-size:0.85rem}
+}
+
+@media (min-width:481px) and (max-width:720px){
+  .skill-name{min-width:70px;font-size:0.85rem}
+  .skill .bar{height:10px}
+}
+
+@media (max-width:720px){
+  .skill-name{min-width:70px}
+}

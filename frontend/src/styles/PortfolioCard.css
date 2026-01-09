@@ -1,14 +1,30 @@
 @import './theme.css';
-/* PortfolioCard — image-first card with scale/tilt interactions and subtle gradients */
+/* PortfolioCard — professional modern card with refined styling and elegant interactions */
 
-.portfolio-card{display:block; position:relative}
-.portfolio-card .card{padding:0; overflow:hidden; border-radius:16px}
-.portfolio-card .thumb{
-  border-radius:16px 16px 0 0; 
-  overflow:hidden; 
-  transition:transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
-  position:relative;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2));
+.portfolio-card {
+  display: block;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(20, 30, 48, 0.95));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.portfolio-card:hover {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(20, 30, 48, 0.98));
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+.portfolio-card .thumb {
+  overflow: hidden;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+  position: relative;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
+  height: 200px;
 }
 .portfolio-card .thumb::after {
   content: '';

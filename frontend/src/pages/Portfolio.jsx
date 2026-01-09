@@ -51,7 +51,7 @@ export default function Portfolio(){
     <div className="portfolio-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white w-full">
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 w-full">
       <div className="text-center mb-8 sm:mb-12">
-        <h1 className="text-3xl sm:text-4xl font-bold gradient-accent mb-3">Portfolio</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold gradient-accent mb-3">Completed Projects</h1>
         <p className="text-base sm:text-lg muted">Explore my recent projects and work.</p>
       </div>
       
@@ -84,7 +84,7 @@ export default function Portfolio(){
           <div className="mt-6 text-sm text-gray-400 text-center py-12">Backend appears offline — portfolio may be out of sync.</div>
         )}
         <div className="mt-4 portfolio-grid">
-          {items.map(item => <PortfolioCard key={item.id} item={item} />)}
+          {items.map((item, idx) => <PortfolioCard key={item.id} item={item} index={idx} />)}
         </div>
         {nextPageUrl && (
           <div className="mt-6 text-center">

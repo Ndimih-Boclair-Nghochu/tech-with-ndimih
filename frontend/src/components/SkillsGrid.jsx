@@ -54,8 +54,6 @@ function Icon({ id }){
 }
 
 export default function SkillsGrid(){
-  const [start, setStart] = React.useState(0)
-  const [visible, setVisible] = React.useState(4)
   const [skills, setSkills] = React.useState([])
 
   React.useEffect(() => {
@@ -76,68 +74,43 @@ export default function SkillsGrid(){
     return () => { mounted = false }
   }, [])
 
-  React.useEffect(()=>{
-    function update(){
-      const w = window.innerWidth
-      if(w >= 1200) setVisible(4)
-      else if(w >= 900) setVisible(3)
-      else if(w >= 640) setVisible(2)
-      else setVisible(3) // show 3 items even on small/mobile screens per user request
-    }
-    update()
-    window.addEventListener('resize', update)
-    return ()=> window.removeEventListener('resize', update)
-  }, [])
-
-  // start the carousel at a specific skill if available
-  React.useEffect(()=>{
-    if (skills.length > 0) {
-      const awsIndex = skills.findIndex(s => s.name?.toLowerCase() === 'aws' || s.id === 'aws')
-      if(awsIndex >= 0) setStart(awsIndex)
-    }
-  }, [skills])
-
-  const next = ()=> setStart(s => skills.length > 0 ? (s + 1) % skills.length : 0)
-  const prev = ()=> setStart(s => skills.length > 0 ? (s - 1 + skills.length) % skills.length : 0)
-
-  // auto-rotate right-to-left
-  React.useEffect(()=>{
-    if (skills.length === 0) return
-    const t = setInterval(()=> setStart(s => (s + 1) % skills.length), 2600)
-    return ()=> clearInterval(t)
-  }, [skills.length])
-
-  const itemsToShow = skills.length > 0 
-    ? Array.from({length: Math.min(visible, skills.length)}).map((_, i)=> skills[(start + i) % skills.length])
-    : []
-
   return (
-    <section id="skills" className="py-12 px-6 bg-cover bg-center bg-no-repeat relative" style={{backgroundImage: `url(${skillsImg})`}}>
-      <div className="absolute inset-0 bg-black/50"></div>
-      <div className="max-w-6xl mx-auto text-center relative z-10">
-        <h2 className="text-2xl font-semibold text-white">Skills</h2>
-        <p className="text-gray-300 mt-2">Technology stack and tooling used in client projects.</p>
+    <section id="skills" className="py-16 px-6 w-full relative overflow-hidden bg-gradient-to-b from-transparent via-purple-500/5 to-transparent">
+      {/* Professional gradient background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl"></div>
+      </div>
 
-        <div className="mt-6 flex items-center justify-center gap-4">
-          <button onClick={prev} className="px-3 py-2 border rounded">◀</button>
-          <div
-            className="skills-grid-container"
-            style={{display: 'grid', gridTemplateColumns: `repeat(${itemsToShow.length}, minmax(0, 1fr))`, gap: '1rem', alignItems: 'stretch'}}
-          >
-            {itemsToShow.length === 0 ? (
-              <div className="col-span-full text-center text-gray-400">No skills available</div>
-            ) : (
-              itemsToShow.map(s => (
-                <div key={s.id} className="glass-card skills-card rounded flex flex-col items-center gap-3 card-hover mx-2">
-                  <div className="skills-icon">
-                    {s.icon ? <span className="text-3xl">{s.icon}</span> : <Icon id={s.id} />}
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-12 animate-fade-in-up">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">Skills</h2>
+          <p className="text-gray-300 mt-2 text-lg">Technology stack and tooling used in client projects.</p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 scroll-stagger">
+          {skills.length === 0 ? (
+            <div className="col-span-full text-center text-gray-400 py-8">No skills available</div>
+          ) : (
+            skills.map((s, idx) => {
+              const popAnimations = ['animate-pop-fade-in-up', 'animate-pop-scale', 'animate-pop-bounce', 'animate-pop-elastic', 'animate-pop-rotate', 'animate-pop-wobble']
+              const randomAnimation = popAnimations[idx % popAnimations.length]
+              const motionAnimations = ['animate-float', 'animate-slow-spin', 'animate-zoom-pulse', 'animate-bounce-loop']
+              const motionAnimation = motionAnimations[idx % motionAnimations.length]
+              
+              return (
+                <div key={s.id} className={`group rounded-xl overflow-hidden transition-all duration-400 ${randomAnimation} ${motionAnimation} lift-on-hover`} style={{ animationDelay: `${idx * 60}ms` }}>
+                  <div className="bg-gradient-to-br from-slate-900/90 to-slate-950/90 border border-slate-700/50 rounded-xl flex flex-col items-center gap-4 p-6 h-full backdrop-blur-sm hover:border-blue-500/30 transition-all duration-300">
+                    <div className="skills-icon transform transition-transform duration-300 group-hover:scale-125 group-hover:text-blue-400">
+                      {s.icon ? <span className="text-4xl">{s.icon}</span> : <Icon id={s.id} />}
+                    </div>
+                    <div className="text-white font-bold text-center text-sm group-hover:text-blue-300 transition-colors">{s.name}</div>
                   </div>
-                  <div className="text-white font-medium">{s.name}</div>
                 </div>
-              ))
-            )}
-          </div>
-          <button onClick={next} className="px-3 py-2 border rounded">▶</button>
+              )
+            })
+          )}
         </div>
       </div>
     </section>

@@ -53,7 +53,7 @@ export default function About(){
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         {/* Hero Section */}
         <div className="about-hero text-center mb-8 sm:mb-12 md:mb-16">
-          <div className="profile-image-container mb-8">
+          <div className="profile-image-container mb-8 animate-pop-scale" style={{ animationDelay: '0.1s' }}>
             {about.profile_image_url ? (
               <div className="profile-image-wrapper">
                 <img 
@@ -68,10 +68,10 @@ export default function About(){
               </div>
             )}
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-accent mb-4">{about.name}</h1>
-          <p className="text-xl sm:text-2xl text-cyan-300 mb-4">{about.title}</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-accent mb-4 animate-pop-fade-in-up" style={{ animationDelay: '0.2s' }}>{about.name}</h1>
+          <p className="text-xl sm:text-2xl text-cyan-300 mb-4 animate-pop-bounce" style={{ animationDelay: '0.3s' }}>{about.title}</p>
           {about.location && (
-            <p className="text-lg muted flex items-center justify-center gap-2">
+            <p className="text-lg muted flex items-center justify-center gap-2 animate-pop-fade-in-up" style={{ animationDelay: '0.4s' }}>
               <span>📍</span> {about.location}
             </p>
           )}
@@ -83,7 +83,8 @@ export default function About(){
             {about.email && (
               <a 
                 href={`mailto:${about.email}`}
-                className="social-link glass-card"
+                className="social-link glass-card animate-pop-fade-in-up lift-on-hover"
+                style={{ animationDelay: '0.5s' }}
                 aria-label="Email"
               >
                 <span className="text-2xl">📧</span>
@@ -95,7 +96,8 @@ export default function About(){
                 href={about.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-link glass-card"
+                className="social-link glass-card animate-pop-scale lift-on-hover"
+                style={{ animationDelay: '0.6s' }}
                 aria-label="Website"
               >
                 <span className="text-2xl">🌐</span>
@@ -107,7 +109,8 @@ export default function About(){
                 href={about.linkedin_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-link glass-card"
+                className="social-link glass-card animate-pop-bounce lift-on-hover"
+                style={{ animationDelay: '0.7s' }}
                 aria-label="LinkedIn"
               >
                 <span className="text-2xl">💼</span>
@@ -119,7 +122,8 @@ export default function About(){
                 href={about.github_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-link glass-card"
+                className="social-link glass-card animate-pop-elastic lift-on-hover"
+                style={{ animationDelay: '0.8s' }}
                 aria-label="GitHub"
               >
                 <span className="text-2xl">💻</span>
@@ -131,7 +135,8 @@ export default function About(){
                 href={about.twitter_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-link glass-card"
+                className="social-link glass-card animate-pop-rotate lift-on-hover"
+                style={{ animationDelay: '0.9s' }}
                 aria-label="Twitter"
               >
                 <span className="text-2xl">🐦</span>
@@ -143,7 +148,8 @@ export default function About(){
                 href={about.resume_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-link glass-card"
+                className="social-link glass-card animate-pop-wobble lift-on-hover"
+                style={{ animationDelay: '1.0s' }}
                 aria-label="Resume"
               >
                 <span className="text-2xl">📄</span>
@@ -155,13 +161,13 @@ export default function About(){
 
         {/* Bio Section */}
         <div className="about-content">
-          <div className="content-card glass-card mb-8">
+          <div className="content-card glass-card mb-8 animate-pop-fade-in-up animate-float" style={{ animationDelay: '1.1s' }}>
             <h2 className="section-title">About Me</h2>
             <p className="bio-text">{about.bio}</p>
           </div>
 
           {about.long_description && (
-            <div className="content-card glass-card">
+            <div className="content-card glass-card animate-pop-fade-in-up animate-sway" style={{ animationDelay: '1.2s' }}>
               <h2 className="section-title">More About Me</h2>
               <div 
                 className="long-description"

@@ -21,16 +21,38 @@
 .card-body p{margin:0 0 .75rem;color:var(--muted-text)}
 .card-body ul{margin:0;padding-left:1.15rem;color:var(--muted-text)}
 
+@media (max-width:480px){
+  .hero-wrap{padding:1rem}
+  .hero-title{font-size:clamp(1.25rem,5vw,1.75rem)}
+  .pretitle{font-size:0.85rem}
+  .hero-left .lead{font-size:0.95rem}
+  .hero-ctas{gap:0.4rem;flex-direction:column}
+  .hero-ctas .btn-primary, .hero-ctas .btn-secondary{max-width:260px;padding:0.6rem 0.9rem;font-size:0.9rem;width:100%}
+  .hero-visual{width:95%;max-width:280px}
+}
+
+@media (min-width:481px) and (max-width:768px){
+  .hero-wrap{padding:1.5rem 1rem}
+  .hero-title{font-size:clamp(1.5rem,4.5vw,2.25rem)}
+  .hero-ctas{flex-direction:column}
+  .hero-ctas .btn-primary, .hero-ctas .btn-secondary{width:100%;max-width:300px}
+  .hero-visual{width:85%;max-width:320px}
+}
+
+@media (min-width:769px) and (max-width:960px){
+  .hero-inner{flex-direction:column;text-align:center}
+  .hero-left{max-width:100%;margin:0 auto;text-align:center}
+  .hero-right{margin-top:1.5rem}
+  .hero-ctas{flex-direction:row;justify-content:center;flex-wrap:wrap}
+  .hero-visual{width:85%;max-width:360px;margin:0 auto}
+}
+
 @media (max-width:960px){
   .hero-inner{flex-direction:column;text-align:center}
-  /* Center hero content on small screens */
   .hero-left{max-width:100%;margin:0 auto;text-align:center}
   .hero-right{margin-top:1rem}
-  /* Stack CTA buttons and center them */
-  .hero-ctas{flex-direction:column;align-items:center;justify-content:center}
-  .hero-ctas .btn-primary, .hero-ctas .btn-secondary{width:100%;max-width:320px}
-  /* Make visual card narrower and centered */
-  .hero-visual{width:80%;max-width:360px;margin:0 auto}
+  .hero-ctas{align-items:center;justify-content:center}
+  .hero-visual{margin:0 auto}
 }
 
 /* Vertically center hero under the sticky header on narrow viewports */

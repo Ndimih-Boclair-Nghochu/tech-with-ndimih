@@ -52,11 +52,12 @@ export default function Skills(){
           <div className="text-center text-gray-400 py-12">No skills available</div>
         ) : (
           <div className="mt-6 max-w-2xl mx-auto skills-grid">
-            {skills.map(s => (
+            {skills.map((s, idx) => (
               <SkillsBar 
                 key={s.id || s.name} 
                 skill={s.name} 
-                percent={s.proficiency || 0} 
+                percent={s.proficiency || 0}
+                index={idx}
               />
             ))}
           </div>

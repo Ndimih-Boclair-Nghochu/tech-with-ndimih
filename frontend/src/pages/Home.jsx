@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import HeroCloud from '../components/HeroCloud'
+import AboutPreview from '../components/AboutPreview'
 import ServicesGrid from '../components/ServicesGrid'
 import PortfolioGrid from '../components/PortfolioGrid'
 import BlogCards from '../components/BlogCards'
@@ -45,6 +46,7 @@ export default function Home({ reduce3D, setReduce3D }){
   return (
     <div className="home-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white">
       <HeroCloud />
+      <AboutPreview />
 
       <main className="-mt-8 z-30 relative">
         <div className="max-w-6xl mx-auto text-center px-4">

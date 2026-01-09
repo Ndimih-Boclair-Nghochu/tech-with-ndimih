@@ -78,7 +78,7 @@ export default function PortfolioDetail(){
     <div className="portfolio-detail-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white w-full">
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 w-full">
         {/* Back Button */}
-        <div className="mb-6">
+        <div className="mb-6 animate-pop-fade-in-up" style={{ animationDelay: '0.1s' }}>
           <button 
             onClick={() => navigate(-1)}
             className="back-button flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
@@ -90,7 +90,7 @@ export default function PortfolioDetail(){
 
         {/* Cover Image */}
         {item.cover && (
-          <div className="portfolio-cover mb-8 rounded-xl overflow-hidden shadow-2xl">
+          <div className="portfolio-cover mb-8 rounded-xl overflow-hidden shadow-2xl animate-pop-scale" style={{ animationDelay: '0.2s' }}>
             <img 
               src={item.cover} 
               alt={item.title} 
@@ -101,7 +101,7 @@ export default function PortfolioDetail(){
         )}
 
         {/* Header Section */}
-        <div className="portfolio-header mb-8">
+        <div className="portfolio-header mb-8 animate-pop-fade-in-up" style={{ animationDelay: '0.3s' }}>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold gradient-accent mb-4 leading-tight">
             {item.title}
           </h1>
@@ -119,7 +119,8 @@ export default function PortfolioDetail(){
                 <Link
                   key={i}
                   to={`/portfolio?tag=${encodeURIComponent(tag)}`}
-                  className="tag-badge"
+                  className="tag-badge animate-pop-bounce lift-on-hover"
+                  style={{ animationDelay: `${0.4 + i * 0.1}s` }}
                 >
                   #{tag}
                 </Link>
@@ -135,7 +136,8 @@ export default function PortfolioDetail(){
                   href={item.live_url} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="portfolio-btn portfolio-btn-live"
+                  className="portfolio-btn portfolio-btn-live animate-pop-fade-in-up lift-on-hover"
+                  style={{ animationDelay: '0.5s' }}
                 >
                   <span className="mr-2">🌐</span>
                   View Live Project
@@ -146,7 +148,8 @@ export default function PortfolioDetail(){
                   href={item.github_url} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="portfolio-btn portfolio-btn-github"
+                  className="portfolio-btn portfolio-btn-github animate-pop-fade-in-up lift-on-hover"
+                  style={{ animationDelay: '0.6s' }}
                 >
                   <span className="mr-2">💻</span>
                   View on GitHub
@@ -158,7 +161,7 @@ export default function PortfolioDetail(){
 
         {/* Content Section */}
         {item.body && (
-          <div className="portfolio-content glass-card p-6 sm:p-8 rounded-xl mb-8">
+          <div className="portfolio-content glass-card p-6 sm:p-8 rounded-xl mb-8 animate-pop-fade-in-up animate-float" style={{ animationDelay: '0.7s' }}>
             <div 
               className="prose prose-invert max-w-none" 
               dangerouslySetInnerHTML={{ __html: item.body }} 
@@ -169,13 +172,14 @@ export default function PortfolioDetail(){
         {/* Gallery Section */}
         {images.length > 0 && (
           <div className="portfolio-gallery mt-12">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-6 gradient-accent">Project Gallery</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-6 gradient-accent animate-pop-bounce" style={{ animationDelay: '0.8s' }}>Project Gallery</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {images.map((src, i) => (
                 <div 
                   key={i} 
-                  className="gallery-item glass-card rounded-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform"
+                  className="gallery-item glass-card rounded-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform animate-pop-fade-in-up animate-sway lift-on-hover"
                   onClick={() => openLightbox(item.cover ? i + 1 : i)}
+                  style={{ animationDelay: `${0.9 + i * 0.1}s` }}
                 >
                   <img 
                     src={src} 

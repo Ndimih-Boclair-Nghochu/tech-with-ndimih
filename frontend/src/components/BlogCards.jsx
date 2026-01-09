@@ -2,67 +2,58 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function BlogCards({ posts = [] }){
-  const [start, setStart] = React.useState(0)
-  const [visible, setVisible] = React.useState(3)
-
-  React.useEffect(()=>{
-    function update(){
-      const w = window.innerWidth
-      if(w >= 1200) setVisible(3)
-      else if(w >= 900) setVisible(2)
-      else setVisible(1)
-    }
-    update()
-    window.addEventListener('resize', update)
-    return ()=> window.removeEventListener('resize', update)
-  }, [])
-
-  const next = ()=> setStart(s => (s + visible) % Math.max(1, posts.length))
-  const prev = ()=> setStart(s => (s - visible + Math.max(1, posts.length)) % Math.max(1, posts.length))
-
-  const slice = Array.from({length: Math.min(visible, posts.length)}).map((_, i)=> posts[(start + i) % posts.length])
-
-  // auto rotate right-to-left and pause on hover
   const [paused, setPaused] = React.useState(false)
-  React.useEffect(()=>{
-    if(paused || posts.length <= 1) return
-    const t = setInterval(()=> setStart(s => (s + 1) % Math.max(1, posts.length)), 3500)
-    return ()=> clearInterval(t)
-  }, [paused, posts.length])
 
   return (
-    <section id="blog" className="py-12 px-6 w-full">
-      <div className="text-center">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between items-center gap-3 mb-6">
+    <section id="blog" className="py-16 px-6 w-full relative overflow-hidden bg-gradient-to-b from-transparent via-indigo-500/5 to-transparent">
+      {/* Professional gradient background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between items-center gap-3 mb-12 animate-fade-in-up">
           <div>
-            <h2 className="text-2xl font-semibold text-white">Blog</h2>
-            <p className="text-gray-300 mt-2">Latest insights and tutorials.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">Blog</h2>
+            <p className="text-gray-300 mt-2 text-lg">Latest insights and tutorials.</p>
           </div>
           <Link to="/blog" className="hero-cta secondary text-sm" style={{textDecoration:'none'}}>View blog</Link>
         </div>
 
-        <div className="mt-6 flex flex-col items-center justify-center gap-4 w-full" onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-            {posts.length === 0 && <div className="glass-card p-6 text-gray-300 col-span-full">No posts yet — subscribe for updates.</div>}
-            {slice.map(p => (
-              <article key={p.id} className="glass-card p-4 rounded-lg card-hover">
-                <div className="w-full h-40 bg-gray-800 overflow-hidden rounded">
-                  {p.cover ? <img src={p.cover} alt={p.title} className="w-full h-full object-cover"/> : <div className="w-full h-full flex items-center justify-center text-gray-500">No image</div>}
-                </div>
-                <div className="mt-3 text-center">
-                  <h3 className="text-lg font-semibold text-white"><Link to={`/blog/${p.slug}`}>{p.title}</Link></h3>
-                  <p className="text-gray-300 mt-1 text-sm">{p.excerpt}</p>
-                </div>
-                <div className="mt-4 flex justify-center gap-3">
-                  <Link to={`/blog/${p.slug}`} className="hero-cta secondary" style={{textDecoration:'none'}}>View more</Link>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full scroll-stagger" onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)}>
+          {posts.length === 0 && <div className="glass-card backdrop-blur-md bg-white/5 border border-white/10 p-6 text-gray-300 col-span-full rounded-lg animate-pop-fade-in-up">No posts yet — subscribe for updates.</div>}
+          {posts.map((p, idx) => {
+            const popAnimations = ['animate-pop-fade-in-up', 'animate-pop-bounce', 'animate-pop-elastic', 'animate-pop-scale', 'animate-pop-heartbeat']
+            const randomAnimation = popAnimations[idx % popAnimations.length]
+            const motionAnimations = ['animate-float', 'animate-sway', 'animate-zoom-pulse', 'animate-tilt']
+            const motionAnimation = motionAnimations[idx % motionAnimations.length]
+            
+            return (
+              <article key={p.id} className={`group overflow-hidden rounded-xl transition-all duration-400 ${randomAnimation} ${motionAnimation} lift-on-hover`} style={{ animationDelay: `${idx * 80}ms` }}>
+                <div className="relative bg-gradient-to-br from-slate-900/90 to-slate-950/90 border border-slate-700/50 rounded-xl overflow-hidden h-full flex flex-col backdrop-blur-sm hover:border-blue-500/30">
+                  <div className="w-full h-48 bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden relative">
+                    {p.cover ? (
+                      <img src={p.cover} alt={p.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"/>
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-slate-600 text-sm">No image</div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                  <div className="flex-1 p-5 flex flex-col justify-between border-t border-slate-700/50">
+                    <div>
+                      <h3 className="text-base font-bold text-white group-hover:text-blue-400 transition-colors duration-300 line-clamp-2">
+                        <Link to={`/blog/${p.slug}`} className="hover:underline">{p.title}</Link>
+                      </h3>
+                      <p className="text-slate-400 mt-2 text-sm line-clamp-2">{p.excerpt}</p>
+                    </div>
+                    <Link to={`/blog/${p.slug}`} className="inline-block mt-4 px-4 py-2 rounded-lg bg-blue-600/20 border border-blue-500/30 text-blue-400 text-sm font-semibold hover:bg-blue-600/40 hover:border-blue-500/60 transition-all duration-300" style={{textDecoration:'none'}}>Read more →</Link>
+                  </div>
                 </div>
               </article>
-            ))}
-          </div>
-          <div className="flex items-center gap-2 mt-4">
-            <button onClick={prev} className="px-3 py-2 border rounded">◀</button>
-            <button onClick={next} className="px-3 py-2 border rounded">▶</button>
-          </div>
+            )
+          })}
         </div>
       </div>
     </section>

@@ -35,22 +35,22 @@ export default function AddReview(){
   return (
     <div className="add-review-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white w-full">
       <main className="max-w-2xl mx-auto px-4 sm:px-6 py-12 sm:py-16 w-full">
-        <div className="mb-6">
+        <div className="mb-6 animate-pop-fade-in-up" style={{ animationDelay: '0.1s' }}>
           <Link to="/" className="text-sm text-gray-300 hover:text-white transition-colors inline-flex items-center gap-2">
             <span>←</span>
             <span>Back to Home</span>
           </Link>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold gradient-accent mb-3">Add Review</h1>
-        <p className="text-base sm:text-lg text-gray-300 mb-8">Share your experience. Reviews may be moderated before appearing publicly.</p>
+        <h1 className="text-3xl sm:text-4xl font-bold gradient-accent mb-3 animate-pop-fade-in-up" style={{ animationDelay: '0.2s' }}>Add Review</h1>
+        <p className="text-base sm:text-lg text-gray-300 mb-8 animate-pop-fade-in-up" style={{ animationDelay: '0.3s' }}>Share your experience. Reviews may be moderated before appearing publicly.</p>
 
-        <form className="glass-card rounded-xl border border-blue-500/10 p-6 sm:p-8" onSubmit={handleSubmit}>
+        <form className="glass-card rounded-xl border border-blue-500/10 p-6 sm:p-8 animate-pop-scale animate-float lift-on-hover" style={{ animationDelay: '0.4s' }} onSubmit={handleSubmit}>
           {error && (
-            <div className="bg-red-900/30 border border-red-500/50 rounded p-3 text-red-300 text-sm mb-4">
+            <div className="bg-red-900/30 border border-red-500/50 rounded p-3 text-red-300 text-sm mb-4 animate-pop-bounce">
               {error}
             </div>
           )}
-          <div className="form-group mb-4">
+          <div className="form-group mb-4 animate-pop-fade-in-up" style={{ animationDelay: '0.5s' }}>
             <label className="block text-sm font-medium text-white mb-2">Name *</label>
             <input 
               className="w-full border border-gray-600 rounded-lg px-4 py-2 mt-1 bg-transparent text-gray-200 focus:border-blue-500 focus:outline-none" 
@@ -60,7 +60,7 @@ export default function AddReview(){
             />
           </div>
 
-          <div className="form-group mb-4">
+          <div className="form-group mb-4 animate-pop-fade-in-up" style={{ animationDelay: '0.6s' }}>
             <label className="block text-sm font-medium text-white mb-2">Rating</label>
             <select 
               className="w-full border border-gray-600 rounded-lg px-4 py-2 mt-1 bg-transparent text-gray-200 focus:border-blue-500 focus:outline-none" 
@@ -71,7 +71,7 @@ export default function AddReview(){
             </select>
           </div>
 
-          <div className="form-group mb-6">
+          <div className="form-group mb-6 animate-pop-fade-in-up" style={{ animationDelay: '0.7s' }}>
             <label className="block text-sm font-medium text-white mb-2">Message *</label>
             <textarea 
               className="w-full border border-gray-600 rounded-lg px-4 py-2 mt-1 bg-transparent text-gray-200 focus:border-blue-500 focus:outline-none resize-y" 
@@ -82,12 +82,12 @@ export default function AddReview(){
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-end">
+          <div className="flex flex-col sm:flex-row gap-3 justify-end animate-pop-fade-in-up" style={{ animationDelay: '0.8s' }}>
             <Link to="/" className="px-4 py-2 border border-gray-600 rounded-lg text-center text-gray-300 hover:bg-white/10 transition">
               Cancel
             </Link>
             <button 
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed" 
+              className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed lift-on-hover" 
               type="submit" 
               disabled={loading}
             >

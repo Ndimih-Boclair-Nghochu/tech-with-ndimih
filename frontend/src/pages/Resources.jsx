@@ -28,10 +28,7 @@ export default function Resources() {
         })
       ])
       
-      // Debug logging
-      console.log('CV Data:', cvData)
-      console.log('Certifications Data:', certData)
-      
+
       // Process CV data - handle both file_url and file field
       if (cvData) {
         // If file_url is not present, try to construct it from file field
@@ -48,7 +45,6 @@ export default function Resources() {
             cvData.file_url = `${baseUrl}${cvData.file.startsWith('/') ? '' : '/'}${cvData.file}`
           }
         }
-        console.log('CV file_url:', cvData.file_url)
       }
       
       // Process certifications
@@ -80,8 +76,6 @@ export default function Resources() {
   }
 
   function openPDFViewer(url, title) {
-    console.log('Opening PDF viewer with URL:', url, 'Title:', title)
-    
     // Pre-validate URL
     if (!url) {
       console.error('No URL provided')
@@ -100,7 +94,6 @@ export default function Resources() {
         if (import.meta.env.DEV) {
           // Use relative URL - Vite will proxy /media requests to Django
           absoluteUrl = url
-          console.log('Using Vite proxy for media file:', absoluteUrl)
         } else {
           const baseUrl = import.meta.env.VITE_API_URL 
             ? import.meta.env.VITE_API_URL.replace('/api', '')
@@ -114,7 +107,6 @@ export default function Resources() {
           : (import.meta.env.DEV ? 'http://localhost:8000' : 'http://localhost:8000')
         absoluteUrl = `${baseUrl}${url.startsWith('/') ? '' : '/'}${url}`
       }
-      console.log('Converted relative URL to absolute:', absoluteUrl)
     } else {
       // If URL already has http://127.0.0.1, try converting to use Vite proxy or localhost
       if (import.meta.env.DEV && url.includes('127.0.0.1:8000')) {
@@ -122,16 +114,13 @@ export default function Resources() {
         const mediaPath = url.replace(/^https?:\/\/[^/]+/, '')
         if (mediaPath.startsWith('/media/') || mediaPath.startsWith('/static/')) {
           absoluteUrl = mediaPath
-          console.log('Converted 127.0.0.1 URL to Vite proxy:', absoluteUrl)
         } else {
           // Try localhost instead of 127.0.0.1
           absoluteUrl = url.replace('127.0.0.1', 'localhost')
-          console.log('Converted 127.0.0.1 to localhost:', absoluteUrl)
         }
       }
     }
     
-    console.log('Final PDF URL:', absoluteUrl)
     setViewingPDF(absoluteUrl)
     setViewingTitle(title)
     // Prevent body scroll when modal is open
@@ -161,7 +150,7 @@ export default function Resources() {
   return (
     <div className="resources-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white">
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <div className="text-center mb-8 sm:mb-12">
+        <div className="text-center mb-8 sm:mb-12 animate-pop-fade-in-up" style={{ animationDelay: '0.1s' }}>
           <h1 className="text-3xl sm:text-4xl font-bold gradient-accent mb-3">Resources</h1>
           <p className="text-base sm:text-lg muted">View my CV and professional certifications</p>
         </div>
@@ -174,8 +163,8 @@ export default function Resources() {
         ) : (
           <div className="resources-container">
             {/* CV Section */}
-            <section className="resource-section">
-              <div className="resource-card">
+            <section className="resource-section animate-pop-scale animate-float" style={{ animationDelay: '0.2s' }}>
+              <div className="resource-card lift-on-hover">
                 <div className="resource-icon">📄</div>
                 <h2 className="resource-title">Curriculum Vitae</h2>
                 <p className="resource-description">
@@ -184,7 +173,7 @@ export default function Resources() {
                 {cv ? (
                   cv.file_url || cv.file ? (
                     <button
-                      className="resource-btn"
+                      className="resource-btn animate-pop-bounce"
                       onClick={() => openPDFViewer(cv.file_url || cv.file, cv.title || 'CV')}
                     >
                       View CV
@@ -200,15 +189,15 @@ export default function Resources() {
 
             {/* Certifications Section */}
             <section className="resource-section">
-              <h2 className="section-title">Certifications</h2>
+              <h2 className="section-title animate-pop-bounce" style={{ animationDelay: '0.3s' }}>Certifications</h2>
               {certifications.length === 0 ? (
-                <div className="resource-card">
+                <div className="resource-card animate-pop-fade-in-up" style={{ animationDelay: '0.4s' }}>
                   <p className="resource-unavailable">No certifications available</p>
                 </div>
               ) : (
                 <div className="certifications-grid">
-                  {certifications.map((cert) => (
-                    <div key={cert.id} className="certification-card">
+                  {certifications.map((cert, idx) => (
+                    <div key={cert.id} className="certification-card animate-pop-fade-in-up animate-sway lift-on-hover" style={{ animationDelay: `${0.5 + idx * 0.1}s` }}>
                       <div className="cert-icon">🏆</div>
                       <h3 className="cert-title">{cert.title}</h3>
                       {cert.issuer && (
@@ -228,7 +217,7 @@ export default function Resources() {
                       </div>
                       {cert.file_url || cert.file ? (
                         <button
-                          className="cert-view-btn"
+                          className="cert-view-btn animate-pop-bounce"
                           onClick={() => openPDFViewer(cert.file_url || cert.file, cert.title)}
                         >
                           View Certificate

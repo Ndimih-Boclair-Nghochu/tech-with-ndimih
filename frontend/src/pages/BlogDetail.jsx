@@ -68,20 +68,20 @@ export default function BlogDetail(){
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <article className="blog-detail">
           {post.cover && (
-            <div className="blog-cover mb-8">
+            <div className="blog-cover mb-8 animate-pop-scale" style={{ animationDelay: '0.1s' }}>
               <img src={post.cover} alt={post.title} className="w-full h-auto rounded-xl" />
             </div>
           )}
-          <h1 className="text-4xl md:text-5xl font-bold gradient-accent mb-4">{post.title}</h1>
-          {post.excerpt && <p className="text-xl text-gray-300 mb-6">{post.excerpt}</p>}
-          <div className="blog-body prose prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: post.body }} />
+          <h1 className="text-4xl md:text-5xl font-bold gradient-accent mb-4 animate-pop-fade-in-up" style={{ animationDelay: '0.2s' }}>{post.title}</h1>
+          {post.excerpt && <p className="text-xl text-gray-300 mb-6 animate-pop-fade-in-up" style={{ animationDelay: '0.3s' }}>{post.excerpt}</p>}
+          <div className="blog-body prose prose-invert max-w-none animate-pop-fade-in-up animate-float" style={{ animationDelay: '0.4s' }} dangerouslySetInnerHTML={{ __html: post.body }} />
 
           {post.products && post.products.length > 0 && (
             <section className="mt-12 pt-8 border-t border-white/10">
-              <h2 className="text-2xl font-semibold mb-6">Related Products</h2>
+              <h2 className="text-2xl font-semibold mb-6 animate-pop-bounce" style={{ animationDelay: '0.5s' }}>Related Products</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {post.products.map(prod => (
-                  <div key={prod.id} className="product-card glass-card rounded-xl border border-blue-500/10 p-6 card-hover">
+                {post.products.map((prod, idx) => (
+                  <div key={prod.id} className="product-card glass-card rounded-xl border border-blue-500/10 p-6 card-hover animate-pop-fade-in-up animate-sway lift-on-hover" style={{ animationDelay: `${0.6 + idx * 0.1}s` }}>
                     <h3 className="text-xl font-semibold text-white mb-2">{prod.title}</h3>
                     <p className="text-gray-300 mb-4">{prod.description}</p>
                     <div className="flex items-center justify-between">

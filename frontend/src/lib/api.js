@@ -173,6 +173,77 @@ export async function fetchBlogBySlug(slug){
   return res.data
 }
 
+export async function createBlog(data){
+  // data: { title, excerpt, body, cover (file), tags, products }
+  const form = new FormData()
+  form.append('title', data.title)
+  if(data.excerpt) form.append('excerpt', data.excerpt)
+  if(data.body) form.append('body', data.body)
+  if(data.cover) form.append('cover', data.cover)
+  if(data.tags) {
+    if(Array.isArray(data.tags)) {
+      data.tags.forEach(tag => form.append('tags', tag))
+    } else if(typeof data.tags === 'string') {
+      data.tags.split(',').map(t => t.trim()).forEach(tag => form.append('tags', tag))
+    }
+  }
+  if(data.products && Array.isArray(data.products)) {
+    data.products.forEach(id => form.append('products', id))
+  }
+  const res = await api.post('/blog/', form, { headers: { 'Content-Type': 'multipart/form-data' } })
+  return res.data
+}
+
+export async function updateBlog(id, data){
+  // id should be slug (backend uses lookup_field='slug' for reads but numeric id for writes)
+  // For updates, use numeric id if available, otherwise use slug
+  const form = new FormData()
+  if(data.title) form.append('title', data.title)
+  if(data.excerpt !== undefined) form.append('excerpt', data.excerpt)
+  if(data.body !== undefined) form.append('body', data.body)
+  if(data.cover) form.append('cover', data.cover)
+  if(data.tags) {
+    if(Array.isArray(data.tags)) {
+      data.tags.forEach(tag => form.append('tags', tag))
+    } else if(typeof data.tags === 'string') {
+      data.tags.split(',').map(t => t.trim()).forEach(tag => form.append('tags', tag))
+    }
+  }
+  if(data.products && Array.isArray(data.products)) {
+    data.products.forEach(pid => form.append('products', pid))
+  }
+  const res = await api.patch(`/blog/${id}/`, form, { headers: { 'Content-Type': 'multipart/form-data' } })
+  return res.data
+}
+
+export async function deleteBlog(id){
+  const res = await api.delete(`/blog/${id}/`)
+  return res.data
+}
+
+export async function fetchAllReviews(){
+  // Fetch all reviews including unpublished (for admin)
+  const res = await api.get('/reviews/')
+  if(Array.isArray(res.data)) {
+    return { results: res.data, next: null, previous: null }
+  }
+  if(res.data && res.data.results) {
+    return res.data
+  }
+  return { results: res.data || [], next: null, previous: null }
+}
+
+export async function updateReview(id, data){
+  // data: { name, rating, message, product, is_published }
+  const res = await api.patch(`/reviews/${id}/`, data)
+  return res.data
+}
+
+export async function deleteReview(id){
+  const res = await api.delete(`/reviews/${id}/`)
+  return res.data
+}
+
 export async function fetchProducts(){
   const res = await api.get('/products/')
   if(res.data && res.data.results) return res.data

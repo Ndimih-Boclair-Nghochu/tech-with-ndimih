@@ -146,7 +146,7 @@ export default function ReviewsSlider({ items = [], onReviewAdded = null }){
         )}
 
         {has ? (
-          <div className="mt-6 flex items-center justify-center gap-4">
+          <div className="mt-6 flex items-center justify-center gap-4 scroll-stagger">
             <button onClick={prev} className="px-3 py-2 border rounded hover:bg-white/10 transition">◀</button>
             <div
               className="reviews-grid-container"
@@ -155,20 +155,29 @@ export default function ReviewsSlider({ items = [], onReviewAdded = null }){
               {itemsToShow.length === 0 ? (
                 <div className="col-span-full text-center text-gray-400">No reviews available</div>
               ) : (
-                itemsToShow.map((r, i) => (
-                  <div key={r.id || `review-${start}-${i}`} className="glass-card skills-card rounded flex flex-col items-center gap-3 card-hover mx-2 p-4">
-                    <div className="text-white font-semibold text-center">{r.name}</div>
-                    <div className="text-yellow-400 text-lg">{Array.from({length: r.rating||5}).map((_,i)=> '★')}</div>
-                    <p className="text-gray-300 text-sm text-center line-clamp-4">{r.message}</p>
-                    <div className="text-gray-400 text-xs mt-auto">{r.created_at ? new Date(r.created_at).toLocaleDateString() : ''}</div>
-                  </div>
-                ))
+                itemsToShow.map((r, i) => {
+                  const popAnimations = ['animate-pop-fade-in-up', 'animate-pop-bounce', 'animate-pop-elastic', 'animate-pop-scale']
+                  const randomAnimation = popAnimations[i % popAnimations.length]
+                  const motionAnimations = ['animate-float', 'animate-sway', 'animate-pulse-glow']
+                  const motionAnimation = motionAnimations[i % motionAnimations.length]
+                  
+                  return (
+                    <div key={r.id || `review-${start}-${i}`} className={`group rounded-xl overflow-hidden flex flex-col mx-2 transition-all duration-400 ${randomAnimation} ${motionAnimation} lift-on-hover`} style={{ animationDelay: `${i * 100}ms` }}>
+                      <div className="bg-gradient-to-br from-slate-900/90 to-slate-950/90 border border-slate-700/50 rounded-xl flex flex-col items-center gap-4 p-5 h-full backdrop-blur-sm hover:border-blue-500/30">
+                        <div className="text-white font-bold text-center text-sm group-hover:text-blue-400 transition-colors">{r.name}</div>
+                        <div className="text-yellow-400 text-lg">{Array.from({length: r.rating||5}).map((_,i)=> '★')}</div>
+                        <p className="text-slate-400 text-sm text-center line-clamp-3">{r.message}</p>
+                        <div className="text-slate-500 text-xs mt-auto">{r.created_at ? new Date(r.created_at).toLocaleDateString() : ''}</div>
+                      </div>
+                    </div>
+                  )
+                })
               )}
             </div>
             <button onClick={next} className="px-3 py-2 border rounded hover:bg-white/10 transition">▶</button>
           </div>
         ) : (
-          <div className="glass-card p-6 rounded">No reviews yet — be the first to share feedback.</div>
+          <div className="bg-gradient-to-br from-slate-900/80 to-slate-950/90 border border-slate-700/50 p-6 rounded-xl text-slate-300 backdrop-blur-sm animate-pop-fade-in-up">No reviews yet — be the first to share feedback.</div>
         )}
       </div>
     </section>

@@ -60,14 +60,14 @@ export default function Navbar(){
 
   return (
     <header className="site-navbar shadow-sm" role="banner">
-      <div className="px-4 py-3 flex items-center justify-between">
-        <Link to="/" className="brand flex items-center gap-2 md:gap-3" aria-label="Home">
-          <img src={logo} alt="Tech with Ndimih" style={{width:40,height:40, borderRadius:8}} />
-          <span className="font-bold text-sm md:text-lg">Tech with Ndimih</span>
+      <div className="flex items-center justify-between">
+        <Link to="/" className="brand flex items-center gap-2" aria-label="Home">
+          <img src={logo} alt="Tech with Ndimih" />
+          <span>Tech with Ndimih</span>
         </Link>
 
         <nav className="site-nav" role="navigation" aria-label="Primary navigation">
-            <div className={`nav-links ${open ? 'open' : ''}`}>
+            <div className="nav-links">
             <Link to="/about" className="nav-link">About</Link>
             <Link to="/services" className="nav-link">Services</Link>
             <Link to="/portfolio" className="nav-link">Portfolio</Link>
@@ -77,9 +77,9 @@ export default function Navbar(){
             <Link to="/admin" className="nav-link">Admin</Link>
           </div>
 
-          <div className="site-actions flex items-center gap-2">
-            <button onClick={() => setShowDonate(true)} className="hidden md:inline-flex hero-cta" style={{textDecoration:'none', border: 'none', background: 'transparent', cursor: 'pointer'}} aria-label="Donate">Donate</button>
-            <button aria-label="Toggle theme" onClick={toggle} className="px-2 md:px-3 py-1 rounded theme-toggle text-lg">
+          <div className="site-actions">
+            <button onClick={() => setShowDonate(true)} className="btn hidden lg:inline-flex" aria-label="Donate">Donate</button>
+            <button aria-label="Toggle theme" onClick={toggle} className="theme-toggle">
               {dark ? '🌙' : '☀️'}
             </button>
 
@@ -92,7 +92,7 @@ export default function Navbar(){
 
       {/* mobile menu panel */}
       <div id="mobile-menu" className={`mobile-menu ${open ? 'open' : ''}`} aria-hidden={!open}>
-        <div className="mobile-inner px-4 py-4">
+        <div className="mobile-inner">
           <Link to="/about" className="mobile-link" onClick={()=>setOpen(false)}>About</Link>
           <Link to="/services" className="mobile-link" onClick={()=>setOpen(false)}>Services</Link>
           <Link to="/portfolio" className="mobile-link" onClick={()=>setOpen(false)}>Portfolio</Link>
@@ -100,7 +100,7 @@ export default function Navbar(){
           <Link to="/resources" className="mobile-link" onClick={()=>setOpen(false)}>Resources</Link>
           <Link to="/contact" className="mobile-link" onClick={()=>setOpen(false)}>Contact</Link>
           <Link to="/admin" className="mobile-link" onClick={()=>setOpen(false)}>Admin</Link>
-          <button className="mobile-link hero-cta inline-block mt-2" style={{textDecoration:'none', border: 'none', background: 'transparent', cursor: 'pointer', width: '100%', textAlign: 'left'}} onClick={()=>{setOpen(false); setShowDonate(true)}}>Donate</button>
+          <button className="mobile-link hero-cta" onClick={()=>{setOpen(false); setShowDonate(true)}}>Donate</button>
         </div>
       </div>
       <DonateModal isOpen={showDonate} onClose={() => setShowDonate(false)} />

@@ -27,8 +27,13 @@ export default function BlogList(){
       <div className="blog-list">
         {loading && <div className="text-center text-lg text-gray-300 py-12">Loading posts…</div>}
         {!loading && posts.length === 0 && <div className="text-center muted text-lg py-12">No posts yet</div>}
-        {posts.map(p => (
-          <article key={p.id} className="post-card glass-card rounded-xl border border-blue-500/10 overflow-hidden card-hover">
+        {posts.map((p, idx) => {
+          const popAnimations = ['animate-pop-fade-in-up', 'animate-pop-bounce', 'animate-pop-elastic', 'animate-pop-scale', 'animate-pop-heartbeat']
+          const randomAnimation = popAnimations[idx % popAnimations.length]
+          const motionAnimations = ['animate-float', 'animate-sway', 'animate-zoom-pulse', 'animate-tilt']
+          const motionAnimation = motionAnimations[idx % motionAnimations.length]
+          return (
+            <article key={p.id} className={`post-card glass-card rounded-xl border border-blue-500/10 overflow-hidden card-hover ${randomAnimation} ${motionAnimation} lift-on-hover`} style={{ animationDelay: `${idx * 80}ms` }}>
             <Link to={`/blog/${p.slug}`} className="block">
               {p.cover && (
                 <div className="post-thumb w-full h-48 overflow-hidden">
@@ -51,8 +56,9 @@ export default function BlogList(){
                 )}
               </div>
             </Link>
-          </article>
-        ))}
+            </article>
+          )
+        })}
       </div>
       </main>
     </div>

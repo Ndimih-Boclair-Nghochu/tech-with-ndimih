@@ -1,0 +1,289 @@
+/* Responsive Design System - Mobile-First Approach */
+
+/* ===== BREAKPOINTS ===== */
+/* Mobile: 0-480px */
+/* Tablet: 481px-768px */
+/* Small Desktop: 769px-1024px */
+/* Large Desktop: 1025px+ */
+
+/* ===== GLOBAL RESPONSIVE UTILITIES ===== */
+
+/* Responsive containers */
+@media (max-width: 480px) {
+  .container-responsive {
+    padding: 1rem;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .container-responsive {
+    padding: 1.25rem;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container-responsive {
+    padding: 1.5rem;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1000px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .container-responsive {
+    padding: 2rem;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1400px;
+  }
+}
+
+/* Responsive text sizes */
+@media (max-width: 480px) {
+  .text-responsive-lg {
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+    line-height: 1.2;
+  }
+  .text-responsive-md {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    line-height: 1.4;
+  }
+  .text-responsive-sm {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    line-height: 1.5;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .text-responsive-lg {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    line-height: 1.2;
+  }
+  .text-responsive-md {
+    font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+    line-height: 1.4;
+  }
+  .text-responsive-sm {
+    font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+    line-height: 1.5;
+  }
+}
+
+@media (min-width: 769px) {
+  .text-responsive-lg {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+  .text-responsive-md {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+  }
+  .text-responsive-sm {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+  }
+}
+
+/* Responsive spacing */
+@media (max-width: 480px) {
+  .gap-responsive-sm { gap: 0.5rem; }
+  .gap-responsive-md { gap: 1rem; }
+  .gap-responsive-lg { gap: 1.25rem; }
+  
+  .p-responsive { padding: 1rem; }
+  .py-responsive { padding-top: 1rem; padding-bottom: 1rem; }
+  .px-responsive { padding-left: 1rem; padding-right: 1rem; }
+  
+  .m-responsive { margin: 1rem; }
+  .my-responsive { margin-top: 1rem; margin-bottom: 1rem; }
+  .mx-responsive { margin-left: 1rem; margin-right: 1rem; }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .gap-responsive-sm { gap: 0.75rem; }
+  .gap-responsive-md { gap: 1.25rem; }
+  .gap-responsive-lg { gap: 1.75rem; }
+  
+  .p-responsive { padding: 1.25rem; }
+  .py-responsive { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+  .px-responsive { padding-left: 1.25rem; padding-right: 1.25rem; }
+  
+  .m-responsive { margin: 1.25rem; }
+  .my-responsive { margin-top: 1.25rem; margin-bottom: 1.25rem; }
+  .mx-responsive { margin-left: 1.25rem; margin-right: 1.25rem; }
+}
+
+@media (min-width: 769px) {
+  .gap-responsive-sm { gap: 1rem; }
+  .gap-responsive-md { gap: 1.5rem; }
+  .gap-responsive-lg { gap: 2rem; }
+  
+  .p-responsive { padding: 1.5rem; }
+  .py-responsive { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+  .px-responsive { padding-left: 1.5rem; padding-right: 1.5rem; }
+  
+  .m-responsive { margin: 1.5rem; }
+  .my-responsive { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+  .mx-responsive { margin-left: 1.5rem; margin-right: 1.5rem; }
+}
+
+/* Responsive grid systems */
+@media (max-width: 480px) {
+  .grid-responsive-cols {
+    grid-template-columns: 1fr;
+  }
+  .grid-responsive-2cols {
+    grid-template-columns: 1fr;
+  }
+  .grid-responsive-3cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .grid-responsive-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-responsive-2cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-responsive-3cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 769px) {
+  .grid-responsive-cols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid-responsive-2cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-responsive-3cols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Touch-friendly button sizes */
+@media (max-width: 768px) {
+  .btn-responsive {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .btn-responsive {
+    min-height: 40px;
+    min-width: 40px;
+    padding: 0.625rem 1.25rem;
+  }
+}
+
+/* Responsive images and media */
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.video-responsive {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+}
+
+.video-responsive iframe,
+.video-responsive embed,
+.video-responsive object {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsive flex utilities */
+@media (max-width: 768px) {
+  .flex-responsive-col {
+    flex-direction: column;
+  }
+  .flex-responsive-wrap {
+    flex-wrap: wrap;
+  }
+}
+
+@media (min-width: 769px) {
+  .flex-responsive-row {
+    flex-direction: row;
+  }
+  .flex-responsive-nowrap {
+    flex-wrap: nowrap;
+  }
+}
+
+/* Responsive visibility utilities */
+@media (max-width: 480px) {
+  .hide-mobile { display: none !important; }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .hide-tablet { display: none !important; }
+}
+
+@media (min-width: 769px) {
+  .hide-desktop { display: none !important; }
+}
+
+/* Show utilities */
+@media (max-width: 480px) {
+  .show-mobile { display: block !important; }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .show-tablet { display: block !important; }
+}
+
+@media (min-width: 769px) {
+  .show-desktop { display: block !important; }
+}
+
+/* Responsive aspect ratios */
+.aspect-ratio-square {
+  aspect-ratio: 1;
+  width: 100%;
+  height: auto;
+}
+
+.aspect-ratio-video {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: auto;
+}
+
+.aspect-ratio-portrait {
+  aspect-ratio: 9 / 16;
+  width: 100%;
+  height: auto;
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print { display: none !important; }
+  .page-break-before { page-break-before: always; }
+  .page-break-after { page-break-after: always; }
+}

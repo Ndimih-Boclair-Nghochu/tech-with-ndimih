@@ -5,6 +5,8 @@ import ResourcesTab from './AdminDashboard_ResourcesTab'
 import AboutTab from './AdminDashboard_AboutTab'
 import HeroTab from './AdminDashboard_HeroTab'
 import DonationsTab from './AdminDashboard_DonationsTab'
+import BlogTab from './AdminDashboard_BlogTab'
+import ReviewsTab from './AdminDashboard_ReviewsTab'
 import { 
   createPortfolio, 
   uploadFile,
@@ -394,6 +396,12 @@ export default function AdminDashboard(){
                 📁 Portfolio
               </button>
               <button 
+                className={`tab ${activeTab === 'blog' ? 'active' : ''}`}
+                onClick={() => setActiveTab('blog')}
+              >
+                📝 Blog
+              </button>
+              <button 
                 className={`tab ${activeTab === 'products' ? 'active' : ''}`}
                 onClick={() => setActiveTab('products')}
               >
@@ -416,6 +424,12 @@ export default function AdminDashboard(){
                 onClick={() => setActiveTab('resources')}
               >
                 📄 Resources
+              </button>
+              <button 
+                className={`tab ${activeTab === 'reviews' ? 'active' : ''}`}
+                onClick={() => setActiveTab('reviews')}
+              >
+                ⭐ Reviews
               </button>
               <button 
                 className={`tab ${activeTab === 'about' ? 'active' : ''}`}
@@ -731,6 +745,12 @@ export default function AdminDashboard(){
 
             {/* Resources Tab */}
             {activeTab === 'resources' && <ResourcesTab />}
+
+            {/* Blog Tab */}
+            {activeTab === 'blog' && <BlogTab />}
+
+            {/* Reviews Tab */}
+            {activeTab === 'reviews' && <ReviewsTab />}
 
             {/* About Tab */}
             {activeTab === 'about' && <AboutTab />}

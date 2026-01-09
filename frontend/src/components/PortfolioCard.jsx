@@ -2,16 +2,21 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/PortfolioCard.css'
 
-export default function PortfolioCard({ item }){
+export default function PortfolioCard({ item, index = 0 }){
+  const popAnimations = ['animate-pop-fade-in-up', 'animate-pop-scale', 'animate-pop-bounce', 'animate-pop-elastic', 'animate-pop-rotate']
+  const randomAnimation = popAnimations[index % popAnimations.length]
+  const motionAnimations = ['animate-float', 'animate-sway', 'animate-zoom-pulse']
+  const motionAnimation = motionAnimations[index % motionAnimations.length]
+  
   return (
-    <article className="portfolio-card bg-white rounded shadow-sm overflow-hidden card-3d">
+    <article className={`portfolio-card overflow-hidden card-3d ${randomAnimation} ${motionAnimation} lift-on-hover`} style={{ animationDelay: `${index * 80}ms` }}>
       <Link to={`/portfolio/${item.slug}`} className="portfolio-link">
         <div className="thumb">
           <img src={item.cover || '/placeholder.png'} alt={item.title} className="w-full h-48 object-cover" loading="lazy" />
         </div>
-        <div className="p-4 meta">
-          <h3 className="font-semibold">{item.title}</h3>
-          <p className="text-sm text-gray-500 mt-2">{item.excerpt}</p>
+        <div className="p-6 meta bg-gradient-to-b from-slate-900/80 to-slate-950/90 backdrop-blur-sm border-t border-white/10">
+          <h3 className="font-bold text-white text-lg leading-snug">{item.title}</h3>
+          <p className="text-sm text-slate-300 mt-3 line-clamp-2">{item.excerpt}</p>
         </div>
       </Link>
       {(item.live_url || item.github_url) && (
