@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { fetchProducts } from '../lib/api'
+import Card3D from './3DCard'
 import '../styles/ForSale.css'
 
 function WhatsAppButton({ product }){
@@ -40,26 +41,33 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
 
   return (
     <section className={`for-sale-section home-section ${preview ? 'preview' : ''}`}>
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-16 left-4 w-72 h-72 bg-blue-600/6 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-8 right-8 w-56 h-56 bg-purple-600/6 rounded-full blur-3xl"></div>
+      </div>
+
       <div className="section-head">
         <h2>Projects For Sale</h2>
         <p className="muted">Select projects available for purchase or hire — no prices shown.</p>
       </div>
       <div className="for-sale-grid">
-        {items.map(p => (
-          <div key={p.id || p.slug} className="sale-card card-3d glass">
-            <div className="card-body">
-              <div className="card-title">{p.title}</div>
-              <div className="card-desc">{p.description || 'No description provided.'}</div>
+        {items.map((p, idx) => (
+          <Card3D key={p.id || p.slug} className={`lift-on-hover`} style={{ animationDelay: `${idx * 80}ms` }}>
+            <div className="sale-card glass">
+              <div className="card-body">
+                <div className="card-title">{p.title}</div>
+                <div className="card-desc">{p.description || 'No description provided.'}</div>
+              </div>
+              <div className="card-actions">
+                <WhatsAppButton product={p} />
+                {p.affiliate_url ? (
+                  <a className="btn btn-primary" href={p.affiliate_url} target="_blank" rel="noopener noreferrer">View Live</a>
+                ) : (
+                  <button className="btn btn-disabled" disabled>View Live</button>
+                )}
+              </div>
             </div>
-            <div className="card-actions">
-              <WhatsAppButton product={p} />
-              {p.affiliate_url ? (
-                <a className="btn btn-primary" href={p.affiliate_url} target="_blank" rel="noopener noreferrer">View Live</a>
-              ) : (
-                <button className="btn btn-disabled" disabled>View Live</button>
-              )}
-            </div>
-          </div>
+          </Card3D>
         ))}
       </div>
       {!preview && <div className="for-sale-cta"><a className="btn btn--primary" href="/for-sale">View all projects for sale</a></div>}

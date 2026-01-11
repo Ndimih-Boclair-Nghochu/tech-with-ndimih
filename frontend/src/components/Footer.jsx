@@ -16,13 +16,14 @@ export default function Footer(){
         <div className="inner">
           <div className="brand">My Portfolio</div>
 
-          <nav className="links footer-nav" role="navigation" aria-label="Footer navigation">
+            <nav className="links footer-nav" role="navigation" aria-label="Footer navigation">
               <Link to="/services" onClick={() => window.scrollTo(0,0)}>Services</Link>
+              <Link to="/for-sale" onClick={() => window.scrollTo(0,0)}>For Sale</Link>
               <Link to="/portfolio" onClick={() => window.scrollTo(0,0)}>Portfolio</Link>
               <Link to="/blog" onClick={() => window.scrollTo(0,0)}>Blog</Link>
               <Link to="/contact" onClick={() => window.scrollTo(0,0)}>Contact</Link>
-              <a href={`${getBackendRoot()}/admin/`} target="_blank" rel="noreferrer">Admin</a>
-          </nav>
+              <Link to="/admin" onClick={() => window.scrollTo(0,0)}>Admin</Link>
+            </nav>
 
           <div className="social">
             <a aria-label="GitHub" href="#" className="social">GitHub</a>
