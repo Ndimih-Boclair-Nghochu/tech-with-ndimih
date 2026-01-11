@@ -1,0 +1,12 @@
+.for-sale-section{margin-top:2.5rem}
+.for-sale-section .section-head{max-width:800px;margin:0 auto 1rem}
+.for-sale-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
+.sale-card{display:flex;flex-direction:column;justify-content:space-between;padding:1rem;border-radius:12px;background:var(--card-bg);box-shadow:0 18px 46px rgba(6,9,21,0.08);transition:transform .2s ease,box-shadow .2s ease}
+.sale-card:hover{transform:translateY(-6px);box-shadow:0 28px 60px rgba(6,9,21,0.12)}
+.card-body{padding-bottom:0.5rem}
+.card-title{font-weight:700;font-size:1.05rem;margin-bottom:0.5rem}
+.card-desc{color:var(--muted);font-size:0.95rem}
+.card-actions{display:flex;gap:0.5rem;justify-content:flex-end;margin-top:0.75rem}
+.btn-whatsapp{background:#25D366;color:white}
+.btn-disabled{opacity:0.5}
+.for-sale-cta{margin-top:1rem;text-align:center}
