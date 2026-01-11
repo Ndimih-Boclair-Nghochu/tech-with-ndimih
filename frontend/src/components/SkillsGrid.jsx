@@ -3,6 +3,8 @@ import skillsImg from '../assets/skills.png'
 import { fetchSkills } from '../lib/api'
 
 const SKILLS_FALLBACK = [
+  { id: 'html', name: 'HTML' },
+  { id: 'css', name: 'CSS' },
   { id: 'react', name: 'React' },
   { id: 'nodejs', name: 'Node.js' },
   { id: 'django', name: 'Django' },
@@ -12,6 +14,7 @@ const SKILLS_FALLBACK = [
   { id: 'git', name: 'Git' },
   { id: 'cicd', name: 'CI/CD' },
   { id: 'three', name: 'Three.js' },
+  { id: 'ai', name: 'AI' },
 ]
 
 function Icon({ id }){
@@ -52,6 +55,18 @@ function Icon({ id }){
     case 'nodejs':
       return (
         <svg {...base} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3 11.5c0 .83-.67 1.5-1.5 1.5S12 14.33 12 13.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5zm-6 0c0 .83-.67 1.5-1.5 1.5S4 14.33 4 13.5 4.67 12 6 12s1.5.67 1.5 1.5z" fill="#00A8FF"/></svg>
+      )
+    case 'html':
+      return (
+        <svg {...base} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 3h2v2h2V3h2v8h2V5h2v6h2V3h2v10h-2v2h4v-2h2V3h2v14H3z" fill="#00A8FF"/></svg>
+      )
+    case 'css':
+      return (
+        <svg {...base} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 3h16l-2 14-6 2-6-2-2-14z" stroke="#00A8FF" strokeWidth="1.5" fill="none"/><path d="M8 8h8M8 12h8M8 16h4" stroke="#00A8FF" strokeWidth="1.5" strokeLinecap="round"/></svg>
+      )
+    case 'ai':
+      return (
+        <svg {...base} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3" fill="#00A8FF"/><path d="M6 16c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="#00A8FF" strokeWidth="2" fill="none" strokeLinecap="round"/><path d="M3 20h18" stroke="#00A8FF" strokeWidth="2" strokeLinecap="round"/></svg>
       )
     default:
       return <svg {...base}><circle cx="14" cy="14" r="10" fill="#00A8FF"/></svg>
@@ -98,7 +113,7 @@ export default function SkillsGrid(){
         <div className="mb-16 flex justify-center">
           <div className="w-full max-w-2xl rounded-2xl overflow-hidden border border-blue-500/30 shadow-2xl hover:shadow-blue-500/30 transition-shadow duration-300">
             <img 
-              src="https://storyset.com/illustration/tech-company/rafiki"
+              src={skillsImg}
               alt="Tech Company"
               className="w-full h-auto object-cover rounded-2xl hover:scale-105 transition-transform duration-300"
             />
