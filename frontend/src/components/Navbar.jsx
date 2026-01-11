@@ -75,7 +75,7 @@ export default function Navbar(){
             <Link to="/blog" className="nav-link">Blog</Link>
             <Link to="/resources" className="nav-link">Resources</Link>
             <Link to="/contact" className="nav-link">Contact</Link>
-            <Link to="/admin" className="nav-link">Admin</Link>
+            <a href={`${getBackendRoot()}/admin/`} className="nav-link">Admin</a>
           </div>
 
           <div className="site-actions">
@@ -101,7 +101,7 @@ export default function Navbar(){
           <Link to="/blog" className="mobile-link" onClick={()=>setOpen(false)}>Blog</Link>
           <Link to="/resources" className="mobile-link" onClick={()=>setOpen(false)}>Resources</Link>
           <Link to="/contact" className="mobile-link" onClick={()=>setOpen(false)}>Contact</Link>
-          <Link to="/admin" className="mobile-link" onClick={()=>setOpen(false)}>Admin</Link>
+          <a href={`${getBackendRoot()}/admin/`} className="mobile-link" onClick={()=>setOpen(false)}>Admin</a>
           <button className="mobile-link hero-cta" onClick={()=>{setOpen(false); setShowDonate(true)}}>Donate</button>
         </div>
       </div>

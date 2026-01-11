@@ -333,7 +333,11 @@ export async function uploadFile(file, portfolio_id=null){
 
 /* Services API */
 export async function fetchServices(){
+  // Fetch all services - backend has pagination disabled for services endpoint
   const res = await api.get('/services/')
+  // Services endpoint returns all results without pagination
+  if(Array.isArray(res.data)) return { results: res.data, next: null, previous: null }
+  // Fallback for paginated response
   if(res.data && res.data.results) return res.data
   return { results: res.data || [], next: null, previous: null }
 }

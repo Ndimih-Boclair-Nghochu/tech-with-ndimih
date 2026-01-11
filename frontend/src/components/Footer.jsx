@@ -22,7 +22,7 @@ export default function Footer(){
               <Link to="/portfolio" onClick={() => window.scrollTo(0,0)}>Portfolio</Link>
               <Link to="/blog" onClick={() => window.scrollTo(0,0)}>Blog</Link>
               <Link to="/contact" onClick={() => window.scrollTo(0,0)}>Contact</Link>
-              <Link to="/admin" onClick={() => window.scrollTo(0,0)}>Admin</Link>
+              <a href={`${getBackendRoot()}/admin/`} onClick={() => window.scrollTo(0,0)} className="footer-link">Admin</a>
             </nav>
 
           <div className="social">

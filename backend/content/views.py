@@ -292,6 +292,7 @@ class BlogPostViewSet(viewsets.ModelViewSet):
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
+    pagination_class = None  # Disable pagination to show all services
 
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:

@@ -4,6 +4,7 @@ import { fetchSkills } from '../lib/api'
 
 const SKILLS_FALLBACK = [
   { id: 'react', name: 'React' },
+  { id: 'nodejs', name: 'Node.js' },
   { id: 'django', name: 'Django' },
   { id: 'tailwind', name: 'Tailwind' },
   { id: 'aws', name: 'AWS' },
@@ -48,6 +49,10 @@ function Icon({ id }){
       return (
         <svg {...base} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l8 4v8l-8 4-8-4V6z" stroke="#00A8FF" strokeWidth="1.6" fill="none"/></svg>
       )
+    case 'nodejs':
+      return (
+        <svg {...base} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3 11.5c0 .83-.67 1.5-1.5 1.5S12 14.33 12 13.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5zm-6 0c0 .83-.67 1.5-1.5 1.5S4 14.33 4 13.5 4.67 12 6 12s1.5.67 1.5 1.5z" fill="#00A8FF"/></svg>
+      )
     default:
       return <svg {...base}><circle cx="14" cy="14" r="10" fill="#00A8FF"/></svg>
   }
@@ -87,6 +92,17 @@ export default function SkillsGrid(){
         <div className="text-center mb-12 animate-fade-in-up">
           <h2 className="text-3xl md:text-4xl font-bold text-white">Skills</h2>
           <p className="text-gray-300 mt-2 text-lg">Technology stack and tooling used in client projects.</p>
+        </div>
+
+        {/* Skills Illustration */}
+        <div className="mb-16 flex justify-center">
+          <div className="w-full max-w-2xl rounded-2xl overflow-hidden border border-blue-500/30 shadow-2xl hover:shadow-blue-500/30 transition-shadow duration-300">
+            <img 
+              src="https://storyset.com/illustration/tech-company/rafiki"
+              alt="Tech Company"
+              className="w-full h-auto object-cover rounded-2xl hover:scale-105 transition-transform duration-300"
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 scroll-stagger">
