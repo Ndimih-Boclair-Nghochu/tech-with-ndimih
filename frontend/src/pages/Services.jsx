@@ -39,6 +39,8 @@ export default function Services(){
           setServices([
             { title: 'Cloud Services', description: 'Comprehensive cloud solutions for modern businesses.', icon: '☁️', subItems: ['Cloud Engineering', 'Cloud Architecture', 'Cloud Security'] },
             { title: 'Web Development', description: 'Modern React + Django applications with CI/CD and testing.', icon: '💻' },
+            { title: 'DevOps', description: 'CI/CD pipelines, infrastructure automation, monitoring and reliability engineering.', icon: '⚙️', subItems: ['CI/CD', 'Infrastructure as Code', 'Monitoring & Logging'] },
+            { title: 'Online Training', description: 'Training: web development with AI, DevOps, and cloud — live & on-demand.', icon: '🎓', subItems: ['Web + AI', 'DevOps Foundations', 'Cloud Engineering'] },
             { title: 'Graphic & Logo Design', description: 'Branding, logos and visual assets tuned for web and social.', icon: '🎨' },
           ])
         }
