@@ -4,9 +4,9 @@ import '../styles/ContactPage.css'
 
 const getBackendRoot = () => {
   try{
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+    const apiUrl = import.meta.env.VITE_API_URL || 'https://api.ndimihboclair.com/api'
     return apiUrl.replace(/\/api\/?$/,'')
-  }catch(e){ return 'http://localhost:8000' }
+  }catch(e){ return 'https://api.ndimihboclair.com' }
 }
 
 export default function ContactDownloads(){

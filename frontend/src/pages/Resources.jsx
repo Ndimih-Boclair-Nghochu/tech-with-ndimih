@@ -60,7 +60,7 @@ export default function Resources() {
           } else {
             const baseUrl = import.meta.env.VITE_API_URL 
               ? import.meta.env.VITE_API_URL.replace('/api', '')
-              : (import.meta.env.DEV ? '' : 'http://localhost:8000')
+              : (import.meta.env.DEV ? '' : 'https://api.ndimihboclair.com')
             cert.file_url = `${baseUrl}${cert.file.startsWith('/') ? '' : '/'}${cert.file}`
           }
         }
@@ -97,14 +97,14 @@ export default function Resources() {
         } else {
           const baseUrl = import.meta.env.VITE_API_URL 
             ? import.meta.env.VITE_API_URL.replace('/api', '')
-            : 'http://localhost:8000'
+          : 'https://api.ndimihboclair.com'
           absoluteUrl = `${baseUrl}${url}`
         }
       } else {
         // Other relative URLs
         const baseUrl = import.meta.env.VITE_API_URL 
           ? import.meta.env.VITE_API_URL.replace('/api', '')
-          : (import.meta.env.DEV ? 'http://localhost:8000' : 'http://localhost:8000')
+          : (import.meta.env.DEV ? '' : 'https://api.ndimihboclair.com')
         absoluteUrl = `${baseUrl}${url.startsWith('/') ? '' : '/'}${url}`
       }
     } else {

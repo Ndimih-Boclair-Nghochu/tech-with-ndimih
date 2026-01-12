@@ -4,9 +4,9 @@ import '../styles/Footer.css'
 
 const getBackendRoot = () => {
   try{
-    const api = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+    const api = import.meta.env.VITE_API_URL || 'https://api.ndimihboclair.com/api'
     return api.replace(/\/api\/?$/,'')
-  }catch(e){ return 'http://localhost:8000' }
+  }catch(e){ return 'https://api.ndimihboclair.com' }
 }
 
 export default function Footer(){

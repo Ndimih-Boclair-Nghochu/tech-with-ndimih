@@ -11,12 +11,8 @@ const getBaseURL = () => {
   if (import.meta.env.DEV) {
     return '/api'
   }
-  // Fallback for production - should be set via VITE_API_URL
-  // If not set, try to infer from current origin
-  if (typeof window !== 'undefined') {
-    return `${window.location.origin}/api`
-  }
-  return '/api'
+  // Production fallback - use the production API URL
+  return 'https://api.ndimihboclair.com/api'
 }
 
 const api = axios.create({
