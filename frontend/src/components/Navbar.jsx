@@ -60,14 +60,14 @@ export default function Navbar(){
 
   return (
     <header className="site-navbar shadow-sm" role="banner">
-      <div className="flex items-center justify-between">
+      <div className="navbar-container">
         <Link to="/" className="brand flex items-center gap-2" aria-label="Home">
           <img src={logo} alt="Tech with Ndimih" />
           <span>Tech with Ndimih</span>
         </Link>
 
         <nav className="site-nav" role="navigation" aria-label="Primary navigation">
-            <div className="nav-links">
+          <div className="nav-links">
             <Link to="/about" className="nav-link">About</Link>
             <Link to="/services" className="nav-link">Services</Link>
             <Link to="/for-sale" className="nav-link">For Sale</Link>
@@ -77,8 +77,7 @@ export default function Navbar(){
             <Link to="/contact" className="nav-link">Contact</Link>
             <Link to="/admin" className="nav-link">Admin</Link>
           </div>
-
-          <div className="site-actions">
+        </nav>
             <button onClick={() => setShowDonate(true)} className="btn hidden lg:inline-flex" aria-label="Donate">Donate</button>
             <button aria-label="Toggle theme" onClick={toggle} className="theme-toggle">
               {dark ? '🌙' : '☀️'}

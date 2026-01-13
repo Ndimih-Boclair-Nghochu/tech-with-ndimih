@@ -3,14 +3,6 @@ import { fetchProducts } from '../lib/api'
 import Card3D from './3DCard'
 import '../styles/ForSale.css'
 
-function WhatsAppButton({ product }){
-  const msg = `I'm interested in your project: ${product.title}. Please share details.`
-  const href = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`
-  return (
-    <a className="btn btn-ghost whatsapp" href={href} target="_blank" rel="noopener noreferrer">WhatsApp</a>
-  )
-}
-
 export default function ForSaleGrid({ preview=false, limit=3 }){
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
@@ -59,12 +51,28 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
                 <div className="card-desc">{p.description || 'No description provided.'}</div>
               </div>
               <div className="card-actions">
-                <WhatsAppButton product={p} />
-                {p.affiliate_url ? (
-                  <a className="btn btn-primary" href={p.affiliate_url} target="_blank" rel="noopener noreferrer">View Live</a>
-                ) : (
-                  <button className="btn btn-disabled" disabled>View Live</button>
-                )}
+                <div className="flex gap-2 justify-center w-full">
+                  {p.affiliate_url && (
+                    <a 
+                      className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-all duration-300" 
+                      href={p.affiliate_url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      <span>🌐</span>
+                      <span>Live</span>
+                    </a>
+                  )}
+                  <a 
+                    className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-lg transition-all duration-300" 
+                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`I'm interested in your project: ${p.title}. Please share details.`)}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    <span>💬</span>
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
               </div>
             </div>
           </Card3D>
