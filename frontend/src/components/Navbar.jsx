@@ -78,16 +78,17 @@ export default function Navbar(){
             <Link to="/admin" className="nav-link">Admin</Link>
           </div>
         </nav>
-            <button onClick={() => setShowDonate(true)} className="btn hidden lg:inline-flex" aria-label="Donate">Donate</button>
-            <button aria-label="Toggle theme" onClick={toggle} className="theme-toggle">
-              {dark ? '🌙' : '☀️'}
-            </button>
 
-            <button className="mobile-toggle" aria-expanded={open} aria-controls="mobile-menu" onClick={toggleMenu} aria-label="Toggle menu">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </button>
-          </div>
-        </nav>
+        <div className="nav-actions">
+          <button onClick={() => setShowDonate(true)} className="btn hidden lg:inline-flex" aria-label="Donate">Donate</button>
+          <button aria-label="Toggle theme" onClick={toggle} className="theme-toggle">
+            {dark ? '🌙' : '☀️'}
+          </button>
+
+          <button className="mobile-toggle" aria-expanded={open} aria-controls="mobile-menu" onClick={toggleMenu} aria-label="Toggle menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </button>
+        </div>
       </div>
 
       {/* mobile menu panel */}
