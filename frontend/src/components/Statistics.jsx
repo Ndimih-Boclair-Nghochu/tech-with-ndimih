@@ -4,57 +4,29 @@ import { useStatistics } from '../hooks/useStatistics';
 export default function Statistics() {
   const { stats, loading } = useStatistics();
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [displayValues, setDisplayValues] = useState({ projects_for_sale: 0, projects_completed: 0, total_reviews: 0, blog_posts: 0 });
+  const [displayValues, setDisplayValues] = useState({ 
+    projects_for_sale: 0, 
+    projects_completed: 0, 
+    total_reviews: 0, 
+    blog_posts: 0 
+  });
   const sectionRef = useRef(null);
-  const animateCountersRef = useRef(null);
 
   const handleManualRefresh = () => {
     console.log('🔄 Manual refresh triggered')
     window.dispatchEvent(new Event('data-updated'))
   }
 
-  // Define animateCounters function
-  const animateCounters = () => {
-    const duration = 1500; // 1.5 seconds
-    const start = Date.now();
-
-    const animate = () => {
-      const elapsed = Date.now() - start;
-      const progress = Math.min(elapsed / duration, 1);
-
-      setDisplayValues({
-        projects_for_sale: Math.floor(stats.projects_for_sale * progress),
-        projects_completed: Math.floor(stats.projects_completed * progress),
-        total_reviews: Math.floor(stats.total_reviews * progress),
-        blog_posts: Math.floor(stats.blog_posts * progress),
-      });
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        // When animation completes, set final values
-        setDisplayValues({
-          projects_for_sale: stats.projects_for_sale,
-          projects_completed: stats.projects_completed,
-          total_reviews: stats.total_reviews,
-          blog_posts: stats.blog_posts,
-        });
-      }
-    };
-
-    animate();
-  };
-
-  animateCountersRef.current = animateCounters;
-
   // Initialize displayValues with actual stats when they load
   useEffect(() => {
-    setDisplayValues({
-      projects_for_sale: stats.projects_for_sale || 0,
-      projects_completed: stats.projects_completed || 0,
-      total_reviews: stats.total_reviews || 0,
-      blog_posts: stats.blog_posts || 0,
-    });
+    if (stats) {
+      setDisplayValues({
+        projects_for_sale: stats.projects_for_sale || 0,
+        projects_completed: stats.projects_completed || 0,
+        total_reviews: stats.total_reviews || 0,
+        blog_posts: stats.blog_posts || 0,
+      });
+    }
   }, [stats]);
 
   // Scroll intersection observer for triggering animations
@@ -64,9 +36,7 @@ export default function Statistics() {
         if (entry.isIntersecting && !hasAnimated) {
           setHasAnimated(true);
           // Start counting animation
-          if (animateCountersRef.current) {
-            animateCountersRef.current();
-          }
+          animateCounters();
         }
       });
     }, { threshold: 0.2 });
@@ -78,6 +48,41 @@ export default function Statistics() {
     return () => {
       if (sectionRef.current) {
         observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasAnimated]);
+
+  // Counter animation function
+  const animateCounters = () => {
+    const duration = 1500; // 1.5 seconds
+    const start = Date.now();
+
+    const animate = () => {
+      const elapsed = Date.now() - start;
+      const progress = Math.min(elapsed / duration, 1);
+
+      setDisplayValues({
+        projects_for_sale: Math.floor((stats.projects_for_sale || 0) * progress),
+        projects_completed: Math.floor((stats.projects_completed || 0) * progress),
+        total_reviews: Math.floor((stats.total_reviews || 0) * progress),
+        blog_posts: Math.floor((stats.blog_posts || 0) * progress),
+      });
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        // When animation completes, set final values
+        setDisplayValues({
+          projects_for_sale: stats.projects_for_sale || 0,
+          projects_completed: stats.projects_completed || 0,
+          total_reviews: stats.total_reviews || 0,
+          blog_posts: stats.blog_posts || 0,
+        });
+      }
+    };
+
+    animate();
+  }
       }
     };
   }, [hasAnimated]);
