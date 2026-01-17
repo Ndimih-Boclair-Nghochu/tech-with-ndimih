@@ -83,6 +83,26 @@ export default function Statistics() {
 
     animate();
   }
+
+  // Scroll intersection observer for triggering animations
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          // Start counting animation
+          animateCounters();
+        }
+      });
+    }, { threshold: 0.2 });
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
       }
     };
   }, [hasAnimated]);
