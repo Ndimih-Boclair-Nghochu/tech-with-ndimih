@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { fetchServices } from '../lib/api'
+import { defaultServices } from '../data/services'
 import Card3D from './3DCard'
 
 export default function ServicesGrid(){
-  const [services, setServices] = useState([])
+  const [services, setServices] = useState(defaultServices)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -11,38 +12,18 @@ export default function ServicesGrid(){
     fetchServices()
       .then(data => {
         if (!mounted) return
+        // If API returns data, use it; otherwise use defaultServices
         const servicesData = Array.isArray(data) ? data : (data.results || [])
-        // Transform "Cloud Architecture" to "Cloud Services" with sub-items
-        const transformed = servicesData.map(s => {
-          if (s.title === 'Cloud Architecture') {
-            return {
-              ...s,
-              title: 'Cloud Services',
-              description: s.description || 'Comprehensive cloud solutions for modern businesses.',
-              subItems: ['Cloud Engineering', 'Cloud Architecture', 'Cloud Security']
-            }
-          }
-          // If already "Cloud Services", ensure it has sub-items
-          if (s.title === 'Cloud Services' && !s.subItems) {
-            return {
-              ...s,
-              subItems: ['Cloud Engineering', 'Cloud Architecture', 'Cloud Security']
-            }
-          }
-          return s
-        })
-        setServices(transformed)
+        if (servicesData.length > 0) {
+          setServices(servicesData)
+        } else {
+          setServices(defaultServices)
+        }
       })
       .catch(() => {
-        // Fallback to default services if API fails
+        // Always use defaultServices on error
         if (mounted) {
-          setServices([
-            { title: 'Cloud Services', description: 'Comprehensive cloud solutions for modern businesses.', icon: '☁️', subItems: ['Cloud Engineering', 'Cloud Architecture', 'Cloud Security'] },
-            { title: 'Web Development', description: 'Modern React + Django applications with CI/CD and testing.', icon: '💻' },
-            { title: 'DevOps', description: 'CI/CD pipelines, infrastructure automation, monitoring and reliability engineering.', icon: '⚙️', subItems: ['CI/CD', 'Infrastructure as Code', 'Monitoring & Logging'] },
-            { title: 'Online Training', description: 'Training: web development with AI, DevOps, and cloud — live & on-demand.', icon: '🎓', subItems: ['Web + AI', 'DevOps Foundations', 'Cloud Engineering'] },
-            { title: 'Graphic & Logo Design', description: 'Branding, logos and visual assets tuned for web and social.', icon: '🎨' },
-          ])
+          setServices(defaultServices)
         }
       })
       .finally(() => {
@@ -94,7 +75,7 @@ export default function ServicesGrid(){
             <div className="col-span-full text-center text-gray-400 py-8">No services available</div>
           ) : (
             services.map((s, idx) => {
-              const hasSubItems = s.title === 'Cloud Services' || (s.subItems && s.subItems.length > 0)
+              const hasSubItems = s.subItems && s.subItems.length > 0
               const popAnimations = ['animate-pop-fade-in-up', 'animate-pop-scale', 'animate-pop-bounce', 'animate-pop-elastic', 'animate-pop-rotate', 'animate-pop-heartbeat']
               const randomAnimation = popAnimations[idx % popAnimations.length]
               const motionAnimations = ['animate-float-rotate', 'animate-float', 'animate-glow-pulse']
@@ -116,7 +97,7 @@ export default function ServicesGrid(){
                       {hasSubItems && (
                         <div className="mt-4 w-full border-t border-slate-700/50 pt-4">
                           <ul className="flex flex-col gap-2">
-                            {(s.subItems || ['Cloud Engineering', 'Cloud Architecture', 'Cloud Security']).map((item, sidx) => (
+                            {s.subItems.map((item, sidx) => (
                               <li key={sidx} className="text-slate-400 text-xs flex items-center gap-2 transform transition-transform duration-200 hover:translate-x-1">
                                 <span className="text-blue-400 font-bold">→</span>
                                 <span className="text-sm">{item}</span>

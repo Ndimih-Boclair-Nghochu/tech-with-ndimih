@@ -12,6 +12,16 @@ export default function Statistics() {
     window.dispatchEvent(new Event('data-updated'))
   }
 
+  // Initialize displayValues with actual stats when they load
+  useEffect(() => {
+    setDisplayValues({
+      projects_for_sale: stats.projects_for_sale,
+      projects_completed: stats.projects_completed,
+      total_reviews: stats.total_reviews,
+      blog_posts: stats.blog_posts,
+    });
+  }, [stats]);
+
   // Scroll intersection observer for triggering animations
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
