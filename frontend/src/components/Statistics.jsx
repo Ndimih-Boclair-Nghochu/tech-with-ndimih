@@ -1,19 +1,69 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useStatistics } from '../hooks/useStatistics';
 
 export default function Statistics() {
   const { stats, loading } = useStatistics();
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const [displayValues, setDisplayValues] = useState({ projects_for_sale: 0, projects_completed: 0, total_reviews: 0, blog_posts: 0 });
+  const sectionRef = useRef(null);
 
   const handleManualRefresh = () => {
     console.log('🔄 Manual refresh triggered')
     window.dispatchEvent(new Event('data-updated'))
   }
 
+  // Scroll intersection observer for triggering animations
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          // Start counting animation
+          animateCounters();
+        }
+      });
+    }, { threshold: 0.2 });
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasAnimated]);
+
+  // Counter animation function
+  const animateCounters = () => {
+    const duration = 1500; // 1.5 seconds
+    const start = Date.now();
+
+    const animate = () => {
+      const elapsed = Date.now() - start;
+      const progress = Math.min(elapsed / duration, 1);
+
+      setDisplayValues({
+        projects_for_sale: Math.floor(stats.projects_for_sale * progress),
+        projects_completed: Math.floor(stats.projects_completed * progress),
+        total_reviews: Math.floor(stats.total_reviews * progress),
+        blog_posts: Math.floor(stats.blog_posts * progress),
+      });
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    animate();
+  }
+
   const statisticItems = [
     {
       icon: '📦',
       label: 'Projects For Sale',
-      value: stats.projects_for_sale,
+      value: displayValues.projects_for_sale,
       color: 'from-blue-600 to-blue-400',
       bgColor: 'bg-blue-500/10',
       borderColor: 'border-blue-500/30',
@@ -22,7 +72,7 @@ export default function Statistics() {
     {
       icon: '✨',
       label: 'Projects Completed',
-      value: stats.projects_completed,
+      value: displayValues.projects_completed,
       color: 'from-purple-600 to-purple-400',
       bgColor: 'bg-purple-500/10',
       borderColor: 'border-purple-500/30',
@@ -31,7 +81,7 @@ export default function Statistics() {
     {
       icon: '⭐',
       label: 'Customer Reviews',
-      value: stats.total_reviews,
+      value: displayValues.total_reviews,
       color: 'from-amber-600 to-amber-400',
       bgColor: 'bg-amber-500/10',
       borderColor: 'border-amber-500/30',
@@ -40,7 +90,7 @@ export default function Statistics() {
     {
       icon: '📝',
       label: 'Blog Posts',
-      value: stats.blog_posts,
+      value: displayValues.blog_posts,
       color: 'from-emerald-600 to-emerald-400',
       bgColor: 'bg-emerald-500/10',
       borderColor: 'border-emerald-500/30',
@@ -49,7 +99,7 @@ export default function Statistics() {
   ];
 
   return (
-    <section className="relative py-4 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section ref={sectionRef} className="relative py-4 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Background gradient orbs */}
       <div className="absolute top-0 left-1/4 w-32 h-32 bg-blue-500/8 rounded-full blur-3xl -z-10 animate-pulse"></div>
       <div className="absolute bottom-0 right-1/4 w-40 h-40 bg-purple-500/8 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDelay: '1s' }}></div>
@@ -85,7 +135,7 @@ export default function Statistics() {
           {statisticItems.map((item, index) => (
             <div
               key={index}
-              className="group relative animate-pop-scale"
+              className={`group relative ${hasAnimated ? 'animate-pop-scale' : 'opacity-0'}`}
               style={{ animationDelay: `${0.1 + index * 0.1}s` }}
             >
               {/* Animated glow background on hover */}
@@ -151,11 +201,11 @@ export default function Statistics() {
         @keyframes pop-scale {
           0% {
             opacity: 0;
-            transform: scale(0.95);
+            transform: scale(0.95) translateY(20px);
           }
           100% {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1) translateY(0);
           }
         }
 
@@ -171,7 +221,7 @@ export default function Statistics() {
         }
 
         .animate-pop-scale {
-          animation: pop-scale 0.6s ease-out forwards;
+          animation: pop-scale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
           opacity: 0;
         }
 
