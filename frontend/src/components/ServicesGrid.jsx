@@ -70,7 +70,7 @@ export default function ServicesGrid(){
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 perspective-1200 scroll-stagger">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-4 perspective-1200 scroll-stagger">
           {services.length === 0 ? (
             <div className="col-span-full text-center text-gray-400 py-8">No services available</div>
           ) : (

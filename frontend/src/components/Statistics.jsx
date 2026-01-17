@@ -6,46 +6,14 @@ export default function Statistics() {
   const [hasAnimated, setHasAnimated] = useState(false);
   const [displayValues, setDisplayValues] = useState({ projects_for_sale: 0, projects_completed: 0, total_reviews: 0, blog_posts: 0 });
   const sectionRef = useRef(null);
+  const animateCountersRef = useRef(null);
 
   const handleManualRefresh = () => {
     console.log('🔄 Manual refresh triggered')
     window.dispatchEvent(new Event('data-updated'))
   }
 
-  // Initialize displayValues with actual stats when they load
-  useEffect(() => {
-    setDisplayValues({
-      projects_for_sale: stats.projects_for_sale,
-      projects_completed: stats.projects_completed,
-      total_reviews: stats.total_reviews,
-      blog_posts: stats.blog_posts,
-    });
-  }, [stats]);
-
-  // Scroll intersection observer for triggering animations
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-          // Start counting animation
-          animateCounters();
-        }
-      });
-    }, { threshold: 0.2 });
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, [hasAnimated]);
-
-  // Counter animation function
+  // Define animateCounters function
   const animateCounters = () => {
     const duration = 1500; // 1.5 seconds
     const start = Date.now();
@@ -75,7 +43,44 @@ export default function Statistics() {
     };
 
     animate();
-  }
+  };
+
+  animateCountersRef.current = animateCounters;
+
+  // Initialize displayValues with actual stats when they load
+  useEffect(() => {
+    setDisplayValues({
+      projects_for_sale: stats.projects_for_sale || 0,
+      projects_completed: stats.projects_completed || 0,
+      total_reviews: stats.total_reviews || 0,
+      blog_posts: stats.blog_posts || 0,
+    });
+  }, [stats]);
+
+  // Scroll intersection observer for triggering animations
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          // Start counting animation
+          if (animateCountersRef.current) {
+            animateCountersRef.current();
+          }
+        }
+      });
+    }, { threshold: 0.2 });
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasAnimated]);
 
   const statisticItems = [
     {
