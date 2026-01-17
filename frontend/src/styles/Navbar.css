@@ -348,22 +348,25 @@
 	.brand span {
 		display: inline !important;
 	}
-	/* Center nav on tablet too */
+	/* Three-column layout: brand (left), nav (center), actions (right) */
 	.navbar-container {
-		justify-content: center;
+		justify-content: space-between;
 		position: relative;
 	}
 	.brand {
-		position: absolute;
-		left: 1rem;
+		position: static;
+		flex-shrink: 0;
+		flex-grow: 0;
 	}
 	.site-nav {
-		flex: 0 1 auto;
+		flex: 1;
+		min-width: 0;
 		justify-content: center;
+		margin: 0 1rem;
 	}
 	.nav-actions {
-		position: absolute;
-		right: 1rem;
+		position: static;
+		flex-shrink: 0;
 	}
 }
 
@@ -388,22 +391,25 @@
 	.brand span {
 		display: inline !important;
 	}
-	/* Center nav on this breakpoint too */
+	/* Three-column layout: brand (left), nav (center), actions (right) */
 	.navbar-container {
-		justify-content: center;
+		justify-content: space-between;
 		position: relative;
 	}
 	.brand {
-		position: absolute;
-		left: 1rem;
+		position: static;
+		flex-shrink: 0;
+		flex-grow: 0;
 	}
 	.site-nav {
-		flex: 0 1 auto;
+		flex: 1;
+		min-width: 0;
 		justify-content: center;
+		margin: 0 1rem;
 	}
 	.nav-actions {
-		position: absolute;
-		right: 1rem;
+		position: static;
+		flex-shrink: 0;
 	}
 }
 
@@ -426,22 +432,25 @@
 	.brand span {
 		display: inline !important;
 	}
-	/* Center the entire navbar content with brand left, nav centered, actions right */
+	/* Three-column layout: brand (left), nav (center), actions (right) */
 	.navbar-container {
-		justify-content: center;
+		justify-content: space-between;
 		position: relative;
 	}
 	.brand {
-		position: absolute;
-		left: 1.5rem;
+		position: static;
+		flex-shrink: 0;
+		flex-grow: 0;
 	}
 	.site-nav {
-		flex: 0 1 auto;
+		flex: 1;
+		min-width: 0;
 		justify-content: center;
+		margin: 0 1.5rem;
 	}
 	.nav-actions {
-		position: absolute;
-		right: 1.5rem;
+		position: static;
+		flex-shrink: 0;
 	}
 }
 
