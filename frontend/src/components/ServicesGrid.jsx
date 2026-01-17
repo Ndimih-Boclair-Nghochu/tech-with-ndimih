@@ -6,6 +6,7 @@ import Card3D from './3DCard'
 export default function ServicesGrid(){
   const [services, setServices] = useState(defaultServices)
   const [loading, setLoading] = useState(true)
+  const [expandedService, setExpandedService] = useState(null)
 
   useEffect(() => {
     let mounted = true
@@ -76,6 +77,7 @@ export default function ServicesGrid(){
           ) : (
             services.map((s, idx) => {
               const hasSubItems = s.subItems && s.subItems.length > 0
+              const isExpanded = expandedService === s.id
               const popAnimations = ['animate-pop-fade-in-up', 'animate-pop-scale', 'animate-pop-bounce', 'animate-pop-elastic', 'animate-pop-rotate', 'animate-pop-heartbeat']
               const randomAnimation = popAnimations[idx % popAnimations.length]
               const motionAnimations = ['animate-float-rotate', 'animate-float', 'animate-glow-pulse']
@@ -93,7 +95,17 @@ export default function ServicesGrid(){
                         {s.icon || '💼'}
                       </div>
                       <h3 className="text-lg font-bold text-white text-center group-hover:text-blue-400 transition-colors">{s.title}</h3>
-                      <p className="text-slate-400 text-sm leading-relaxed text-center flex-1">{s.description || s.desc}</p>
+                      <div>
+                        <p className={`text-slate-400 text-sm leading-relaxed text-center transition-all duration-300 ${isExpanded ? '' : 'line-clamp-2'}`}>
+                          {s.description || s.desc}
+                        </p>
+                        <button
+                          onClick={() => setExpandedService(isExpanded ? null : s.id)}
+                          className="mt-2 text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors"
+                        >
+                          {isExpanded ? 'See less' : 'See more'}
+                        </button>
+                      </div>
                       {hasSubItems && (
                         <div className="mt-4 w-full border-t border-slate-700/50 pt-4">
                           <ul className="flex flex-col gap-2">

@@ -6,6 +6,7 @@ import '../styles/Services.css'
 export default function Services(){
   const [services, setServices] = useState(defaultServices)
   const [loading, setLoading] = useState(true)
+  const [expandedService, setExpandedService] = useState(null)
 
   useEffect(() => {
     let mounted = true
@@ -67,6 +68,7 @@ export default function Services(){
                 const randomAnimation = popAnimations[idx % popAnimations.length]
                 const randomMotion = motionAnimations[idx % motionAnimations.length]
                 const hasSubItems = s.subItems && s.subItems.length > 0
+                const isExpanded = expandedService === s.id
                 return (
                   <div key={s.id || s.title} className={`service-card card-3d glass rounded-2xl border border-blue-500/10 p-8 ${randomAnimation} ${randomMotion} lift-on-hover`} style={{ animationDelay: `${0.3 + idx * 0.1}s` }}>
                     <div className="flex flex-col items-center text-center mb-4">
@@ -74,7 +76,17 @@ export default function Services(){
                         {s.icon || '💼'}
                       </div>
                       <h3 className="text-xl font-bold mb-3">{s.title}</h3>
-                      <p className="muted mb-4">{s.description || s.desc}</p>
+                      <div>
+                        <p className={`muted mb-2 transition-all duration-300 ${isExpanded ? '' : 'line-clamp-2'}`}>
+                          {s.description || s.desc}
+                        </p>
+                        <button
+                          onClick={() => setExpandedService(isExpanded ? null : s.id)}
+                          className="text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors mb-3"
+                        >
+                          {isExpanded ? 'See less' : 'See more'}
+                        </button>
+                      </div>
                     </div>
                     {hasSubItems && (
                       <div className="mt-4 pt-4 border-t border-white/10">
