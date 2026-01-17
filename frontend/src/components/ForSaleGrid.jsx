@@ -46,16 +46,26 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
         {items.map((p, idx) => (
           <Card3D key={p.id || p.slug} className={`lift-on-hover`} style={{ animationDelay: `${idx * 80}ms` }}>
             <div className="sale-card glass">
+              {p.cover && (
+                <div className="card-image mb-4 rounded-lg overflow-hidden">
+                  <img 
+                    src={p.cover} 
+                    alt={p.title} 
+                    className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </div>
+              )}
               <div className="card-body">
                 <div className="card-title">{p.title}</div>
                 <div className="card-desc">{p.description || 'No description provided.'}</div>
               </div>
               <div className="card-actions">
                 <div className="flex gap-2 justify-center w-full">
-                  {p.affiliate_url && (
+                  {p.live_url && (
                     <a 
                       className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-all duration-300" 
-                      href={p.affiliate_url} 
+                      href={p.live_url} 
                       target="_blank" 
                       rel="noopener noreferrer"
                     >
@@ -63,15 +73,28 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
                       <span>Live</span>
                     </a>
                   )}
-                  <a 
-                    className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-lg transition-all duration-300" 
-                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`I'm interested in your project: ${p.title}. Please share details.`)}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    <span>💬</span>
-                    <span>WhatsApp</span>
-                  </a>
+                  {p.github_url && (
+                    <a 
+                      className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-slate-700 hover:bg-slate-800 text-white text-sm font-semibold rounded-lg transition-all duration-300" 
+                      href={p.github_url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      <span>💻</span>
+                      <span>GitHub</span>
+                    </a>
+                  )}
+                  {p.affiliate_url && (
+                    <a 
+                      className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-lg transition-all duration-300" 
+                      href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`I'm interested in your project: ${p.title}. Please share details.`)}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      <span>💬</span>
+                      <span>WhatsApp</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

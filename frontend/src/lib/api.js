@@ -280,12 +280,13 @@ export async function createDonationSession(amount_cents, metadata={}){
 }
 
 export async function createProduct(data){
-  // data: { title, description, price_cents, file }
+  // data: { title, description, price_cents, file, cover }
   const form = new FormData()
   form.append('title', data.title)
   if(data.description) form.append('description', data.description)
   if(data.price_cents !== undefined) form.append('price_cents', String(data.price_cents))
   if(data.file) form.append('file', data.file)
+  if(data.cover) form.append('cover', data.cover)
   if(data.affiliate_url) form.append('affiliate_url', data.affiliate_url)
   if(data.stripe_price_id) form.append('stripe_price_id', data.stripe_price_id)
   const res = await api.post('/products/', form, { headers: { 'Content-Type': 'multipart/form-data' } })
@@ -303,8 +304,8 @@ export async function purchaseProduct(id){
 }
 
 export async function updateProduct(id, data){
-  // data may contain file => use multipart
-  const hasFile = data && data.file
+  // data may contain file or cover => use multipart
+  const hasFile = data && (data.file || data.cover)
   if(hasFile){
     const form = new FormData()
     if(data.title) form.append('title', data.title)
@@ -312,7 +313,8 @@ export async function updateProduct(id, data){
     if(data.price_cents !== undefined) form.append('price_cents', String(data.price_cents))
     if(data.affiliate_url) form.append('affiliate_url', data.affiliate_url)
     if(data.is_published !== undefined) form.append('is_published', String(data.is_published))
-    form.append('file', data.file)
+    if(data.file) form.append('file', data.file)
+    if(data.cover) form.append('cover', data.cover)
     const res = await api.patch(`/products/${id}/`, form, { headers: { 'Content-Type': 'multipart/form-data' } })
     return res.data
   }
