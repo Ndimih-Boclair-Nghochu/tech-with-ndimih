@@ -8,6 +8,8 @@
 .card-desc{color:var(--muted);font-size:0.95rem}
 .card-actions{display:flex;gap:0.5rem;justify-content:flex-end;margin-top:0.75rem}
 .btn-ghost.whatsapp{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#25D366;padding:0.5rem 0.75rem;border-radius:10px}
+.btn-live{background:linear-gradient(135deg,#ff6b6b,#ff8e72);border:none;color:#fff;padding:0.5rem 0.75rem;border-radius:10px;cursor:pointer;font-weight:600;font-size:0.9rem;transition:all 0.25s ease;box-shadow:0 4px 12px rgba(255,107,107,0.3)}
+.btn-live:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(255,107,107,0.4)}
 .btn-disabled{opacity:0.5}
 .for-sale-cta{margin-top:1rem;text-align:center}
 

@@ -51,11 +51,13 @@ product_data = [
         "title": "Django REST API Template",
         "description": "Ready-to-use Django REST Framework template with best practices",
         "price_cents": 1999,
+        "youtube_url": "https://www.youtube.com/watch?v=jbDy-d8WCGE",
     },
     {
         "title": "React Component Library",
         "description": "Collection of reusable React components with Tailwind CSS",
         "price_cents": 2999,
+        "youtube_url": "https://youtu.be/jLfHFfwOW_A",
     },
 ]
 
@@ -65,6 +67,7 @@ for data in product_data:
         defaults={
             "description": data["description"],
             "price_cents": data["price_cents"],
+            "youtube_url": data.get("youtube_url"),
         }
     )
     if created:

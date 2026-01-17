@@ -64,6 +64,7 @@ class Product(models.Model):
     stripe_price_id = models.CharField(max_length=200, blank=True, null=True, help_text='Optional Stripe Price ID for hosted checkout')
     stripe_product_id = models.CharField(max_length=200, blank=True, null=True, help_text='Optional Stripe Product ID')
     affiliate_url = models.URLField(max_length=1000, blank=True, null=True, help_text='Optional external affiliate or vendor URL')
+    youtube_url = models.URLField(max_length=1000, blank=True, null=True, help_text='Optional YouTube video URL for product demo')
     affiliate_clicks = models.PositiveIntegerField(default=0, help_text='Count of outbound affiliate clicks')
     is_published = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)

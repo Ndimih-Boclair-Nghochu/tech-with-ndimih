@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { fetchProducts } from '../lib/api'
 import Card3D from '../components/3DCard'
+import YouTubeModal from '../components/YouTubeModal'
 import '../styles/ForSale.css'
 
 export default function ForSale(){
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const [selectedVideo, setSelectedVideo] = useState(null)
+  const [videoModalOpen, setVideoModalOpen] = useState(false)
 
   useEffect(()=>{
     let mounted = true
@@ -16,6 +19,16 @@ export default function ForSale(){
     }).catch(()=>{ if(mounted) setItems([]) }).finally(()=>{ if(mounted) setLoading(false) })
     return ()=> mounted = false
   },[])
+
+  const handleWatchVideo = (product) => {
+    setSelectedVideo(product)
+    setVideoModalOpen(true)
+  }
+
+  const handleCloseVideo = () => {
+    setVideoModalOpen(false)
+    setTimeout(() => setSelectedVideo(null), 300)
+  }
 
   return (
     <div className="for-sale-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white">
@@ -43,6 +56,7 @@ export default function ForSale(){
                     <div className="card-desc">{p.description || 'No description provided.'}</div>
                   </div>
                   <div className="card-actions">
+                    {p.youtube_url && <button className="btn btn-live" onClick={() => handleWatchVideo(p)}>Live Demo</button>}
                     <a className="btn btn-ghost whatsapp" href={`https://api.whatsapp.com/send?text=${encodeURIComponent("I'm interested in your project: " + p.title)}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
                     {p.affiliate_url ? <a className="btn btn-primary" href={p.affiliate_url} target="_blank" rel="noopener noreferrer">View Live</a> : <button className="btn btn-disabled" disabled>View Live</button>}
                   </div>
@@ -50,6 +64,15 @@ export default function ForSale(){
               </Card3D>
             ))}
           </div>
+        )}
+
+        {selectedVideo && (
+          <YouTubeModal 
+            isOpen={videoModalOpen} 
+            videoUrl={selectedVideo.youtube_url} 
+            onClose={handleCloseVideo}
+            title={selectedVideo.title}
+          />
         )}
       </main>
     </div>

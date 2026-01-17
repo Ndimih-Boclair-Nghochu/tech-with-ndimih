@@ -80,10 +80,11 @@ class PortfolioSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     affiliate_url = serializers.URLField(required=False, allow_blank=True)
+    youtube_url = serializers.URLField(required=False, allow_blank=True)
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'slug', 'description', 'price_cents', 'file', 'stripe_price_id', 'stripe_product_id', 'affiliate_url', 'affiliate_clicks', 'is_published', 'created_at']
+        fields = ['id', 'title', 'slug', 'description', 'price_cents', 'file', 'stripe_price_id', 'stripe_product_id', 'affiliate_url', 'youtube_url', 'affiliate_clicks', 'is_published', 'created_at']
 
     def validate(self, attrs):
         # price validation
