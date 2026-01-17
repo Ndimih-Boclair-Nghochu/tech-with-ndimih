@@ -18,15 +18,21 @@ export default function AddReview(){
     setLoading(true)
     try{
       await createReview(form)
+      console.log('✅ Review created successfully')
+      // Dispatch event to update statistics
+      window.dispatchEvent(new Event('data-updated'))
       // On success, go back to home where recent reviews are shown
-      navigate('/')
+      setTimeout(() => navigate('/'), 500)
     }catch(err){
+      console.error('❌ Failed to create review:', err)
       // fallback: persist locally and navigate back
       try{
         const stored = [form, ...JSON.parse(localStorage.getItem('reviews')||'[]')]
         localStorage.setItem('reviews', JSON.stringify(stored))
       }catch(e){}
-      navigate('/')
+      // Dispatch event anyway in case other data changed
+      window.dispatchEvent(new Event('data-updated'))
+      setTimeout(() => navigate('/'), 500)
     }finally{
       setLoading(false)
     }

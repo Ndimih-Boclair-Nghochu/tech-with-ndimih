@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import HeroCloud from '../components/HeroCloud'
 import AboutPreview from '../components/AboutPreview'
+import Statistics from '../components/Statistics'
 import ServicesGrid from '../components/ServicesGrid'
 import PortfolioGrid from '../components/PortfolioGrid'
 import BlogCards from '../components/BlogCards'
@@ -51,11 +52,15 @@ export default function Home({ reduce3D, setReduce3D }){
 
       <main className="-mt-8 z-30 relative">
         <div className="max-w-6xl mx-auto text-center px-4">
+          <Statistics />
           <ServicesGrid />
           <SkillsGrid />
           <ForSaleGrid preview={true} limit={3} />
           <PortfolioGrid items={featured} />
-          <ReviewsSlider items={reviews} onReviewAdded={()=> setReviewsKey(k => k+1)} />
+          <ReviewsSlider items={reviews} onReviewAdded={()=> {
+            setReviewsKey(k => k+1)
+            window.dispatchEvent(new Event('data-updated'))
+          }} />
           <BlogCards posts={blogs} />
         </div>
       </main>

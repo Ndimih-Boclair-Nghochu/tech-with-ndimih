@@ -22,9 +22,23 @@ const api = axios.create({
   }
 })
 
-// Add response interceptor for better error handling
+// Add response interceptor for better error handling and data update events
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Emit data-updated event on successful POST, PUT, PATCH, DELETE to specific endpoints
+    if (response.config.method && ['post', 'put', 'patch', 'delete'].includes(response.config.method.toLowerCase())) {
+      const url = response.config.url || ''
+      // List of endpoints that affect statistics
+      const statisticsEndpoints = ['/reviews/', '/products/', '/portfolio/', '/blog/', '/portfolio', '/blog', '/products', '/reviews']
+      const shouldNotify = statisticsEndpoints.some(endpoint => url.includes(endpoint))
+      
+      if (shouldNotify) {
+        console.log(`🔔 API: ${response.config.method.toUpperCase()} ${url} - Emitting data-updated event`)
+        window.dispatchEvent(new Event('data-updated'))
+      }
+    }
+    return response
+  },
   (error) => {
     // Handle 401 Unauthorized - token expired or invalid
     if (error.response?.status === 401) {
@@ -160,8 +174,20 @@ export async function fetchRecentReviews(){
 
 export async function createReview(data){
   // data: { name, rating, message, product }
-  const res = await api.post('/reviews/', data)
-  return res.data
+  try {
+    console.log('📝 Creating review:', data)
+    const res = await api.post('/reviews/', data)
+    console.log('✅ Review created successfully:', res.data)
+    return res.data
+  } catch (err) {
+    console.error('❌ Error creating review:', {
+      status: err.response?.status,
+      statusText: err.response?.statusText,
+      data: err.response?.data,
+      message: err.message
+    })
+    throw err
+  }
 }
 
 export async function fetchBlogBySlug(slug){

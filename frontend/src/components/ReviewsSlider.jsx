@@ -7,6 +7,8 @@ export default function ReviewsSlider({ items = [], onReviewAdded = null }){
   const [visible, setVisible] = useState(3)
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState({ name: '', rating: 5, message: '' })
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const syncTimerRef = useRef(null)
 
   useEffect(()=>{ 
@@ -62,6 +64,8 @@ export default function ReviewsSlider({ items = [], onReviewAdded = null }){
 
   async function submit(e){
     e.preventDefault()
+    setError('')
+    setLoading(true)
     const payload = { name: form.name, rating: Number(form.rating), message: form.message }
     // optimistic UI
     const optimistic = { ...payload, created_at: new Date().toISOString(), id: `local-${Date.now()}` }
@@ -70,6 +74,7 @@ export default function ReviewsSlider({ items = [], onReviewAdded = null }){
     setShowForm(false)
     try{
       const saved = await createReview(payload)
+      console.log('✅ Successfully saved review, replacing optimistic with:', saved)
       // Replace optimistic review with saved one, ensuring it's at the front
       setReviews(prev => {
         // Remove the optimistic review
@@ -87,10 +92,14 @@ export default function ReviewsSlider({ items = [], onReviewAdded = null }){
       if(onReviewAdded) onReviewAdded()
     }catch(err){
       // store in localStorage queue for later sync
-      console.error('Failed to save review, queuing for sync', err)
+      const errMsg = err.response?.data?.detail || err.response?.data?.message || err.message || 'Failed to save review'
+      console.error('❌ Failed to save review, queuing for sync', err)
+      setError(errMsg)
       const q = JSON.parse(localStorage.getItem('unsyncedReviews') || '[]') || []
       q.push(optimistic)
       localStorage.setItem('unsyncedReviews', JSON.stringify(q))
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -127,21 +136,26 @@ export default function ReviewsSlider({ items = [], onReviewAdded = null }){
         {showForm && (
           <form onSubmit={submit} className="glass-card p-6 rounded mb-6 max-w-3xl mx-auto text-left">
             <h3 className="text-lg font-semibold text-white mb-2">Add a review</h3>
+            {error && (
+              <div className="mb-4 p-3 rounded bg-red-500/20 border border-red-500/50 text-red-300">
+                {error}
+              </div>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
-              <input required value={form.name} onChange={e=> setForm({...form, name: e.target.value})} placeholder="Your name" className="p-3 rounded bg-transparent border border-white/6 w-full" />
-              <select value={form.rating} onChange={e=> setForm({...form, rating: e.target.value})} className="p-3 rounded bg-transparent border border-white/6 w-full">
+              <input required value={form.name} onChange={e=> setForm({...form, name: e.target.value})} placeholder="Your name" className="p-3 rounded bg-transparent border border-white/6 w-full" disabled={loading} />
+              <select value={form.rating} onChange={e=> setForm({...form, rating: e.target.value})} className="p-3 rounded bg-transparent border border-white/6 w-full" disabled={loading}>
                 <option value={5}>5 - Excellent</option>
                 <option value={4}>4 - Good</option>
                 <option value={3}>3 - Average</option>
                 <option value={2}>2 - Poor</option>
                 <option value={1}>1 - Terrible</option>
               </select>
-              <div className="flex items-center justify-end">
-                <button type="button" onClick={()=> setShowForm(false)} className="px-3 py-2 mr-2 border rounded">Cancel</button>
-                <button type="submit" className="hero-cta">Submit review</button>
+              <div className="flex items-center justify-end gap-2">
+                <button type="button" onClick={()=> { setShowForm(false); setError(''); }} className="px-3 py-2 mr-2 border rounded" disabled={loading}>Cancel</button>
+                <button type="submit" className="hero-cta" disabled={loading}>{loading ? 'Submitting...' : 'Submit review'}</button>
               </div>
             </div>
-            <textarea required value={form.message} onChange={e=> setForm({...form, message: e.target.value})} placeholder="Your review" className="w-full mt-2 p-3 rounded bg-transparent border border-white/6" rows={5}></textarea>
+            <textarea required value={form.message} onChange={e=> setForm({...form, message: e.target.value})} placeholder="Your review" className="w-full mt-2 p-3 rounded bg-transparent border border-white/6" rows={5} disabled={loading}></textarea>
           </form>
         )}
 
