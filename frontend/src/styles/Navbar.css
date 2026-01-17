@@ -348,6 +348,23 @@
 	.brand span {
 		display: inline !important;
 	}
+	/* Center nav on tablet too */
+	.navbar-container {
+		justify-content: center;
+		position: relative;
+	}
+	.brand {
+		position: absolute;
+		left: 1rem;
+	}
+	.site-nav {
+		flex: 0 1 auto;
+		justify-content: center;
+	}
+	.nav-actions {
+		position: absolute;
+		right: 1rem;
+	}
 }
 
 /* Small Desktop: 769px-1024px */
@@ -371,6 +388,23 @@
 	.brand span {
 		display: inline !important;
 	}
+	/* Center nav on this breakpoint too */
+	.navbar-container {
+		justify-content: center;
+		position: relative;
+	}
+	.brand {
+		position: absolute;
+		left: 1rem;
+	}
+	.site-nav {
+		flex: 0 1 auto;
+		justify-content: center;
+	}
+	.nav-actions {
+		position: absolute;
+		right: 1rem;
+	}
 }
 
 /* Large Desktop: 1025px+ */
@@ -391,6 +425,23 @@
 	}
 	.brand span {
 		display: inline !important;
+	}
+	/* Center the entire navbar content with brand left, nav centered, actions right */
+	.navbar-container {
+		justify-content: center;
+		position: relative;
+	}
+	.brand {
+		position: absolute;
+		left: 1.5rem;
+	}
+	.site-nav {
+		flex: 0 1 auto;
+		justify-content: center;
+	}
+	.nav-actions {
+		position: absolute;
+		right: 1.5rem;
 	}
 }
 
