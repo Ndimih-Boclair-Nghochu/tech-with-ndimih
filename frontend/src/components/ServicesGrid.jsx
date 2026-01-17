@@ -5,11 +5,12 @@ import Card3D from './3DCard'
 
 export default function ServicesGrid(){
   const [services, setServices] = useState(defaultServices)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [expandedService, setExpandedService] = useState(null)
 
   useEffect(() => {
     let mounted = true
+    setLoading(true)
     fetchServices()
       .then(data => {
         if (!mounted) return

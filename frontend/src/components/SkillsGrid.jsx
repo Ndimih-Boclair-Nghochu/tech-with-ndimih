@@ -74,7 +74,7 @@ function Icon({ id }){
 }
 
 export default function SkillsGrid(){
-  const [skills, setSkills] = React.useState([])
+  const [skills, setSkills] = React.useState(SKILLS_FALLBACK)
 
   React.useEffect(() => {
     let mounted = true
