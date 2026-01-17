@@ -1,4 +1,5 @@
 import React, { useState, lazy, Suspense } from 'react'
+import { Link } from 'react-router-dom'
 import '../styles/Hero.css'
 
 const DonateModalContent = lazy(() => import('../pages/Donate'))
