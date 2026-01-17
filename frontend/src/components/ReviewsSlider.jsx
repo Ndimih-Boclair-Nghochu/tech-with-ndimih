@@ -160,11 +160,11 @@ export default function ReviewsSlider({ items = [], onReviewAdded = null }){
         )}
 
         {has ? (
-          <div className="mt-6 flex items-center justify-center gap-4 scroll-stagger">
-            <button onClick={prev} className="px-3 py-2 border rounded hover:bg-white/10 transition">◀</button>
+          <div className="mt-6 flex flex-col md:flex-row items-center justify-center gap-4 scroll-stagger">
+            <button onClick={prev} className="hidden md:block px-3 py-2 border rounded hover:bg-white/10 transition">◀</button>
             <div
-              className="reviews-grid-container"
-              style={{display: 'grid', gridTemplateColumns: `repeat(${itemsToShow.length}, minmax(0, 1fr))`, gap: '1rem', alignItems: 'stretch'}}
+              className="reviews-grid-container w-full md:w-auto"
+              style={{display: 'grid', gridTemplateColumns: `repeat(${Math.min(itemsToShow.length, 2)}, minmax(0, 1fr))`, gap: '1rem', alignItems: 'stretch'}}
             >
               {itemsToShow.length === 0 ? (
                 <div className="col-span-full text-center text-gray-400">No reviews available</div>
@@ -176,7 +176,7 @@ export default function ReviewsSlider({ items = [], onReviewAdded = null }){
                   const motionAnimation = motionAnimations[i % motionAnimations.length]
                   
                   return (
-                    <div key={r.id || `review-${start}-${i}`} className={`group rounded-xl overflow-hidden flex flex-col mx-2 transition-all duration-400 ${randomAnimation} ${motionAnimation} lift-on-hover`} style={{ animationDelay: `${i * 100}ms` }}>
+                    <div key={r.id || `review-${start}-${i}`} className={`group rounded-xl overflow-hidden flex flex-col transition-all duration-400 ${randomAnimation} ${motionAnimation} lift-on-hover`} style={{ animationDelay: `${i * 100}ms` }}>
                       <div className="bg-gradient-to-br from-slate-900/90 to-slate-950/90 border border-slate-700/50 rounded-xl flex flex-col items-center gap-4 p-5 h-full backdrop-blur-sm hover:border-blue-500/30">
                         <div className="text-white font-bold text-center text-sm group-hover:text-blue-400 transition-colors">{r.name}</div>
                         <div className="text-yellow-400 text-lg">{Array.from({length: r.rating||5}).map((_,i)=> '★')}</div>
@@ -188,7 +188,7 @@ export default function ReviewsSlider({ items = [], onReviewAdded = null }){
                 })
               )}
             </div>
-            <button onClick={next} className="px-3 py-2 border rounded hover:bg-white/10 transition">▶</button>
+            <button onClick={next} className="hidden md:block px-3 py-2 border rounded hover:bg-white/10 transition">▶</button>
           </div>
         ) : (
           <div className="bg-gradient-to-br from-slate-900/80 to-slate-950/90 border border-slate-700/50 p-6 rounded-xl text-slate-300 backdrop-blur-sm animate-pop-fade-in-up">No reviews yet — be the first to share feedback.</div>

@@ -53,6 +53,14 @@ export default function Statistics() {
 
       if (progress < 1) {
         requestAnimationFrame(animate);
+      } else {
+        // When animation completes, set final values
+        setDisplayValues({
+          projects_for_sale: stats.projects_for_sale,
+          projects_completed: stats.projects_completed,
+          total_reviews: stats.total_reviews,
+          blog_posts: stats.blog_posts,
+        });
       }
     };
 
@@ -135,8 +143,8 @@ export default function Statistics() {
           {statisticItems.map((item, index) => (
             <div
               key={index}
-              className={`group relative ${hasAnimated ? 'animate-pop-scale' : 'opacity-0'}`}
-              style={{ animationDelay: `${0.1 + index * 0.1}s` }}
+              className={`group relative ${hasAnimated ? 'animate-pop-scale' : 'opacity-0'} animate-float`}
+              style={{ animationDelay: `${0.1 + index * 0.1}s`, '--float-delay': `${index * 0.3}s` }}
             >
               {/* Animated glow background on hover */}
               <div className={`absolute inset-0 ${item.glowColor} rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
@@ -220,6 +228,15 @@ export default function Statistics() {
           }
         }
 
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-8px);
+          }
+        }
+
         .animate-pop-scale {
           animation: pop-scale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
           opacity: 0;
@@ -228,6 +245,11 @@ export default function Statistics() {
         .animate-pop-fade-in-up {
           animation: pop-fade-in-up 0.6s ease-out forwards;
           opacity: 0;
+        }
+
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+          animation-delay: var(--float-delay, 0s);
         }
       `}</style>
     </section>
