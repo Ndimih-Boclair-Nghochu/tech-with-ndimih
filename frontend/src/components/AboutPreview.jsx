@@ -75,24 +75,16 @@ export default function AboutPreview() {
           <div className="flex justify-center md:col-span-1 animate-pop-scale" style={{ animationDelay: '0.1s' }}>
             <div className="relative group">
               {/* Animated gradient border glow */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-xl opacity-0 group-hover:opacity-75 transition-opacity duration-500 animate-pulse"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 animate-pulse"></div>
               
-              {/* Multi-layer shadow depth */}
-              <div className="absolute -inset-0.5 bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-pink-500/30 rounded-2xl blur-lg opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Main image container */}
-              <div className="relative bg-gradient-to-br from-gray-900 to-gray-950 p-0.5 rounded-2xl overflow-hidden transform group-hover:scale-105 transition-transform duration-500">
-                <div className="relative rounded-2xl overflow-hidden bg-gray-950">
-                  {/* Ambient light overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent z-10 pointer-events-none rounded-2xl"></div>
-                  
-                  {/* Image */}
-                  {aboutData.profile_image ? (
-                    <img src={aboutData.profile_image} alt={aboutData.name} className="w-48 h-56 object-cover rounded-[1.9375rem]" />
-                  ) : (
-                    <img src={boclairImage} alt={aboutData.name} className="w-48 h-56 object-cover rounded-[1.9375rem]" />
-                  )}
-                </div>
+              {/* Image container with minimal styling */}
+              <div className="relative overflow-hidden rounded-3xl transform group-hover:scale-110 transition-transform duration-500">
+                {/* Image */}
+                {aboutData.profile_image ? (
+                  <img src={aboutData.profile_image} alt={aboutData.name} className="w-64 h-80 object-cover rounded-3xl" />
+                ) : (
+                  <img src={boclairImage} alt={aboutData.name} className="w-64 h-80 object-cover rounded-3xl" />
+                )}
               </div>
 
               {/* Professional info badge on hover */}
