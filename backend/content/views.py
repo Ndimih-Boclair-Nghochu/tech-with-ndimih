@@ -211,7 +211,6 @@ def sitemap_xml(request):
 
 @api_view(['GET'])
 @permission_classes([permissions.AllowAny])
-@cache_page(60 * 60)  # cache tag list for 1 hour
 def tags_list(request):
     # return tags with counts for UI, only showing tags that have associated portfolios
     qs = Tag.objects.annotate(count=Count('portfolios')).filter(count__gt=0).order_by('-count', 'name')
@@ -224,6 +223,13 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     # accept file uploads on create/update
     parser_classes = [MultiPartParser, FormParser, JSONParser]
+
+    def get_queryset(self):
+        qs = Product.objects.all()
+        # Filter to only published products for list and retrieve actions
+        if self.action in ['list', 'retrieve']:
+            qs = qs.filter(is_published=True)
+        return qs
 
     def get_permissions(self):
         # require authentication for create/update/delete, allow list/retrieve to all
@@ -282,6 +288,13 @@ class BlogPostViewSet(viewsets.ModelViewSet):
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostSerializer
     lookup_field = 'slug'
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+
+    def get_permissions(self):
+        # Require authentication for create/update/delete
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [permissions.IsAuthenticated()]
+        return [permissions.AllowAny()]
 
     def get_queryset(self):
         qs = BlogPost.objects.all()
@@ -441,10 +454,14 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         qs = Review.objects.all()
-        # only published for public listing
+        # Admins can see all reviews; public users only see published
         if self.action in ['list']:
-            qs = qs.filter(is_published=True)
-        # Always return all reviews (no pagination limit for reviews)
+            if self.request.user and self.request.user.is_authenticated:
+                # Return all reviews for authenticated admins
+                return qs.order_by('-created_at')
+            else:
+                # Only published for public listing
+                qs = qs.filter(is_published=True)
         return qs.order_by('-created_at')
 
     def perform_create(self, serializer):
@@ -453,11 +470,8 @@ class ReviewViewSet(viewsets.ModelViewSet):
         serializer.save(is_published=True)
 
     def destroy(self, request, *args, **kwargs):
-        """Prevent deletion of reviews - they are permanently stored"""
-        return Response(
-            {'detail': 'Reviews cannot be deleted. They are permanently stored for historical purposes. You can unpublish them instead.'},
-            status=status.HTTP_403_FORBIDDEN
-        )
+        """Allow authenticated users to delete reviews"""
+        return super().destroy(request, *args, **kwargs)
 
 
 class DonationInfoViewSet(viewsets.ModelViewSet):
