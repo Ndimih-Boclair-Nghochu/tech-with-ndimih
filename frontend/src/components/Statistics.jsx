@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { fetchPortfolioList, fetchBlogList, fetchRecentReviews, fetchProducts } from '../lib/api'
 
 export default function Statistics() {
+  const navigate = useNavigate()
   const [stats, setStats] = useState({
     portfolio: 0,
     blog: 0,
@@ -78,10 +80,10 @@ export default function Statistics() {
   }
 
   const statItems = [
-    { label: 'Projects Completed', value: displayStats.portfolio, icon: '📁' },
-    { label: 'Blog Posts', value: displayStats.blog, icon: '📝' },
-    { label: 'Happy Clients', value: displayStats.reviews, icon: '⭐' },
-    { label: 'Products', value: displayStats.products, icon: '🛍️' }
+    { label: 'Projects Completed', value: displayStats.portfolio, icon: '📁', path: '/portfolio' },
+    { label: 'Blog Posts', value: displayStats.blog, icon: '📝', path: '/blog' },
+    { label: 'Happy Clients', value: displayStats.reviews, icon: '⭐', path: '/services' },
+    { label: 'Products', value: displayStats.products, icon: '🛍️', path: '/for-sale' }
   ]
 
   return (
@@ -91,7 +93,8 @@ export default function Statistics() {
           {statItems.map((item, idx) => (
             <div
               key={idx}
-              className="text-center p-6 rounded-xl border border-blue-500/20 bg-gradient-to-br from-slate-900/50 to-slate-950/50 hover:border-blue-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 animate-fade-in-up"
+              onClick={() => navigate(item.path)}
+              className="text-center p-6 rounded-xl border border-blue-500/20 bg-gradient-to-br from-slate-900/50 to-slate-950/50 hover:border-blue-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 animate-fade-in-up cursor-pointer hover:scale-105"
               style={{ animationDelay: `${idx * 0.1}s` }}
             >
               <div className="text-4xl mb-3">{item.icon}</div>
