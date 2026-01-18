@@ -114,31 +114,85 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class BlogPostSerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True, read_only=True)
+    product_ids = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.all(),
+        many=True,
+        write_only=True,
+        required=False,
+        source='products'
+    )
     # Use SerializerMethodField for tags to avoid ManyRelatedManager iteration issues
     tags = serializers.SerializerMethodField()
 
     class Meta:
         model = BlogPost
-        fields = ['id', 'title', 'slug', 'excerpt', 'body', 'cover', 'products', 'tags', 'created_at']
+        fields = ['id', 'title', 'slug', 'excerpt', 'body', 'cover', 'products', 'product_ids', 'tags', 'created_at']
+        read_only_fields = ['slug', 'created_at']
 
     def get_tags(self, obj):
         """Return tags as a list of names for read operations"""
         return [t.name for t in obj.tags.all()]
 
     def to_internal_value(self, data):
-        """Handle tags input for write operations"""
+        """Handle tags and products input for write operations"""
+        # Extract tags from data
         tags_data = data.get('tags', [])
+        # Extract products from data (allow both 'products' and 'product_ids')
+        products_data = data.get('product_ids') or data.get('products', [])
+        
         data = data.copy()
         if 'tags' in data:
             del data['tags']
+        # Don't delete product_ids here - let the serializer handle it
+        
         validated_data = super().to_internal_value(data)
+        # Store tags and products for create/update
         validated_data['_tags'] = tags_data
+        validated_data['_products'] = products_data
         return validated_data
 
-    def to_representation(self, instance):
-        ret = super().to_representation(instance)
-        # Tags are already handled by get_tags method
-        return ret
+    def create(self, validated_data):
+        tags_data = validated_data.pop('_tags', [])
+        products_data = validated_data.pop('_products', [])
+        
+        # Create the blog post
+        blog_post = BlogPost.objects.create(**validated_data)
+        
+        # Handle tags
+        if tags_data:
+            for tag_name in tags_data:
+                if tag_name:
+                    tag, _ = Tag.objects.get_or_create(name=tag_name.lower())
+                    blog_post.tags.add(tag)
+        
+        # Handle products
+        if products_data:
+            blog_post.products.set(products_data)
+        
+        return blog_post
+
+    def update(self, instance, validated_data):
+        tags_data = validated_data.pop('_tags', None)
+        products_data = validated_data.pop('_products', None)
+        
+        # Update basic fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        
+        # Handle tags
+        if tags_data is not None:
+            instance.tags.clear()
+            for tag_name in tags_data:
+                if tag_name:
+                    tag, _ = Tag.objects.get_or_create(name=tag_name.lower())
+                    instance.tags.add(tag)
+        
+        # Handle products
+        if products_data is not None:
+            instance.products.set(products_data)
+        
+        return instance
 
 
 class ReviewSerializer(serializers.ModelSerializer):
