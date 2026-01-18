@@ -66,7 +66,7 @@ export default function AboutPreview() {
   }
 
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section className="py-4 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 w-56 h-56 bg-purple-500/5 rounded-full blur-3xl"></div>
 
