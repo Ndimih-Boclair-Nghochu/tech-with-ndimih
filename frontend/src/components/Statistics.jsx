@@ -87,7 +87,7 @@ export default function Statistics() {
   return (
     <section className="py-16 px-6 w-full">
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
           {statItems.map((item, idx) => (
             <div
               key={idx}

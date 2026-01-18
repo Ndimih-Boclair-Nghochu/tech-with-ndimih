@@ -81,7 +81,7 @@ export default function Navbar(){
 
         <div className="nav-actions">
           <button onClick={() => setShowDonate(true)} className="btn hidden lg:inline-flex" aria-label="Donate">Donate</button>
-          <button aria-label="Toggle theme" onClick={toggle} className="theme-toggle">
+          <button aria-label="Theme toggle (decoration)" className="theme-toggle" disabled>
             {dark ? '🌙' : '☀️'}
           </button>
 
