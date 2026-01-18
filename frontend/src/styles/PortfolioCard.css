@@ -140,3 +140,15 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
   background: linear-gradient(135deg, #1a1e22, #0d1117);
 }
+
+.portfolio-btn-whatsapp {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.portfolio-btn-whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+  background: linear-gradient(135deg, #128C7E, #0C5D54);
+}

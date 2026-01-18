@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { fetchProducts } from '../lib/api'
-import Card3D from '../components/3DCard'
-import YouTubeModal from '../components/YouTubeModal'
-import '../styles/ForSale.css'
+import '../styles/PortfolioCard.css'
 
 export default function ForSale(){
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
-  const [selectedVideo, setSelectedVideo] = useState(null)
-  const [videoModalOpen, setVideoModalOpen] = useState(false)
 
   useEffect(()=>{
     let mounted = true
@@ -22,16 +18,6 @@ export default function ForSale(){
     return ()=> mounted = false
   },[])
 
-  const handleWatchVideo = (product) => {
-    setSelectedVideo(product)
-    setVideoModalOpen(true)
-  }
-
-  const handleCloseVideo = () => {
-    setVideoModalOpen(false)
-    setTimeout(() => setSelectedVideo(null), 300)
-  }
-
   return (
     <div className="for-sale-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white">
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 w-full">
@@ -41,7 +27,7 @@ export default function ForSale(){
         </div>
         <div className="text-center mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold gradient-accent mb-3">Projects For Sale</h1>
-          <p className="muted">Browse available projects. Click WhatsApp to message me about a project, or View Live to see demos.</p>
+          <p className="muted">Browse available projects. Connect with me on WhatsApp or visit the live demo.</p>
         </div>
 
         {loading ? (
@@ -50,31 +36,57 @@ export default function ForSale(){
           <div className="text-center text-gray-400 py-12">No projects available for sale yet.</div>
         ) : (
           <div className="for-sale-grid">
-            {items.map((p, idx) => (
-              <Card3D key={p.id || p.slug} className="lift-on-hover" style={{ animationDelay: `${idx * 80}ms` }}>
-                <div className="sale-card glass">
-                  <div className="card-body">
-                    <div className="card-title">{p.title}</div>
-                    <div className="card-desc">{p.description || 'No description provided.'}</div>
+            {items.map((p, idx) => {
+              const popAnimations = ['animate-pop-fade-in-up', 'animate-pop-scale', 'animate-pop-bounce']
+              const randomAnimation = popAnimations[idx % popAnimations.length]
+              return (
+                <article key={p.id || p.slug} className={`portfolio-card overflow-hidden card-3d ${randomAnimation} lift-on-hover`} style={{ animationDelay: `${idx * 80}ms` }}>
+                  {p.cover && (
+                    <div className="thumb">
+                      <img src={p.cover} alt={p.title} className="w-full h-48 object-cover" loading="lazy" />
+                    </div>
+                  )}
+                  <div className="p-6 meta bg-gradient-to-b from-slate-900/80 to-slate-950/90 backdrop-blur-sm border-t border-white/10">
+                    <h3 className="font-bold text-white text-lg leading-snug">{p.title}</h3>
+                    <p className="text-sm text-slate-300 mt-3 line-clamp-2">{p.description || 'No description'}</p>
+                    {p.price_cents && (
+                      <div className="mt-3 text-lg font-semibold text-cyan-400">
+                        ${(p.price_cents / 100).toFixed(2)}
+                      </div>
+                    )}
                   </div>
-                  <div className="card-actions">
-                    {p.youtube_url && <button className="btn btn-live" onClick={() => handleWatchVideo(p)}>Live Demo</button>}
-                    <a className="btn btn-ghost whatsapp" href={`https://api.whatsapp.com/send?text=${encodeURIComponent("I'm interested in your project: " + p.title)}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
-                    {p.affiliate_url ? <a className="btn btn-primary" href={p.affiliate_url} target="_blank" rel="noopener noreferrer">View Live</a> : <button className="btn btn-disabled" disabled>View Live</button>}
-                  </div>
-                </div>
-              </Card3D>
-            ))}
+                  {(p.live_url || p.whatsapp_url) && (
+                    <div className="px-4 pb-4 portfolio-actions">
+                      <div className="flex gap-2 flex-wrap">
+                        {p.live_url && (
+                          <a 
+                            href={p.live_url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="portfolio-btn portfolio-btn-live"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            🌐 View Live
+                          </a>
+                        )}
+                        {p.whatsapp_url && (
+                          <a 
+                            href={p.whatsapp_url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="portfolio-btn portfolio-btn-whatsapp"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            💬 WhatsApp
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </article>
+              )
+            })}
           </div>
-        )}
-
-        {selectedVideo && (
-          <YouTubeModal 
-            isOpen={videoModalOpen} 
-            videoUrl={selectedVideo.youtube_url} 
-            onClose={handleCloseVideo}
-            title={selectedVideo.title}
-          />
         )}
       </main>
     </div>

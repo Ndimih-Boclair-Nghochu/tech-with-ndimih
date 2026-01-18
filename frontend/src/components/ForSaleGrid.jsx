@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { fetchProducts } from '../lib/api'
 import Card3D from './3DCard'
 import '../styles/ForSale.css'
+import '../styles/PortfolioCard.css'
 
 export default function ForSaleGrid({ preview=false, limit=3 }){
   const [items, setItems] = useState([])
@@ -45,58 +46,56 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
         <p className="muted">Select projects available for purchase or hire — no prices shown.</p>
       </div>
       <div className="for-sale-grid">
-        {items.map((p, idx) => (
-          <Card3D key={p.id || p.slug} className={`lift-on-hover`} style={{ animationDelay: `${idx * 80}ms` }}>
-            <div className="sale-card glass">
+        {items.map((p, idx) => {
+          const popAnimations = ['animate-pop-fade-in-up', 'animate-pop-scale', 'animate-pop-bounce']
+          const randomAnimation = popAnimations[idx % popAnimations.length]
+          return (
+            <article key={p.id || p.slug} className={`portfolio-card overflow-hidden card-3d ${randomAnimation} lift-on-hover`} style={{ animationDelay: `${idx * 80}ms` }}>
               {p.cover && (
-                <div className="card-image mb-4 rounded-lg overflow-hidden">
-                  <img 
-                    src={p.cover} 
-                    alt={p.title} 
-                    className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
-                  />
+                <div className="thumb">
+                  <img src={p.cover} alt={p.title} className="w-full h-48 object-cover" loading="lazy" />
                 </div>
               )}
-              <div className="card-body">
-                <div className="card-title">{p.title}</div>
-                <div className="card-desc">{p.description || 'No description provided.'}</div>
-              </div>
-              <div className="card-actions">
-                {p.live_url && (
-                  <a 
-                    className="btn btn-live" 
-                    href={p.live_url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    Live Demo
-                  </a>
-                )}
-                {p.github_url && (
-                  <a 
-                    className="btn btn-primary" 
-                    href={p.github_url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    GitHub
-                  </a>
-                )}
-                {p.affiliate_url && (
-                  <a 
-                    className="btn btn-ghost whatsapp" 
-                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`I'm interested in your project: ${p.title}. Please share details.`)}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    WhatsApp
-                  </a>
+              <div className="p-6 meta bg-gradient-to-b from-slate-900/80 to-slate-950/90 backdrop-blur-sm border-t border-white/10">
+                <h3 className="font-bold text-white text-lg leading-snug">{p.title}</h3>
+                <p className="text-sm text-slate-300 mt-3 line-clamp-2">{p.description || 'No description'}</p>
+                {p.price_cents && (
+                  <div className="mt-3 text-lg font-semibold text-cyan-400">
+                    ${(p.price_cents / 100).toFixed(2)}
+                  </div>
                 )}
               </div>
-            </div>
-          </Card3D>
-        ))}
+              {(p.live_url || p.whatsapp_url) && (
+                <div className="px-4 pb-4 portfolio-actions">
+                  <div className="flex gap-2 flex-wrap">
+                    {p.live_url && (
+                      <a 
+                        href={p.live_url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="portfolio-btn portfolio-btn-live"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        🌐 View Live
+                      </a>
+                    )}
+                    {p.whatsapp_url && (
+                      <a 
+                        href={p.whatsapp_url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="portfolio-btn portfolio-btn-whatsapp"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        💬 WhatsApp
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
+            </article>
+          )
+        })}
       </div>
       {!preview && <div className="for-sale-cta"><a className="btn btn--primary" href="/for-sale">View all projects for sale</a></div>}
     </section>
