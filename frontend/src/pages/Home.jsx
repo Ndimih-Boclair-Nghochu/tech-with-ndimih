@@ -15,14 +15,22 @@ export default function Home({ reduce3D, setReduce3D }){
   const [blogs, setBlogs] = useState([])
   const [reviews, setReviews] = useState([])
   const [reviewsKey, setReviewsKey] = useState(0)
+  const [portfolioIndex, setPortfolioIndex] = useState(0)
+  const [blogIndex, setBlogIndex] = useState(0)
+  const [allPortfolio, setAllPortfolio] = useState([])
+  const [allBlogs, setAllBlogs] = useState([])
 
   useEffect(()=>{
     let mounted = true
     Promise.all([fetchPortfolioPage({ page: 1 }), fetchBlogList(), fetchRecentReviews()])
       .then(([pData, bData, rData])=>{
         if(!mounted) return
-        setFeatured((pData.results||[]).slice(0,6))
-        setBlogs((bData.results||[]).slice(0,6))
+        const allProjects = (pData.results||[])
+        const allBlogPosts = (bData.results||[])
+        setAllPortfolio(allProjects)
+        setAllBlogs(allBlogPosts)
+        setFeatured(allProjects.slice(0, 3))
+        setBlogs(allBlogPosts.slice(0, 3))
         // Fetch ALL reviews - all reviews will rotate through the home page
         // Reviews are never deleted, so we display all of them
         const allReviews = rData.results || []
@@ -40,10 +48,54 @@ export default function Home({ reduce3D, setReduce3D }){
           setFeatured([])
           setBlogs([])
           setReviews([])
+          setAllPortfolio([])
+          setAllBlogs([])
         }
       })
     return ()=> mounted = false
   }, [reviewsKey])
+
+  // Rotation effect for portfolio - every 60 seconds
+  useEffect(() => {
+    if(allPortfolio.length <= 3) return // no rotation needed if 3 or fewer items
+    
+    const interval = setInterval(() => {
+      setPortfolioIndex(prev => {
+        const nextIndex = (prev + 3) % allPortfolio.length
+        setFeatured(allPortfolio.slice(nextIndex, nextIndex + 3))
+        // if we don't have enough items at the end, wrap around
+        if(nextIndex + 3 > allPortfolio.length) {
+          const remaining = allPortfolio.slice(nextIndex)
+          const wrapped = allPortfolio.slice(0, 3 - remaining.length)
+          setFeatured([...remaining, ...wrapped])
+        }
+        return nextIndex
+      })
+    }, 60000) // 60 seconds = 1 minute
+    
+    return () => clearInterval(interval)
+  }, [allPortfolio])
+
+  // Rotation effect for blog - every 60 seconds
+  useEffect(() => {
+    if(allBlogs.length <= 3) return // no rotation needed if 3 or fewer items
+    
+    const interval = setInterval(() => {
+      setBlogIndex(prev => {
+        const nextIndex = (prev + 3) % allBlogs.length
+        setBlogs(allBlogs.slice(nextIndex, nextIndex + 3))
+        // if we don't have enough items at the end, wrap around
+        if(nextIndex + 3 > allBlogs.length) {
+          const remaining = allBlogs.slice(nextIndex)
+          const wrapped = allBlogs.slice(0, 3 - remaining.length)
+          setBlogs([...remaining, ...wrapped])
+        }
+        return nextIndex
+      })
+    }, 60000) // 60 seconds = 1 minute
+    
+    return () => clearInterval(interval)
+  }, [allBlogs])
 
   return (
     <div className="home-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white">
