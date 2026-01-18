@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
+from django.db.models.signals import post_delete, m2m_changed
+from django.dispatch import receiver
 
 
 class Tag(models.Model):
@@ -398,3 +400,29 @@ class Hero(models.Model):
         if not self.pk:
             Hero.objects.all().delete()
         super().save(*args, **kwargs)
+
+
+# Signal handlers to delete orphaned tags
+@receiver(post_delete, sender=Portfolio)
+def delete_orphaned_tags(sender, instance, **kwargs):
+    """Delete tags that have no portfolios after a portfolio is deleted"""
+    # Get all tags from the deleted portfolio
+    for tag in instance.tags.all():
+        # If this tag has no more portfolios, delete it
+        if tag.portfolios.count() == 0:
+            tag.delete()
+
+
+@receiver(m2m_changed, sender=Portfolio.tags.through)
+def delete_orphaned_tags_on_m2m_change(sender, instance, action, pk_set, **kwargs):
+    """Delete tags that have no portfolios when tags are removed from a portfolio"""
+    if action == 'post_remove':
+        # Check all tags that were removed
+        for tag_id in pk_set:
+            try:
+                tag = Tag.objects.get(id=tag_id)
+                # If this tag has no more portfolios, delete it
+                if tag.portfolios.count() == 0:
+                    tag.delete()
+            except Tag.DoesNotExist:
+                pass

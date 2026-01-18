@@ -213,8 +213,8 @@ def sitemap_xml(request):
 @permission_classes([permissions.AllowAny])
 @cache_page(60 * 60)  # cache tag list for 1 hour
 def tags_list(request):
-    # return tags with counts for UI (e.g., [{name: 'web', count: 5}, ...])
-    qs = Tag.objects.annotate(count=Count('portfolios')).order_by('-count', 'name')
+    # return tags with counts for UI, only showing tags that have associated portfolios
+    qs = Tag.objects.annotate(count=Count('portfolios')).filter(count__gt=0).order_by('-count', 'name')
     data = [{'name': t.name, 'count': t.count} for t in qs]
     return Response(data)
 
