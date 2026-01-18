@@ -49,10 +49,10 @@ export default function Home({ reduce3D, setReduce3D }){
     <div className="home-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white">
       <HeroCloud />
       <AboutPreview />
+      <Statistics />
 
       <main className="-mt-8 z-30 relative">
         <div className="max-w-6xl mx-auto text-center px-4">
-          <Statistics />
           <ServicesGrid />
           <SkillsGrid />
           <ForSaleGrid preview={true} limit={3} />
