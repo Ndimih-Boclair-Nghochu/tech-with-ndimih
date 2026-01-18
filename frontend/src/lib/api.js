@@ -280,7 +280,7 @@ export async function createDonationSession(amount_cents, metadata={}){
 }
 
 export async function createProduct(data){
-  // data: { title, description, price_cents, file, cover, live_url, whatsapp_url, is_published }
+  // data: { title, description, price_cents, file, cover, live_url, youtube_url, whatsapp_url, github_url, affiliate_url, is_published }
   const form = new FormData()
   form.append('title', data.title)
   if(data.description) form.append('description', data.description)
@@ -288,7 +288,10 @@ export async function createProduct(data){
   if(data.file) form.append('file', data.file)
   if(data.cover) form.append('cover', data.cover)
   if(data.live_url) form.append('live_url', data.live_url)
+  if(data.youtube_url) form.append('youtube_url', data.youtube_url)
   if(data.whatsapp_url) form.append('whatsapp_url', data.whatsapp_url)
+  if(data.github_url) form.append('github_url', data.github_url)
+  if(data.affiliate_url) form.append('affiliate_url', data.affiliate_url)
   if(data.is_published !== undefined) form.append('is_published', String(data.is_published))
   const res = await api.post('/products/', form, { headers: { 'Content-Type': 'multipart/form-data' } })
   return res.data
@@ -313,7 +316,10 @@ export async function updateProduct(id, data){
     if(data.description) form.append('description', data.description)
     if(data.price_cents !== undefined) form.append('price_cents', String(data.price_cents))
     if(data.live_url) form.append('live_url', data.live_url)
+    if(data.youtube_url) form.append('youtube_url', data.youtube_url)
     if(data.whatsapp_url) form.append('whatsapp_url', data.whatsapp_url)
+    if(data.github_url) form.append('github_url', data.github_url)
+    if(data.affiliate_url) form.append('affiliate_url', data.affiliate_url)
     if(data.is_published !== undefined) form.append('is_published', String(data.is_published))
     if(data.file) form.append('file', data.file)
     if(data.cover) form.append('cover', data.cover)

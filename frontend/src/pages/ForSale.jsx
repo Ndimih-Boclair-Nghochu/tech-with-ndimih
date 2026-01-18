@@ -41,9 +41,13 @@ export default function ForSale(){
               const randomAnimation = popAnimations[idx % popAnimations.length]
               return (
                 <article key={p.id || p.slug} className={`portfolio-card overflow-hidden card-3d ${randomAnimation} lift-on-hover`} style={{ animationDelay: `${idx * 80}ms` }}>
-                  {p.cover && (
+                  {p.cover ? (
                     <div className="thumb">
                       <img src={p.cover} alt={p.title} className="w-full h-48 object-cover" loading="lazy" />
+                    </div>
+                  ) : (
+                    <div className="thumb bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center">
+                      <div className="text-4xl text-slate-400">📦</div>
                     </div>
                   )}
                   <div className="p-6 meta bg-gradient-to-b from-slate-900/80 to-slate-950/90 backdrop-blur-sm border-t border-white/10">
@@ -55,7 +59,7 @@ export default function ForSale(){
                       </div>
                     )}
                   </div>
-                  {(p.live_url || p.whatsapp_url) && (
+                  {(p.live_url || p.youtube_url || p.whatsapp_url || p.affiliate_url) && (
                     <div className="px-4 pb-4 portfolio-actions">
                       <div className="flex gap-2 flex-wrap">
                         {p.live_url && (
@@ -69,9 +73,31 @@ export default function ForSale(){
                             🌐 View Live
                           </a>
                         )}
-                        {p.whatsapp_url && (
+                        {p.youtube_url && (
                           <a 
-                            href={p.whatsapp_url} 
+                            href={p.youtube_url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="portfolio-btn portfolio-btn-live"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            ▶️ Demo
+                          </a>
+                        )}
+                        {p.github_url && (
+                          <a 
+                            href={p.github_url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="portfolio-btn portfolio-btn-github"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            💻 GitHub
+                          </a>
+                        )}
+                        {(p.whatsapp_url || p.affiliate_url) && (
+                          <a 
+                            href={p.whatsapp_url || p.affiliate_url} 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="portfolio-btn portfolio-btn-whatsapp"

@@ -10,18 +10,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='product',
-            name='affiliate_url',
-        ),
-        migrations.RemoveField(
-            model_name='product',
-            name='youtube_url',
-        ),
-        migrations.RemoveField(
-            model_name='product',
-            name='github_url',
-        ),
         migrations.AddField(
             model_name='product',
             name='whatsapp_url',
