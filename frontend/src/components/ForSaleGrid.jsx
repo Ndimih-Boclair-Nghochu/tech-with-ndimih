@@ -13,6 +13,8 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
       .then(data => {
         if(!mounted) return
         const all = data.results || []
+        // Backend already filters to published for non-authenticated users,
+        // but we filter again for safety in case user logs in/out
         const published = all.filter(p => p.is_published)
         setItems(published.slice(0, limit))
       })
@@ -61,41 +63,36 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
                 <div className="card-desc">{p.description || 'No description provided.'}</div>
               </div>
               <div className="card-actions">
-                <div className="flex gap-2 justify-center w-full">
-                  {p.live_url && (
-                    <a 
-                      className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-all duration-300" 
-                      href={p.live_url} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
-                      <span>🌐</span>
-                      <span>Live</span>
-                    </a>
-                  )}
-                  {p.github_url && (
-                    <a 
-                      className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-slate-700 hover:bg-slate-800 text-white text-sm font-semibold rounded-lg transition-all duration-300" 
-                      href={p.github_url} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
-                      <span>💻</span>
-                      <span>GitHub</span>
-                    </a>
-                  )}
-                  {p.affiliate_url && (
-                    <a 
-                      className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-lg transition-all duration-300" 
-                      href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`I'm interested in your project: ${p.title}. Please share details.`)}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
-                      <span>💬</span>
-                      <span>WhatsApp</span>
-                    </a>
-                  )}
-                </div>
+                {p.live_url && (
+                  <a 
+                    className="btn btn-live" 
+                    href={p.live_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    Live Demo
+                  </a>
+                )}
+                {p.github_url && (
+                  <a 
+                    className="btn btn-primary" 
+                    href={p.github_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    GitHub
+                  </a>
+                )}
+                {p.affiliate_url && (
+                  <a 
+                    className="btn btn-ghost whatsapp" 
+                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`I'm interested in your project: ${p.title}. Please share details.`)}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    WhatsApp
+                  </a>
+                )}
               </div>
             </div>
           </Card3D>

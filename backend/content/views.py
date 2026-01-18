@@ -226,9 +226,11 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         qs = Product.objects.all()
-        # Filter to only published products for list and retrieve actions
+        # For list and retrieve actions: show all products to authenticated users, only published to others
         if self.action in ['list', 'retrieve']:
-            qs = qs.filter(is_published=True)
+            # Only filter if user is not authenticated
+            if not self.request.user.is_authenticated:
+                qs = qs.filter(is_published=True)
         return qs
 
     def get_permissions(self):

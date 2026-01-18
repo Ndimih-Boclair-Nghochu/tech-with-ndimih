@@ -15,6 +15,8 @@ export default function ForSale(){
     fetchProducts().then(data => {
       if(!mounted) return
       const all = data.results || []
+      // Backend already filters to published for non-authenticated users,
+      // but we filter again for safety in case user logs in/out
       setItems(all.filter(p => p.is_published))
     }).catch(()=>{ if(mounted) setItems([]) }).finally(()=>{ if(mounted) setLoading(false) })
     return ()=> mounted = false

@@ -1,16 +1,22 @@
 .for-sale-section{margin-top:2.5rem}
 .for-sale-section .section-head{max-width:800px;margin:0 auto 1rem;text-align:center}
-.for-sale-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
+.for-sale-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1rem}
 .sale-card{display:flex;flex-direction:column;justify-content:space-between;padding:1rem;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.03);box-shadow:0 18px 46px rgba(6,9,21,0.08);transition:transform .25s cubic-bezier(.2,.9,.3,1),box-shadow .25s ease}
 .sale-card:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 28px 80px rgba(6,9,21,0.14)}
+.card-image{width:100%;height:auto;border-radius:8px;overflow:hidden}
+.card-image img{width:100%;height:auto;display:block;transition:transform 0.3s ease}
+.card-image img:hover{transform:scale(1.05)}
 .card-body{padding-bottom:0.5rem}
 .card-title{font-weight:700;font-size:1.05rem;margin-bottom:0.5rem}
 .card-desc{color:var(--muted);font-size:0.95rem}
-.card-actions{display:flex;gap:0.5rem;justify-content:flex-end;margin-top:0.75rem}
-.btn-ghost.whatsapp{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#25D366;padding:0.5rem 0.75rem;border-radius:10px}
-.btn-live{background:linear-gradient(135deg,#ff6b6b,#ff8e72);border:none;color:#fff;padding:0.5rem 0.75rem;border-radius:10px;cursor:pointer;font-weight:600;font-size:0.9rem;transition:all 0.25s ease;box-shadow:0 4px 12px rgba(255,107,107,0.3)}
+.card-actions{display:flex;gap:0.5rem;justify-content:center;margin-top:0.75rem;width:100%}
+.btn-ghost.whatsapp{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#25D366;padding:0.5rem 0.75rem;border-radius:10px;font-weight:600;cursor:pointer;transition:all 0.25s ease;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.btn-ghost.whatsapp:hover{border-color:#25D366;background:rgba(37,211,102,0.1)}
+.btn-live{background:linear-gradient(135deg,#ff6b6b,#ff8e72);border:none;color:#fff;padding:0.5rem 0.75rem;border-radius:10px;cursor:pointer;font-weight:600;font-size:0.9rem;transition:all 0.25s ease;box-shadow:0 4px 12px rgba(255,107,107,0.3);text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
 .btn-live:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(255,107,107,0.4)}
-.btn-disabled{opacity:0.5}
+.btn-primary{background:linear-gradient(135deg,#667eea,#764ba2);border:none;color:#fff;padding:0.5rem 0.75rem;border-radius:10px;cursor:pointer;font-weight:600;font-size:0.9rem;transition:all 0.25s ease;box-shadow:0 4px 12px rgba(102,126,234,0.3);text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(102,126,234,0.4)}
+.btn-disabled{opacity:0.5;cursor:not-allowed;background:#999;padding:0.5rem 0.75rem;border-radius:10px;color:#fff;display:inline-flex;align-items:center;justify-content:center}
 .for-sale-cta{margin-top:1rem;text-align:center}
 
 /* small decorative 3D image placeholders (can be replaced with assets) */
