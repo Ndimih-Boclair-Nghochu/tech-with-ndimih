@@ -38,22 +38,18 @@ export default function ForSale(){
         ) : (
           <div className="for-sale-grid">
             {items.map((p, idx) => {
-              const popAnimations = ['animate-pop-fade-in-up', 'animate-pop-scale', 'animate-pop-bounce']
+              const popAnimations = ['animate-pop-fade-in-up', 'animate-pop-scale', 'animate-pop-bounce', 'animate-pop-elastic', 'animate-pop-rotate']
               const randomAnimation = popAnimations[idx % popAnimations.length]
+              const motionAnimations = ['animate-float', 'animate-sway', 'animate-zoom-pulse']
+              const motionAnimation = motionAnimations[idx % motionAnimations.length]
               return (
-                <article key={p.id || p.slug} className={`portfolio-card overflow-hidden card-3d ${randomAnimation} lift-on-hover`} style={{ animationDelay: `${idx * 80}ms` }}>
-                  {p.cover ? (
-                    <div className="thumb">
-                      <img src={p.cover} alt={p.title} className="w-full h-48 object-cover" loading="lazy" />
-                    </div>
-                  ) : (
-                    <div className="thumb bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center">
-                      <div className="text-4xl text-slate-400">📦</div>
-                    </div>
-                  )}
+                <article key={p.id || p.slug} className={`portfolio-card overflow-hidden card-3d ${randomAnimation} ${motionAnimation} lift-on-hover`} style={{ animationDelay: `${idx * 80}ms` }}>
+                  <div className="thumb">
+                    <img src={p.cover || '/placeholder.png'} alt={p.title} className="w-full h-48 object-cover" loading="lazy" />
+                  </div>
                   <div className="p-6 meta bg-gradient-to-b from-slate-900/80 to-slate-950/90 backdrop-blur-sm border-t border-white/10">
                     <h3 className="font-bold text-white text-lg leading-snug">{p.title}</h3>
-                    <p className="text-sm text-slate-300 mt-3 line-clamp-3">
+                    <p className="text-sm text-slate-300 mt-3 line-clamp-2">
                       <ReadMore text={p.description || 'No description'} maxLength={100} />
                     </p>
                     {p.price_cents && (
@@ -62,7 +58,7 @@ export default function ForSale(){
                       </div>
                     )}
                   </div>
-                  {(p.live_url || p.youtube_url || p.whatsapp_url || p.affiliate_url) && (
+                  {(p.live_url || p.youtube_url || p.whatsapp_url || p.github_url || p.affiliate_url) && (
                     <div className="px-4 pb-4 portfolio-actions">
                       <div className="flex gap-2 flex-wrap">
                         {p.live_url && (
