@@ -4,12 +4,12 @@
 .portfolio-card {
   display: block;
   position: relative;
-  border-radius: 16px;
+  border-radius: 20px;
   overflow: hidden;
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(20, 30, 48, 0.95));
   border: 1px solid rgba(148, 163, 184, 0.2);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .portfolio-card:hover {
@@ -107,14 +107,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
   border: 1px solid transparent;
   white-space: nowrap;
+  gap: 0.4rem;
 }
 
 .portfolio-btn-live {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { fetchProducts } from '../lib/api'
+import ReadMore from '../components/ReadMore'
 import '../styles/PortfolioCard.css'
 
 export default function ForSale(){
@@ -52,7 +53,9 @@ export default function ForSale(){
                   )}
                   <div className="p-6 meta bg-gradient-to-b from-slate-900/80 to-slate-950/90 backdrop-blur-sm border-t border-white/10">
                     <h3 className="font-bold text-white text-lg leading-snug">{p.title}</h3>
-                    <p className="text-sm text-slate-300 mt-3 line-clamp-2">{p.description || 'No description'}</p>
+                    <p className="text-sm text-slate-300 mt-3 line-clamp-3">
+                      <ReadMore text={p.description || 'No description'} maxLength={100} />
+                    </p>
                     {p.price_cents && (
                       <div className="mt-3 text-lg font-semibold text-cyan-400">
                         ${(p.price_cents / 100).toFixed(2)}

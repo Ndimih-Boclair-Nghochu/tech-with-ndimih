@@ -63,11 +63,11 @@ export default function AdminDashboard(){
   const [loadingList, setLoadingList] = useState(false)
   const [products, setProducts] = useState([])
   const [loadingProducts, setLoadingProducts] = useState(false)
-  const [productForm, setProductForm] = useState({ title: '', description: '', price: '', cover: null, file: null, live_url: '', whatsapp_url: '', is_published: true })
+  const [productForm, setProductForm] = useState({ title: '', description: '', price: '', cover: null, file: null, live_url: '', youtube_url: '', whatsapp_url: '', github_url: '', affiliate_url: '', is_published: true })
   
   const [productStatus, setProductStatus] = useState(null)
   const [productEdit, setProductEdit] = useState(null)
-  const [productEditForm, setProductEditForm] = useState({ title: '', description: '', price: '', cover: null, file: null, live_url: '', whatsapp_url: '', is_published: true })
+  const [productEditForm, setProductEditForm] = useState({ title: '', description: '', price: '', cover: null, file: null, live_url: '', youtube_url: '', whatsapp_url: '', github_url: '', affiliate_url: '', is_published: true })
   const [productEditStatus, setProductEditStatus] = useState(null)
   const [affiliateStats, setAffiliateStats] = useState([])
   const [loadingStats, setLoadingStats] = useState(false)
@@ -203,11 +203,14 @@ export default function AdminDashboard(){
         file: productForm.file,
         is_published: productForm.is_published,
         live_url: productForm.live_url,
-        whatsapp_url: productForm.whatsapp_url
+        youtube_url: productForm.youtube_url,
+        whatsapp_url: productForm.whatsapp_url,
+        github_url: productForm.github_url,
+        affiliate_url: productForm.affiliate_url
       }
       await createProduct(payload)
       setProductStatus('created')
-      setProductForm({ title: '', description: '', price: '', cover: null, file: null, live_url: '', whatsapp_url: '', is_published: true })
+      setProductForm({ title: '', description: '', price: '', cover: null, file: null, live_url: '', youtube_url: '', whatsapp_url: '', github_url: '', affiliate_url: '', is_published: true })
       addToast('Product created successfully', 'success')
       loadProducts()
     }catch(err){
@@ -229,7 +232,7 @@ export default function AdminDashboard(){
 
   function openProductEdit(prod){
     setProductEdit(prod)
-    setProductEditForm({ title: prod.title || '', description: prod.description || '', price: prod.price_cents ? (prod.price_cents/100).toFixed(2) : '', cover: null, file: null, live_url: prod.live_url || '', whatsapp_url: prod.whatsapp_url || '', is_published: prod.is_published })
+    setProductEditForm({ title: prod.title || '', description: prod.description || '', price: prod.price_cents ? (prod.price_cents/100).toFixed(2) : '', cover: null, file: null, live_url: prod.live_url || '', youtube_url: prod.youtube_url || '', whatsapp_url: prod.whatsapp_url || '', github_url: prod.github_url || '', affiliate_url: prod.affiliate_url || '', is_published: prod.is_published })
     loadAffiliateStats(prod.id)
   }
 
@@ -288,7 +291,10 @@ export default function AdminDashboard(){
         file: productEditForm.file,
         is_published: productEditForm.is_published,
         live_url: productEditForm.live_url,
-        whatsapp_url: productEditForm.whatsapp_url
+        youtube_url: productEditForm.youtube_url,
+        whatsapp_url: productEditForm.whatsapp_url,
+        github_url: productEditForm.github_url,
+        affiliate_url: productEditForm.affiliate_url
       }
       await updateProduct(productEdit.id, payload)
       setProductEditStatus('updated')
@@ -657,6 +663,24 @@ export default function AdminDashboard(){
                       />
                     </div>
                     <div className="form-group">
+                      <label>YouTube URL (optional)</label>
+                      <input 
+                        type="url" 
+                        value={productForm.youtube_url} 
+                        onChange={e=>setProductForm({...productForm, youtube_url: e.target.value})}
+                        placeholder="https://youtube.com/watch?v=..."
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>GitHub URL (optional)</label>
+                      <input 
+                        type="url" 
+                        value={productForm.github_url} 
+                        onChange={e=>setProductForm({...productForm, github_url: e.target.value})}
+                        placeholder="https://github.com/username/repo"
+                      />
+                    </div>
+                    <div className="form-group">
                       <label>WhatsApp URL (optional)</label>
                       <input 
                         type="url" 
@@ -665,6 +689,15 @@ export default function AdminDashboard(){
                         placeholder="https://api.whatsapp.com/send?text=..."
                       />
                       <small style={{color: '#999', marginTop: '0.25rem', display: 'block'}}>Create link at: https://wa.me/[YOUR_NUMBER]</small>
+                    </div>
+                    <div className="form-group">
+                      <label>Affiliate URL (optional)</label>
+                      <input 
+                        type="url" 
+                        value={productForm.affiliate_url} 
+                        onChange={e=>setProductForm({...productForm, affiliate_url: e.target.value})}
+                        placeholder="https://affiliate-link.com"
+                      />
                     </div>
                     <div className="form-group">
                       <label>File (zip/pdf/image)</label>
@@ -921,6 +954,24 @@ export default function AdminDashboard(){
                   />
                 </div>
                 <div className="form-group">
+                  <label>YouTube URL (optional)</label>
+                  <input 
+                    type="url" 
+                    value={productEditForm.youtube_url} 
+                    onChange={e=>setProductEditForm({...productEditForm, youtube_url: e.target.value})}
+                    placeholder="https://youtube.com/watch?v=..."
+                  />
+                </div>
+                <div className="form-group">
+                  <label>GitHub URL (optional)</label>
+                  <input 
+                    type="url" 
+                    value={productEditForm.github_url} 
+                    onChange={e=>setProductEditForm({...productEditForm, github_url: e.target.value})}
+                    placeholder="https://github.com/username/repo"
+                  />
+                </div>
+                <div className="form-group">
                   <label>WhatsApp URL (optional)</label>
                   <input 
                     type="url" 
@@ -929,6 +980,15 @@ export default function AdminDashboard(){
                     placeholder="https://api.whatsapp.com/send?text=..."
                   />
                   <small style={{color: '#999', marginTop: '0.25rem', display: 'block'}}>Create link at: https://wa.me/[YOUR_NUMBER]</small>
+                </div>
+                <div className="form-group">
+                  <label>Affiliate URL (optional)</label>
+                  <input 
+                    type="url" 
+                    value={productEditForm.affiliate_url} 
+                    onChange={e=>setProductEditForm({...productEditForm, affiliate_url: e.target.value})}
+                    placeholder="https://affiliate-link.com"
+                  />
                 </div>
                 <div className="form-group">
                   <label>Replace File (optional)</label>
