@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import boclairImage from '../assets/boclair.jpg';
+import profileImage from '../assets/nbn - Edited.png';
 
 export default function AboutPreview() {
   const [aboutData, setAboutData] = useState(null);
@@ -83,7 +83,7 @@ export default function AboutPreview() {
                 {aboutData.profile_image ? (
                   <img src={aboutData.profile_image} alt={aboutData.name} className="w-64 h-80 object-cover rounded-3xl" />
                 ) : (
-                  <img src={boclairImage} alt={aboutData.name} className="w-64 h-80 object-cover rounded-3xl" />
+                  <img src={profileImage} alt={aboutData.name} className="w-64 h-80 object-cover rounded-3xl" />
                 )}
               </div>
 
