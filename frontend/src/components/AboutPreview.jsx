@@ -81,9 +81,9 @@ export default function AboutPreview() {
               <div className="relative overflow-hidden rounded-3xl transform group-hover:scale-110 transition-transform duration-500">
                 {/* Image */}
                 {aboutData.profile_image ? (
-                  <img src={aboutData.profile_image} alt={aboutData.name} className="w-64 h-80 object-cover rounded-3xl" />
+                  <img src={aboutData.profile_image} alt={aboutData.name} className="w-96 h-full max-h-96 object-cover rounded-3xl" />
                 ) : (
-                  <img src={profileImage} alt={aboutData.name} className="w-64 h-80 object-cover rounded-3xl" />
+                  <img src={profileImage} alt={aboutData.name} className="w-96 h-full max-h-96 object-cover rounded-3xl" />
                 )}
               </div>
 
