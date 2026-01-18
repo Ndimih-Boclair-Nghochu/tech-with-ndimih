@@ -79,11 +79,14 @@ class ProductAdmin(admin.ModelAdmin):
         ('📦 Product Information', {
             'fields': ('title', 'slug', 'description', 'is_published')
         }),
+        ('�️ Media', {
+            'fields': ('cover',)
+        }),
         ('💰 Pricing', {
             'fields': ('price_cents',)
         }),
         ('🔗 Links & Files', {
-            'fields': ('affiliate_url', 'file', 'stripe_product_id', 'stripe_price_id')
+            'fields': ('affiliate_url', 'youtube_url', 'file', 'live_url', 'github_url', 'stripe_product_id', 'stripe_price_id')
         }),
     )
     
