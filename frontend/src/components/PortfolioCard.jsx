@@ -12,7 +12,7 @@ export default function PortfolioCard({ item, index = 0 }){
     <article className={`portfolio-card overflow-hidden card-3d ${randomAnimation} ${motionAnimation} lift-on-hover`} style={{ animationDelay: `${index * 80}ms` }}>
       <Link to={`/portfolio/${item.slug}`} className="portfolio-link">
         <div className="thumb">
-          <img src={item.cover || '/placeholder.png'} alt={item.title} className="w-full h-48 object-cover" loading="lazy" />
+          <img src={item.cover || '/placeholder.png'} alt={item.title} className="w-full object-cover" loading="lazy" />
         </div>
         <div className="p-6 meta bg-gradient-to-b from-slate-900/80 to-slate-950/90 backdrop-blur-sm border-t border-white/10">
           <h3 className="font-bold text-white text-lg leading-snug">{item.title}</h3>

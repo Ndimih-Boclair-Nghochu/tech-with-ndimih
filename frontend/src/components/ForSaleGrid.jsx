@@ -55,7 +55,7 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
           return (
             <article key={p.id || p.slug} className={`portfolio-card overflow-hidden card-3d ${randomAnimation} ${motionAnimation} lift-on-hover`} style={{ animationDelay: `${idx * 80}ms` }}>
               <div className="thumb">
-                <img src={p.cover || '/placeholder.png'} alt={p.title} className="w-full h-48 object-cover" loading="lazy" />
+                <img src={p.cover || '/placeholder.png'} alt={p.title} className="w-full object-cover" loading="lazy" />
               </div>
               <div className="p-6 meta bg-gradient-to-b from-slate-900/80 to-slate-950/90 backdrop-blur-sm border-t border-white/10">
                 <h3 className="font-bold text-white text-lg leading-snug">{p.title}</h3>
