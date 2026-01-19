@@ -7,7 +7,6 @@ import PortfolioGrid from '../components/PortfolioGrid'
 import BlogCards from '../components/BlogCards'
 import ReviewsSlider from '../components/ReviewsSlider'
 import SkillsGrid from '../components/SkillsGrid'
-import ForSaleGrid from '../components/ForSaleGrid'
 import { fetchPortfolioPage, fetchBlogList, fetchRecentReviews } from '../lib/api'
 
 export default function Home({ reduce3D, setReduce3D }){
@@ -107,7 +106,6 @@ export default function Home({ reduce3D, setReduce3D }){
         <div className="max-w-6xl mx-auto text-center px-4">
           <ServicesGrid />
           <SkillsGrid />
-          <ForSaleGrid preview={true} limit={3} />
           <PortfolioGrid items={featured} />
           <ReviewsSlider items={reviews} onReviewAdded={()=> {
             setReviewsKey(k => k+1)

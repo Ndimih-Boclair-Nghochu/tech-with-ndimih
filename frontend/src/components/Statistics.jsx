@@ -82,8 +82,7 @@ export default function Statistics() {
   const statItems = [
     { label: 'Projects Completed', value: displayStats.portfolio, icon: '📁', path: '/portfolio' },
     { label: 'Blog Posts', value: displayStats.blog, icon: '📝', path: '/blog' },
-    { label: 'Happy Clients', value: displayStats.reviews, icon: '⭐', path: '/services' },
-    { label: 'Products', value: displayStats.products, icon: '🛍️', path: '/for-sale' }
+    { label: 'Happy Clients', value: displayStats.reviews, icon: '⭐', path: '/services' }
   ]
 
   return (
