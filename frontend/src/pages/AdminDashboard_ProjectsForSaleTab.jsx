@@ -27,10 +27,13 @@ export default function ProjectsForSaleTab() {
     try {
       setLoading(true)
       const data = await fetchProjectsForSale()
-      // For admin, we want to see all projects including unpublished
-      setProjects(data.results || [])
+      // Handle both paginated and non-paginated responses
+      const projects = data.results || data || []
+      setProjects(Array.isArray(projects) ? projects : [])
     } catch (err) {
+      console.error('Load projects error:', err)
       setStatus({ message: 'Failed to load projects', type: 'error' })
+      setProjects([])
     } finally {
       setLoading(false)
     }
@@ -45,23 +48,21 @@ export default function ProjectsForSaleTab() {
 
     try {
       setStatus({ message: 'Creating project...', type: 'info' })
-      const formData = new FormData()
-      formData.append('title', form.title)
-      formData.append('description', form.description)
-      formData.append('price', form.price || '0')
-      formData.append('whatsapp_url', form.whatsapp_url)
-      formData.append('live_url', form.live_url)
-      formData.append('is_published', form.is_published)
-      if (form.image) {
-        formData.append('image', form.image)
-      }
-
-      const result = await createProjectForSale(formData)
+      await createProjectForSale({
+        title: form.title,
+        description: form.description,
+        price: form.price || '0',
+        whatsapp_url: form.whatsapp_url,
+        live_url: form.live_url,
+        is_published: form.is_published,
+        image: form.image
+      })
       setStatus({ message: 'Project created successfully!', type: 'success' })
       setForm({ title: '', description: '', price: '', whatsapp_url: '', live_url: '', image: null, is_published: true })
       await loadProjects()
     } catch (err) {
-      setStatus({ message: err.message || 'Failed to create project', type: 'error' })
+      console.error('Create error:', err)
+      setStatus({ message: err.response?.data?.detail || err.message || 'Failed to create project', type: 'error' })
     }
   }
 
@@ -85,23 +86,21 @@ export default function ProjectsForSaleTab() {
 
     try {
       setEditStatus({ message: 'Updating...', type: 'info' })
-      const formData = new FormData()
-      formData.append('title', editForm.title)
-      formData.append('description', editForm.description)
-      formData.append('price', editForm.price || '0')
-      formData.append('whatsapp_url', editForm.whatsapp_url)
-      formData.append('live_url', editForm.live_url)
-      formData.append('is_published', editForm.is_published)
-      if (editForm.image) {
-        formData.append('image', editForm.image)
-      }
-
-      await updateProjectForSale(edit.slug, formData)
+      await updateProjectForSale(edit.slug, {
+        title: editForm.title,
+        description: editForm.description,
+        price: editForm.price || '0',
+        whatsapp_url: editForm.whatsapp_url,
+        live_url: editForm.live_url,
+        is_published: editForm.is_published,
+        image: editForm.image
+      })
       setEditStatus({ message: 'Project updated!', type: 'success' })
       setEdit(null)
       await loadProjects()
     } catch (err) {
-      setEditStatus({ message: err.message || 'Failed to update', type: 'error' })
+      console.error('Update error:', err)
+      setEditStatus({ message: err.response?.data?.detail || err.message || 'Failed to update', type: 'error' })
     }
   }
 
@@ -112,7 +111,8 @@ export default function ProjectsForSaleTab() {
       setStatus({ message: 'Project deleted', type: 'success' })
       await loadProjects()
     } catch (err) {
-      setStatus({ message: 'Failed to delete', type: 'error' })
+      console.error('Delete error:', err)
+      setStatus({ message: err.response?.data?.detail || 'Failed to delete', type: 'error' })
     }
   }
 
