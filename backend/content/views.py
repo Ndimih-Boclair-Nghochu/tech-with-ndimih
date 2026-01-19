@@ -28,6 +28,7 @@ from .serializers import PortfolioSerializer, PortfolioImageSerializer
 
 from .serializers import ProductSerializer, BlogPostSerializer, ReviewSerializer, ServiceSerializer, SkillSerializer, CVSerializer, CertificationSerializer, AboutSerializer, HeroSerializer, DonationInfoSerializer, BankDetailSerializer, GiftCardSerializer
 from .serializers import NewsletterSerializer, ProjectForSaleSerializer
+from .notifications import send_update_notification
 from .models import Product, BlogPost
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
@@ -53,7 +54,21 @@ class PortfolioViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         # serializer will handle file fields if present in multipart/form-data
-        serializer.save()
+        portfolio = serializer.save()
+        # Send notification to subscribers
+        try:
+            send_update_notification(
+                subject=f'New Project: {portfolio.title}',
+                content_type='portfolio',
+                content_data={
+                    'title': portfolio.title,
+                    'description': portfolio.excerpt or portfolio.body[:200],
+                    'url': f'https://ndimihboclair.com/portfolio/{portfolio.slug}',
+                    'image_url': portfolio.images.first().image.url if portfolio.images.exists() else None
+                }
+            )
+        except Exception as e:
+            print(f"Failed to send notification: {e}")
 
     def perform_update(self, serializer):
         serializer.save()
@@ -299,6 +314,23 @@ class BlogPostViewSet(viewsets.ModelViewSet):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             return [permissions.IsAuthenticated()]
         return [permissions.AllowAny()]
+
+    def perform_create(self, serializer):
+        blog = serializer.save()
+        # Send notification to subscribers
+        try:
+            send_update_notification(
+                subject=f'New Blog Post: {blog.title}',
+                content_type='blog',
+                content_data={
+                    'title': blog.title,
+                    'description': blog.excerpt or blog.body[:200],
+                    'url': f'https://ndimihboclair.com/blog/{blog.slug}',
+                    'image_url': blog.cover_image.url if blog.cover_image else None
+                }
+            )
+        except Exception as e:
+            print(f"Failed to send notification: {e}")
 
     def get_queryset(self):
         qs = BlogPost.objects.all()
@@ -891,8 +923,25 @@ class ProjectForSaleViewSet(viewsets.ModelViewSet):
             return [permissions.IsAuthenticated()]
         return [permissions.AllowAny()]
     
+    def perform_create(self, serializer):
+        project = serializer.save()
+        # Send notification to subscribers if published
+        if project.is_published:
+            try:
+                send_update_notification(
+                    subject=f'New Project for Sale: {project.title}',
+                    content_type='project_for_sale',
+                    content_data={
+                        'title': project.title,
+                        'description': project.description or f'${project.price}' if project.price else 'Check it out!',
+                        'url': f'https://ndimihboclair.com/projects-for-sale/{project.slug}',
+                        'image_url': project.image.url if project.image else None
+                    }
+                )
+            except Exception as e:
+                print(f"Failed to send notification: {e}")
+    
     def get_queryset(self):
         if self.request.user.is_authenticated:
             return ProjectForSale.objects.all()
         return ProjectForSale.objects.filter(is_published=True)
-    return resp
