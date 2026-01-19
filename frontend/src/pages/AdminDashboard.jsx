@@ -310,6 +310,8 @@ export default function AdminDashboard(){
   // preview URLs for local file selections
   const [productFormPreview, setProductFormPreview] = useState(null)
   const [productEditPreview, setProductEditPreview] = useState(null)
+  const [productFormCoverPreview, setProductFormCoverPreview] = useState(null)
+  const [productEditCoverPreview, setProductEditCoverPreview] = useState(null)
 
   React.useEffect(()=>{
     if(productForm.file){
@@ -321,6 +323,15 @@ export default function AdminDashboard(){
   }, [productForm.file])
 
   React.useEffect(()=>{
+    if(productForm.cover){
+      const u = URL.createObjectURL(productForm.cover)
+      setProductFormCoverPreview(u)
+      return ()=> { URL.revokeObjectURL(u); setProductFormCoverPreview(null) }
+    }
+    setProductFormCoverPreview(null)
+  }, [productForm.cover])
+
+  React.useEffect(()=>{
     if(productEditForm.file){
       const u = URL.createObjectURL(productEditForm.file)
       setProductEditPreview(u)
@@ -328,6 +339,15 @@ export default function AdminDashboard(){
     }
     setProductEditPreview(null)
   }, [productEditForm.file])
+
+  React.useEffect(()=>{
+    if(productEditForm.cover){
+      const u = URL.createObjectURL(productEditForm.cover)
+      setProductEditCoverPreview(u)
+      return ()=> { URL.revokeObjectURL(u); setProductEditCoverPreview(null) }
+    }
+    setProductEditCoverPreview(null)
+  }, [productEditForm.cover])
 
   return (
     <div className="admin-dashboard">
@@ -652,6 +672,9 @@ export default function AdminDashboard(){
                         accept="image/*"
                         onChange={e=>setProductForm({...productForm, cover: e.target.files[0]})}
                       />
+                      {productFormCoverPreview && (
+                        <img src={productFormCoverPreview} alt="cover preview" className="preview-image" />
+                      )}
                     </div>
                     <div className="form-group">
                       <label>Live URL (optional)</label>
@@ -943,6 +966,12 @@ export default function AdminDashboard(){
                     accept="image/*"
                     onChange={e=>setProductEditForm({...productEditForm, cover: e.target.files[0]})}
                   />
+                  {productEditCoverPreview && (
+                    <img src={productEditCoverPreview} alt="cover preview" className="preview-image" style={{marginTop: '0.5rem'}} />
+                  )}
+                  {!productEditCoverPreview && productEdit && productEdit.cover && !productEditForm.cover && (
+                    <img src={productEdit.cover} alt="existing cover" className="preview-image" style={{marginTop: '0.5rem'}} />
+                  )}
                 </div>
                 <div className="form-group">
                   <label>Live URL (optional)</label>
