@@ -53,7 +53,7 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
           const motionAnimations = ['animate-float', 'animate-sway', 'animate-zoom-pulse']
           const motionAnimation = motionAnimations[idx % motionAnimations.length]
           return (
-            <article key={p.id || p.slug} className={`portfolio-card overflow-hidden card-3d ${randomAnimation} ${motionAnimation} lift-on-hover`} style={{ animationDelay: `${idx * 80}ms` }}>
+            <article key={p.id} className={`portfolio-card overflow-hidden card-3d ${randomAnimation} ${motionAnimation} lift-on-hover`} style={{ animationDelay: `${idx * 80}ms` }}>
               <div className="thumb">
                 <img src={p.cover || '/placeholder.png'} alt={p.title} className="w-full object-cover" loading="lazy" />
               </div>
@@ -70,14 +70,13 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
               </div>
               {(p.live_url || p.youtube_url || p.whatsapp_url || p.github_url || p.affiliate_url) && (
                 <div className="px-4 pb-4 portfolio-actions">
-                  <div className="flex gap-2 flex-wrap justify-center sm:justify-start">
+                  <div className="flex gap-2 flex-wrap">
                     {p.live_url && (
                       <a 
                         href={p.live_url} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="portfolio-btn portfolio-btn-live"
-                        onClick={(e) => e.stopPropagation()}
                       >
                         🌐 View Live
                       </a>
@@ -88,7 +87,6 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="portfolio-btn portfolio-btn-live"
-                        onClick={(e) => e.stopPropagation()}
                       >
                         ▶️ Demo
                       </a>
@@ -99,7 +97,6 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="portfolio-btn portfolio-btn-github"
-                        onClick={(e) => e.stopPropagation()}
                       >
                         💻 GitHub
                       </a>
@@ -110,7 +107,6 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="portfolio-btn portfolio-btn-whatsapp"
-                        onClick={(e) => e.stopPropagation()}
                       >
                         💬 WhatsApp
                       </a>
@@ -121,7 +117,6 @@ export default function ForSaleGrid({ preview=false, limit=3 }){
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="portfolio-btn portfolio-btn-whatsapp"
-                        onClick={(e) => e.stopPropagation()}
                       >
                         🔗 Affiliate
                       </a>
