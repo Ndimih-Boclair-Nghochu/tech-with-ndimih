@@ -7,6 +7,7 @@ import HeroTab from './AdminDashboard_HeroTab'
 import DonationsTab from './AdminDashboard_DonationsTab'
 import BlogTab from './AdminDashboard_BlogTab'
 import ReviewsTab from './AdminDashboard_ReviewsTab'
+import ProjectsForSaleTab from './AdminDashboard_ProjectsForSaleTab'
 import { 
   createPortfolio, 
   uploadFile,
@@ -468,6 +469,12 @@ export default function AdminDashboard(){
               >
                 💰 Donations
               </button>
+              <button 
+                className={`tab ${activeTab === 'projectsForSale' ? 'active' : ''}`}
+                onClick={() => setActiveTab('projectsForSale')}
+              >
+                💼 Projects for Sale
+              </button>
             </div>
 
             {/* Portfolio Tab */}
@@ -660,6 +667,10 @@ export default function AdminDashboard(){
                 updateGiftCard={updateGiftCard}
                 addToast={addToast}
               />
+            )}
+
+            {activeTab === 'projectsForSale' && (
+              <ProjectsForSaleTab />
             )}
           </>
         )}
