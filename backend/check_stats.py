@@ -6,16 +6,18 @@ import json
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
 django.setup()
 
-from content.models import Portfolio, Product, Review, BlogPost
+from content.models import Portfolio, Product, Review, BlogPost, ProjectForSale
 
 portfolio_count = Portfolio.objects.count()
 product_count = Product.objects.count()
+projects_for_sale_count = ProjectForSale.objects.filter(is_published=True).count()
 review_count = Review.objects.count()
 blog_count = BlogPost.objects.count()
 
 stats = {
     "projects_completed": portfolio_count,
-    "projects_for_sale": product_count,
+    "products_for_sale": product_count,
+    "projects_for_sale": projects_for_sale_count,
     "total_reviews": review_count,
     "blog_posts": blog_count,
 }
@@ -31,6 +33,10 @@ for p in Portfolio.objects.all()[:5]:
 
 print(f"\nProducts: {product_count}")
 for p in Product.objects.all()[:5]:
+    print(f"  - {p.title} (slug: {p.slug})")
+
+print(f"\nProjects for Sale: {projects_for_sale_count}")
+for p in ProjectForSale.objects.filter(is_published=True)[:5]:
     print(f"  - {p.title} (slug: {p.slug})")
 
 print(f"\nReviews: {review_count}")

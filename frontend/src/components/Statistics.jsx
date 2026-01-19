@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { fetchPortfolioList, fetchBlogList, fetchRecentReviews, fetchProducts } from '../lib/api'
+import { fetchPortfolioList, fetchBlogList, fetchRecentReviews, fetchProducts, fetchProjectsForSale } from '../lib/api'
 
 export default function Statistics() {
   const navigate = useNavigate()
@@ -8,14 +8,16 @@ export default function Statistics() {
     portfolio: 0,
     blog: 0,
     reviews: 0,
-    products: 0
+    products: 0,
+    projectsForSale: 0
   })
   const [loading, setLoading] = useState(true)
   const [displayStats, setDisplayStats] = useState({
     portfolio: 0,
     blog: 0,
     reviews: 0,
-    products: 0
+    products: 0,
+    projectsForSale: 0
   })
 
   useEffect(() => {
@@ -26,26 +28,29 @@ export default function Statistics() {
       fetchPortfolioList().catch(() => ({ results: [] })),
       fetchBlogList().catch(() => ({ results: [] })),
       fetchRecentReviews().catch(() => ({ results: [] })),
-      fetchProducts().catch(() => ({ results: [] }))
+      fetchProducts().catch(() => ({ results: [] })),
+      fetchProjectsForSale().catch(() => ({ results: [] }))
     ])
-      .then(([portfolioData, blogData, reviewsData, productsData]) => {
+      .then(([portfolioData, blogData, reviewsData, productsData, projectsForSaleData]) => {
         if (!mounted) return
 
         const portfolioCount = (portfolioData.results || []).length
         const blogCount = (blogData.results || []).length
         const reviewsCount = (reviewsData.results || []).length
         const productsCount = (productsData.results || []).length
+        const projectsForSaleCount = (projectsForSaleData.results || []).length
 
         setStats({
           portfolio: portfolioCount,
           blog: blogCount,
           reviews: reviewsCount,
-          products: productsCount
+          products: productsCount,
+          projectsForSale: projectsForSaleCount
         })
 
         // Animate counters
         animateCounters(
-          { portfolio: portfolioCount, blog: blogCount, reviews: reviewsCount, products: productsCount }
+          { portfolio: portfolioCount, blog: blogCount, reviews: reviewsCount, products: productsCount, projectsForSale: projectsForSaleCount }
         )
       })
       .finally(() => {
@@ -69,7 +74,8 @@ export default function Statistics() {
         portfolio: Math.floor(targetStats.portfolio * progress),
         blog: Math.floor(targetStats.blog * progress),
         reviews: Math.floor(targetStats.reviews * progress),
-        products: Math.floor(targetStats.products * progress)
+        products: Math.floor(targetStats.products * progress),
+        projectsForSale: Math.floor(targetStats.projectsForSale * progress)
       })
 
       if (currentStep >= steps) {
@@ -82,7 +88,8 @@ export default function Statistics() {
   const statItems = [
     { label: 'Projects Completed', value: displayStats.portfolio, icon: '📁', path: '/portfolio' },
     { label: 'Blog Posts', value: displayStats.blog, icon: '📝', path: '/blog' },
-    { label: 'Happy Clients', value: displayStats.reviews, icon: '⭐', path: '/services' }
+    { label: 'Happy Clients', value: displayStats.reviews, icon: '⭐', path: '/services' },
+    { label: 'Projects for Sale', value: displayStats.projectsForSale, icon: '💼', path: '/projects-for-sale' }
   ]
 
   return (
