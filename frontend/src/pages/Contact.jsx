@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ContactForm from '../components/ContactForm'
 import ContactDownloads from '../components/ContactDownloads'
 import '../styles/ContactPage.css'
 
 export default function Contact(){
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <div className="contact-page bg-[linear-gradient(180deg,#071225,rgba(10,15,31,0.95))] min-h-screen text-white w-full">
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 w-full">

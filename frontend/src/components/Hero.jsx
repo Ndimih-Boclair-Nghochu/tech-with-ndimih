@@ -1,5 +1,6 @@
 import React, { useState, lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
+import TypingEffect from './TypingEffect'
 import '../styles/Hero.css'
 
 const DonateModalContent = lazy(() => import('../pages/Donate'))
@@ -14,9 +15,9 @@ export default function Hero(){
           <div className="hero-left">
             <p className="pretitle">Hi — I design & operate cloud-first apps</p>
             <h1 className="hero-title">Building Cloud-Powered Digital Experiences That Scale</h1>
-            <p className="lead">I am Cloud En</p>
+            <p className="lead">I am <TypingEffect words={['Cloud Engineer', 'Full-Stack Developer', 'DevOps Specialist']} /></p>
             <div className="hero-ctas">
-              <Link to="/contact" className="btn-primary">Hire me</Link>
+              <Link to="/contact" className="btn-primary" onClick={() => window.scrollTo(0, 0)}>Hire me</Link>
               <Link to="/portfolio" className="btn-secondary">View portfolio</Link>
             </div>
           </div>

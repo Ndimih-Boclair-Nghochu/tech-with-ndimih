@@ -78,3 +78,29 @@
 .donate-modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6)}
 .donate-modal-panel{position:relative;z-index:150;background:var(--card-bg,#fff);max-width:760px;width:94%;max-height:92vh;overflow:auto;border-radius:12px;box-shadow:0 20px 60px rgba(2,6,23,0.4);padding:1rem}
 .donate-close{position:absolute;right:10px;top:10px;background:transparent;border:none;font-size:1.1rem}
+
+/* Typing effect styles */
+.typing-text {
+  font-weight: 600;
+  background: linear-gradient(90deg, #7c3aed, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  min-width: 200px;
+  display: inline-block;
+}
+
+.typing-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
