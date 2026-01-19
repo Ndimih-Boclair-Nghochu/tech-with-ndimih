@@ -22,10 +22,12 @@ from django.urls import reverse
 
 from .models import Portfolio, PortfolioImage, Tag
 from .models import Product, BlogPost, AffiliateClick, Review, Donation, Service, Skill, CV, Certification, About, Hero, DonationInfo, BankDetail, GiftCard
+from .models import Newsletter, ProjectForSale
 import os
 from .serializers import PortfolioSerializer, PortfolioImageSerializer
 
 from .serializers import ProductSerializer, BlogPostSerializer, ReviewSerializer, ServiceSerializer, SkillSerializer, CVSerializer, CertificationSerializer, AboutSerializer, HeroSerializer, DonationInfoSerializer, BankDetailSerializer, GiftCardSerializer
+from .serializers import NewsletterSerializer, ProjectForSaleSerializer
 from .models import Product, BlogPost
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
@@ -865,4 +867,32 @@ def affiliate_clicks_csv(request, pk):
     writer.writerow(['created_at', 'ip', 'user_agent', 'referer'])
     for c in qs:
         writer.writerow([c.created_at.isoformat(), c.ip or '', c.user_agent or '', c.referer or ''])
+
+
+class NewsletterViewSet(viewsets.ModelViewSet):
+    queryset = Newsletter.objects.all()
+    serializer_class = NewsletterSerializer
+    permission_classes = [permissions.AllowAny]
+    
+    def get_permissions(self):
+        if self.action in ['list', 'destroy']:
+            return [permissions.IsAuthenticated()]
+        return [permissions.AllowAny()]
+
+
+class ProjectForSaleViewSet(viewsets.ModelViewSet):
+    queryset = ProjectForSale.objects.filter(is_published=True)
+    serializer_class = ProjectForSaleSerializer
+    lookup_field = 'slug'
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+    
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [permissions.IsAuthenticated()]
+        return [permissions.AllowAny()]
+    
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return ProjectForSale.objects.all()
+        return ProjectForSale.objects.filter(is_published=True)
     return resp

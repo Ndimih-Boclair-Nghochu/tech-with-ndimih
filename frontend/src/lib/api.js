@@ -659,4 +659,61 @@ export async function updateGiftCard(id, data){
   return res.data
 }
 
+// Newsletter
+export async function subscribeNewsletter(email){
+  const res = await api.post('/newsletter/', { email, is_active: true })
+  return res.data
+}
+
+export async function fetchNewsletterSubscribers(){
+  const res = await api.get('/newsletter/')
+  return res.data
+}
+
+// Projects For Sale
+export async function fetchProjectsForSale(){
+  const res = await api.get('/projects-for-sale/')
+  return res.data
+}
+
+export async function fetchProjectForSaleBySlug(slug){
+  const res = await api.get(`/projects-for-sale/${slug}/`)
+  return res.data
+}
+
+export async function createProjectForSale(data){
+  const form = new FormData()
+  form.append('title', data.title)
+  if(data.description) form.append('description', data.description)
+  if(data.price) form.append('price', data.price)
+  if(data.image) form.append('image', data.image)
+  if(data.whatsapp_url) form.append('whatsapp_url', data.whatsapp_url)
+  if(data.live_url) form.append('live_url', data.live_url)
+  form.append('is_published', data.is_published || true)
+  const res = await api.post('/projects-for-sale/', form)
+  return res.data
+}
+
+export async function updateProjectForSale(slug, data){
+  if(data.image){
+    const form = new FormData()
+    form.append('title', data.title)
+    if(data.description) form.append('description', data.description)
+    if(data.price) form.append('price', data.price)
+    form.append('image', data.image)
+    if(data.whatsapp_url) form.append('whatsapp_url', data.whatsapp_url)
+    if(data.live_url) form.append('live_url', data.live_url)
+    form.append('is_published', data.is_published)
+    const res = await api.patch(`/projects-for-sale/${slug}/`, form)
+    return res.data
+  }
+  const res = await api.patch(`/projects-for-sale/${slug}/`, data)
+  return res.data
+}
+
+export async function deleteProjectForSale(slug){
+  const res = await api.delete(`/projects-for-sale/${slug}/`)
+  return res.data
+}
+
 export default api

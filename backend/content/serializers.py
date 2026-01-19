@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Portfolio, PortfolioImage, Tag, Product, BlogPost, Review
 from .models import Donation, Service, Skill, CV, Certification, About, Hero, DonationInfo, BankDetail, GiftCard
+from .models import Newsletter, ProjectForSale
 from django.conf import settings
 import os
 
@@ -369,3 +370,17 @@ class GiftCardSerializer(serializers.ModelSerializer):
                 return request.build_absolute_uri(obj.card_image.url)
             return obj.card_image.url
         return None
+
+
+class NewsletterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Newsletter
+        fields = ['id', 'email', 'subscribed_at', 'is_active']
+        read_only_fields = ['subscribed_at']
+
+
+class ProjectForSaleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjectForSale
+        fields = ['id', 'title', 'slug', 'description', 'image', 'price', 'whatsapp_url', 'live_url', 'is_published', 'created_at', 'updated_at']
+        read_only_fields = ['slug', 'created_at', 'updated_at']

@@ -4,10 +4,12 @@ from .views import PortfolioViewSet, contact_view, upload_view, robots_txt, site
 from .views import contact_files_view
 from .views import ProductViewSet, BlogPostViewSet, purchase_product, product_click_redirect, affiliate_stats, affiliate_clicks_csv, ReviewViewSet, create_donation_session, donate_webhook, create_paypal_order, paypal_webhook, donation_report_csv
 from .views import ServiceViewSet, SkillViewSet, CVViewSet, CertificationViewSet, AboutViewSet, HeroViewSet, DonationInfoViewSet, BankDetailViewSet, GiftCardViewSet
+from .views import NewsletterViewSet, ProjectForSaleViewSet
 
 router = DefaultRouter()
 router.register(r'portfolio', PortfolioViewSet, basename='portfolio')
 router.register(r'products', ProductViewSet, basename='product')
+router.register(r'projects-for-sale', ProjectForSaleViewSet, basename='project-for-sale')
 router.register(r'blog', BlogPostViewSet, basename='blog')
 router.register(r'reviews', ReviewViewSet, basename='review')
 router.register(r'services', ServiceViewSet, basename='service')
@@ -19,6 +21,7 @@ router.register(r'hero', HeroViewSet, basename='hero')
 router.register(r'donation-info', DonationInfoViewSet, basename='donation-info')
 router.register(r'bank-details', BankDetailViewSet, basename='bank-detail')
 router.register(r'gift-cards', GiftCardViewSet, basename='gift-card')
+router.register(r'newsletter', NewsletterViewSet, basename='newsletter')
 
 urlpatterns = [
     path('', include(router.urls)),

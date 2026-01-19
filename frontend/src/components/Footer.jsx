@@ -19,6 +19,7 @@ export default function Footer(){
             <nav className="links footer-nav" role="navigation" aria-label="Footer navigation">
               <Link to="/services" onClick={() => window.scrollTo(0,0)}>Services</Link>
               <Link to="/portfolio" onClick={() => window.scrollTo(0,0)}>Portfolio</Link>
+              <Link to="/projects-for-sale" onClick={() => window.scrollTo(0,0)}>Projects</Link>
               <Link to="/blog" onClick={() => window.scrollTo(0,0)}>Blog</Link>
               <Link to="/contact" onClick={() => window.scrollTo(0,0)}>Contact</Link>
               <Link to="/admin" onClick={() => window.scrollTo(0,0)}>Admin</Link>

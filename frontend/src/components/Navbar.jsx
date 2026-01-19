@@ -71,6 +71,7 @@ export default function Navbar(){
             <Link to="/about" className="nav-link">About</Link>
             <Link to="/services" className="nav-link">Services</Link>
             <Link to="/portfolio" className="nav-link">Portfolio</Link>
+            <Link to="/projects-for-sale" className="nav-link">Projects</Link>
             <Link to="/blog" className="nav-link">Blog</Link>
             <Link to="/resources" className="nav-link">Resources</Link>
             <Link to="/contact" className="nav-link">Contact</Link>
@@ -96,6 +97,7 @@ export default function Navbar(){
           <Link to="/about" className="mobile-link" onClick={()=>setOpen(false)}>About</Link>
           <Link to="/services" className="mobile-link" onClick={()=>setOpen(false)}>Services</Link>
           <Link to="/portfolio" className="mobile-link" onClick={()=>setOpen(false)}>Portfolio</Link>
+          <Link to="/projects-for-sale" className="mobile-link" onClick={()=>setOpen(false)}>Projects</Link>
           <Link to="/blog" className="mobile-link" onClick={()=>setOpen(false)}>Blog</Link>
           <Link to="/resources" className="mobile-link" onClick={()=>setOpen(false)}>Resources</Link>
           <Link to="/contact" className="mobile-link" onClick={()=>setOpen(false)}>Contact</Link>
