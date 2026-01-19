@@ -60,7 +60,7 @@ export default function ForSale(){
                   </div>
                   {(p.live_url || p.youtube_url || p.whatsapp_url || p.github_url || p.affiliate_url) && (
                     <div className="px-4 pb-4 portfolio-actions">
-                      <div className="flex gap-2 flex-wrap">
+                      <div className="flex gap-2 flex-wrap justify-center sm:justify-start">
                         {p.live_url && (
                           <a 
                             href={p.live_url} 
@@ -94,15 +94,26 @@ export default function ForSale(){
                             💻 GitHub
                           </a>
                         )}
-                        {(p.whatsapp_url || p.affiliate_url) && (
+                        {p.whatsapp_url && (
                           <a 
-                            href={p.whatsapp_url || p.affiliate_url} 
+                            href={p.whatsapp_url} 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="portfolio-btn portfolio-btn-whatsapp"
                             onClick={(e) => e.stopPropagation()}
                           >
                             💬 WhatsApp
+                          </a>
+                        )}
+                        {p.affiliate_url && !p.whatsapp_url && (
+                          <a 
+                            href={p.affiliate_url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="portfolio-btn portfolio-btn-whatsapp"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            🔗 Affiliate
                           </a>
                         )}
                       </div>
