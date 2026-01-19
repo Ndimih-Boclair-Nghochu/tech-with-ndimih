@@ -1,6 +1,8 @@
 .for-sale-section{margin-top:2.5rem}
 .for-sale-section .section-head{max-width:800px;margin:0 auto 1rem;text-align:center}
-.for-sale-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(1rem,2vw,1.75rem);align-items:start;margin-top:2rem}
+.for-sale-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(1rem,2vw,1.75rem);align-items:start;margin-top:2rem;max-width:1400px;margin-left:auto;margin-right:auto}
+@media(min-width:1024px){.for-sale-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1440px){.for-sale-grid{grid-template-columns:repeat(4,1fr)}}
 
 /* small decorative 3D image placeholders */
 .for-sale-section .blob-3d{position:absolute;border-radius:9999px;filter:blur(36px);opacity:0.12}
